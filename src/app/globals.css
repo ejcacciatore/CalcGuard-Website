@@ -2,26 +2,190 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Custom Font Variables */
 :root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
+  --font-montserrat: 'Montserrat', sans-serif;
+  --font-raleway: 'Raleway', sans-serif;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
+/* Base Styles */
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    font-family: var(--font-raleway);
+    background-color: #ffffff;
+    color: #334155;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: var(--font-montserrat);
+    font-weight: 400;
   }
 }
 
-body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+/* Component Styles */
+@layer components {
+  /* Professional Section Styles */
+  .section-container {
+    @apply min-h-screen flex items-center justify-center relative;
+  }
+
+  .content-container {
+    @apply container mx-auto px-6 py-16;
+  }
+
+  /* Professional Card Styles */
+  .feature-card {
+    @apply bg-white p-6 rounded-xl shadow-lg border border-slate-100 hover:shadow-xl transition-all duration-300;
+  }
+
+  .feature-card:hover {
+    transform: translateY(-4px);
+  }
+
+  /* Professional Button Styles */
+  .btn-primary {
+    @apply bg-red-500 hover:bg-red-600 text-white font-semibold py-3 px-6 rounded-lg transition-all duration-300 transform hover:scale-105;
+  }
+
+  .btn-secondary {
+    @apply border-2 border-slate-600 text-slate-600 hover:bg-slate-600 hover:text-white font-semibold py-3 px-6 rounded-lg transition-all duration-300;
+  }
+
+  /* Professional Typography */
+  .section-title {
+    @apply text-4xl md:text-5xl font-light text-slate-800 leading-tight;
+  }
+
+  .section-subtitle {
+    @apply text-lg text-slate-600 leading-relaxed;
+  }
+
+  .card-title {
+    @apply text-sm font-semibold text-slate-800 uppercase tracking-wide;
+  }
+
+  /* Professional Navigation */
+  .nav-link {
+    @apply text-sm text-slate-600 hover:text-red-500 font-medium uppercase tracking-wider transition-colors duration-300;
+  }
+
+  .nav-link.active {
+    @apply text-red-500;
+  }
+
+  /* Professional Dot Navigation */
+  .dot-nav {
+    @apply w-3 h-3 rounded-full bg-slate-300 hover:bg-red-500 transition-all duration-300 cursor-pointer;
+  }
+
+  .dot-nav.active {
+    @apply bg-red-500 scale-125;
+  }
+}
+
+/* Utility Styles */
+@layer utilities {
+  /* Professional Backgrounds */
+  .bg-hero {
+    background-image: url('/images/backgrounds/main_background.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+  }
+
+  .bg-overlay {
+    @apply relative;
+  }
+
+  .bg-overlay::before {
+    content: '';
+    @apply absolute inset-0 bg-white/20;
+  }
+
+  /* Professional Animations */
+  .animate-fade-in {
+    animation: fadeIn 0.6s ease-out forwards;
+  }
+
+  .animate-slide-up {
+    animation: slideUp 0.6s ease-out forwards;
+  }
+
+  .animate-float {
+    animation: float 6s ease-in-out infinite;
+  }
+
+  /* Professional Gradients */
+  .gradient-primary {
+    background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+  }
+
+  .gradient-secondary {
+    background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+  }
+
+  /* Professional Shadows */
+  .shadow-professional {
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+  }
+
+  .shadow-card {
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  }
+}
+
+/* Keyframe Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
+}
+
+/* Professional Responsive Design */
+@media (max-width: 768px) {
+  .section-container {
+    @apply min-h-auto py-16;
+  }
+}
+
+/* Professional Print Styles */
+@media print {
+  .no-print {
+    display: none !important;
+  }
 }

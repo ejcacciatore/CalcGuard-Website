@@ -6,18 +6,7 @@ module.exports = {
     './src/app/**/*.{js,ts,jsx,tsx,mdx}',
   ],
   theme: {
-    extend: {
-      fontFamily: {
-        'montserrat': ['var(--font-montserrat)', 'sans-serif'],
-        'raleway': ['var(--font-raleway)', 'sans-serif'],
-      },
-      colors: {
-        calcguard: {
-          primary: '#ef4444',
-          secondary: '#1e293b',
-        }
-      }
-    },
+    extend: {},
   },
   plugins: [],
 }

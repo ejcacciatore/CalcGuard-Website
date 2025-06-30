@@ -29,107 +29,62 @@ export default function Home() {
           </nav>
           
           <div style={{display: 'flex', alignItems: 'center', gap: '0.75rem'}}>
-            <div style={{
-              width: '40px',
-              height: '40px',
-              backgroundColor: '#ef4444',
-              borderRadius: '6px',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center'
-            }}>
-              <span style={{color: 'white', fontWeight: 'bold', fontSize: '1.125rem'}}>CG</span>
-            </div>
-            <div>
-              <div style={{fontSize: '1.25rem', fontWeight: '300', color: '#111'}}>CalcGuard</div>
-              <div style={{fontSize: '0.75rem', color: '#666', textTransform: 'uppercase'}}>Technologies</div>
-            </div>
+            <img 
+              src="/images/CG_1.png" 
+              alt="CalcGuard Logo" 
+              style={{
+                height: '40px',
+                width: 'auto'
+              }}
+            />
           </div>
         </div>
       </header>
 
       <main style={{marginTop: '80px'}}>
-        {/* Section 1: Hero */}
+        {/* Section 1: Hero - Using Your Actual Assets */}
         <section id="home" style={{
           minHeight: '100vh',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
-          backgroundImage: 'url("/images/main_background.png"), linear-gradient(135deg, #1e293b 0%, #475569 50%, #64748b 100%)',
+          backgroundImage: 'url("/images/main_background.png")',
           backgroundSize: 'cover',
           backgroundPosition: 'center',
-          color: 'white',
-          textAlign: 'center',
+          backgroundRepeat: 'no-repeat',
+          position: 'relative',
           padding: '2rem'
         }}>
+          {/* Optional overlay for better readability */}
           <div style={{
-            backgroundColor: 'rgba(255, 255, 255, 0.95)',
-            padding: '3rem 4rem',
-            borderRadius: '16px',
-            boxShadow: '0 20px 60px rgba(0, 0, 0, 0.3)',
-            backdropFilter: 'blur(10px)',
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            backgroundColor: 'rgba(0, 0, 0, 0.1)',
+            zIndex: 1
+          }}></div>
+
+          {/* Hero Content */}
+          <div style={{
             textAlign: 'center',
-            maxWidth: '800px'
+            position: 'relative',
+            zIndex: 2,
+            maxWidth: '1000px',
+            width: '100%'
           }}>
-            <div style={{
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              marginBottom: '2rem'
-            }}>
-              <div style={{
-                width: '80px',
-                height: '80px',
-                backgroundColor: '#ef4444',
-                borderRadius: '12px',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                marginRight: '2rem'
-              }}>
-                <span style={{
-                  color: 'white',
-                  fontWeight: 'bold',
-                  fontSize: '2.5rem'
-                }}>
-                  CG
-                </span>
-              </div>
-              <div>
-                <h1 style={{
-                  fontSize: '4rem',
-                  fontWeight: '300',
-                  color: '#1e293b',
-                  margin: 0
-                }}>
-                  CalcGuard
-                </h1>
-                <p style={{
-                  fontSize: '1.5rem',
-                  color: '#64748b',
-                  margin: 0,
-                  textTransform: 'uppercase'
-                }}>
-                  Technologies
-                </p>
-              </div>
-            </div>
-            
-            <div style={{
-              backgroundColor: '#1e293b',
-              color: 'white',
-              padding: '1.5rem 2rem',
-              borderRadius: '8px',
-              marginBottom: '1rem'
-            }}>
-              <h2 style={{
-                fontSize: '2rem',
-                fontWeight: '300',
-                margin: 0
-              }}>
-                Seamless B2B Data & Analytics Connectivity
-              </h2>
-            </div>
+            {/* Landing Page Logo - Your main hero image */}
+            <img 
+              src="/images/landing_page_logo.png" 
+              alt="CalcGuard Technologies Hero Logo" 
+              style={{
+                maxWidth: '100%',
+                width: '100%',
+                height: 'auto',
+                filter: 'drop-shadow(0 20px 40px rgba(0, 0, 0, 0.3))'
+              }}
+            />
           </div>
         </section>
 

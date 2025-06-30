@@ -76,7 +76,7 @@ export default function Home() {
           }}>
             {/* Landing Page Logo - Your main hero image */}
             <img 
-              src="/images/landing_page_logo.png" 
+              src="assets\landing page logo.png" 
               alt="CalcGuard Technologies Hero Logo" 
               style={{
                 maxWidth: '100%',

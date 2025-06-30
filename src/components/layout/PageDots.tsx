@@ -1,14 +1,21 @@
 'use client'
 
 import { useScrollToSection } from '@/hooks/useScrollToSection'
-import { cn } from '@/lib/utils'
 
 const SECTIONS = [
   { id: 'home', label: 'Home' },
   { id: 'what-we-do', label: 'What We Do' },
   { id: 'challenge', label: 'Challenge' },
   { id: 'platform', label: 'Platform' },
+  { id: 'inefficiencies', label: 'Inefficiencies' },
+  { id: 'trinity', label: 'Trinity' },
+  { id: 'evidence', label: 'Evidence' },
+  { id: 'discovery', label: 'Discovery' },
+  { id: 'analytics', label: 'Analytics' },
+  { id: 'ai-barriers', label: 'AI Barriers' },
+  { id: 'competitive-edge', label: 'Competitive Edge' },
   { id: 'leadership', label: 'Leadership' },
+  { id: 'disclaimer', label: 'Disclaimer' },
 ]
 
 interface PageDotsProps {
@@ -19,18 +26,17 @@ export const PageDots = ({ activeSection }: PageDotsProps) => {
   const scrollToSection = useScrollToSection()
 
   return (
-    <nav className="fixed right-5 top-1/2 transform -translate-y-1/2 z-40 hidden lg:block">
-      <div className="flex flex-col gap-4">
+    <nav className="fixed right-5 top-1/2 transform -translate-y-1/2 z-50 hidden lg:block">
+      <div className="flex flex-col gap-3">
         {SECTIONS.map((section) => (
           <button
             key={section.id}
             onClick={() => scrollToSection(section.id)}
-            className={cn(
-              'w-3 h-3 rounded-full transition-all duration-300 group relative',
+            className={`w-3 h-3 rounded-full transition-all duration-300 group relative border-2 ${
               activeSection === section.id
-                ? 'bg-red-500 scale-125'
-                : 'bg-slate-300 hover:bg-red-400 hover:scale-110'
-            )}
+                ? 'bg-red-500 border-red-500 scale-125'
+                : 'bg-gray-200 border-gray-300 hover:border-red-400 hover:bg-red-100 hover:scale-110'
+            }`}
             title={section.label}
           >
             {/* Tooltip */}

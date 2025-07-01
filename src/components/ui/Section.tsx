@@ -1,13 +1,6 @@
 import { ReactNode } from 'react'
 import { cn } from '@/lib/utils'
-
-interface SectionProps {
-  id: string
-  children: ReactNode
-  fullHeight?: boolean
-  background?: string
-  className?: string
-}
+import { SectionProps } from '@/types'  // Add this import
 
 export const Section = ({
   id,

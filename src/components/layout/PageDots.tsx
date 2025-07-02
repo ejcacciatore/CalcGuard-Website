@@ -1,51 +1,136 @@
 'use client'
 
-import { useScrollToSection } from '@/hooks/useScrollToSection'
+import { useState, useEffect } from 'react'
 
-const SECTIONS = [
-  { id: 'home', label: 'Home' },
-  { id: 'what-we-do', label: 'What We Do' },
-  { id: 'challenge', label: 'Challenge' },
-  { id: 'platform', label: 'Platform' },
-  { id: 'inefficiencies', label: 'Inefficiencies' },
-  { id: 'trinity', label: 'Trinity' },
-  { id: 'evidence', label: 'Evidence' },
-  { id: 'discovery', label: 'Discovery' },
-  { id: 'analytics', label: 'Analytics' },
-  { id: 'ai-barriers', label: 'AI Barriers' },
-  { id: 'competitive-edge', label: 'Competitive Edge' },
-  { id: 'leadership', label: 'Leadership' },
-  { id: 'disclaimer', label: 'Disclaimer' },
-]
-
-interface PageDotsProps {
-  activeSection: string
+interface Section {
+  id: string;
+  name: string;
 }
 
-export const PageDots = ({ activeSection }: PageDotsProps) => {
-  const scrollToSection = useScrollToSection()
+const PageDots = () => {
+  const [activeSection, setActiveSection] = useState('home')
+
+  const sections: Section[] = [
+    { id: 'home', name: 'Home' },
+    { id: 'what-we-do', name: 'What We Do' },
+    { id: 'challenge', name: 'Challenge' },
+    { id: 'platform', name: 'Platform' },
+    { id: 'inefficiencies', name: 'Inefficiencies' },
+    { id: 'trinity', name: 'Trinity' },
+  ]
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setActiveSection(entry.target.id)
+          }
+        })
+      },
+      {
+        root: null,
+        rootMargin: '0px',
+        threshold: 0.5
+      }
+    )
+
+    sections.forEach(section => {
+      const element = document.getElementById(section.id)
+      if (element) observer.observe(element)
+    })
+
+    return () => observer.disconnect()
+  }, [sections])
+
+  const scrollToSection = (sectionId: string) => {
+    const element = document.getElementById(sectionId)
+    if (element) {
+      element.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start'
+      })
+    }
+  }
 
   return (
-    <nav className="fixed right-5 top-1/2 transform -translate-y-1/2 z-50 hidden lg:block">
-      <div className="flex flex-col gap-3">
-        {SECTIONS.map((section) => (
-          <button
+    <>
+      <style jsx>{`
+        .page-dots {
+          position: fixed;
+          right: 20px;
+          top: 50%;
+          transform: translateY(-50%);
+          z-index: 1000;
+          display: flex;
+          flex-direction: column;
+          gap: 16px;
+        }
+
+        .dot {
+          width: 12px;
+          height: 12px;
+          border-radius: 50%;
+          background-color: rgba(255, 255, 255, 0.4);
+          cursor: pointer;
+          transition: all 0.3s ease;
+          position: relative;
+        }
+
+        .dot:hover {
+          background-color: rgba(255, 255, 255, 0.7);
+          transform: scale(1.2);
+        }
+
+        .dot.active {
+          background-color: #ef4444;
+          transform: scale(1.3);
+          box-shadow: 0 0 10px rgba(239, 68, 68, 0.5);
+        }
+
+        .dot-tooltip {
+          position: absolute;
+          right: 20px;
+          top: 50%;
+          transform: translateY(-50%);
+          background-color: rgba(0, 0, 0, 0.8);
+          color: white;
+          padding: 4px 8px;
+          border-radius: 4px;
+          font-size: 11px;
+          font-weight: 600;
+          text-transform: uppercase;
+          letter-spacing: 0.05em;
+          white-space: nowrap;
+          opacity: 0;
+          pointer-events: none;
+          transition: opacity 0.3s ease;
+        }
+
+        .dot:hover .dot-tooltip {
+          opacity: 1;
+        }
+
+        @media (max-width: 768px) {
+          .page-dots {
+            display: none;
+          }
+        }
+      `}</style>
+
+      <nav className="page-dots">
+        {sections.map((section) => (
+          <div
             key={section.id}
+            className={`dot ${activeSection === section.id ? 'active' : ''}`}
             onClick={() => scrollToSection(section.id)}
-            className={`w-3 h-3 rounded-full transition-all duration-300 group relative border-2 ${
-              activeSection === section.id
-                ? 'bg-red-500 border-red-500 scale-125'
-                : 'bg-gray-200 border-gray-300 hover:border-red-400 hover:bg-red-100 hover:scale-110'
-            }`}
-            title={section.label}
           >
-            {/* Tooltip */}
-            <span className="absolute right-6 top-1/2 transform -translate-y-1/2 bg-gray-800 text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity duration-200 whitespace-nowrap pointer-events-none">
-              {section.label}
-            </span>
-          </button>
+            <div className="dot-tooltip">{section.name}</div>
+          </div>
         ))}
-      </div>
-    </nav>
+      </nav>
+    </>
   )
 }
+
+export default PageDots

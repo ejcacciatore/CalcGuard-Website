@@ -15,8 +15,8 @@ const Header = () => {
     { name: 'EVIDENCE', href: '#evidence' },
     { name: 'DISCOVERY', href: '#discovery' },
     { name: 'ANALYTICS', href: '#analytics' },
-    { name: 'AI', href: '#ai' },
-    { name: 'EDGE', href: '#edge' },
+    { name: 'AI', href: '#ai-barriers' },
+    { name: 'EDGE', href: '#competitive-edge' },
     { name: 'LEADERSHIP', href: '#leadership' },
     { name: 'DISCLAIMER', href: '#disclaimer' }
   ]

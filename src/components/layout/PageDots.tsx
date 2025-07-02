@@ -17,6 +17,12 @@ const PageDots = () => {
     { id: 'platform', name: 'Platform' },
     { id: 'inefficiencies', name: 'Inefficiencies' },
     { id: 'trinity', name: 'Trinity' },
+    { id: 'evidence', name: 'Evidence' },
+    { id: 'discovery', name: 'Discovery' },
+    { id: 'analytics', name: 'Analytics' },
+    { id: 'ai-barriers', name: 'AI Barriers' },
+    { id: 'competitive-edge', name: 'Edge' },
+    { id: 'leadership', name: 'Leadership' },
   ]
 
   useEffect(() => {

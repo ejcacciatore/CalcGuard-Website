@@ -11,6 +11,7 @@ import AnalyticsSection from '@/components/sections/analytics/AnalyticsSection'
 import AIBarriersSection from '@/components/sections/ai-barriers/AIBarriersSection'
 import CompetitiveEdgeSection from '@/components/sections/competitive-edge/CompetitiveEdgeSection'
 import LeadershipSection from '@/components/sections/leadership/LeadershipSection'
+import DisclaimerSection from '@/components/sections/disclaimer/DisclaimerSection'
 import PageDots from '@/components/layout/PageDots'
 
 export default function HomePage() {
@@ -30,6 +31,7 @@ export default function HomePage() {
       <AIBarriersSection />
       <CompetitiveEdgeSection />
       <LeadershipSection />
+      <DisclaimerSection />
     </>
   )
 }

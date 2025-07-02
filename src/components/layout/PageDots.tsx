@@ -23,6 +23,7 @@ const PageDots = () => {
     { id: 'ai-barriers', name: 'AI Barriers' },
     { id: 'competitive-edge', name: 'Edge' },
     { id: 'leadership', name: 'Leadership' },
+    { id: 'disclaimer', name: 'Contact' },
   ]
 
   useEffect(() => {

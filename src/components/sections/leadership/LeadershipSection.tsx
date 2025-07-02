@@ -376,7 +376,14 @@ const LeadershipSection = () => {
                       index and trading groups. Expert in quantitative finance 
                       and market structure with 20+ years experience.
                     </p>
-                    <a href="#" className="linkedin-link">LinkedIn Profile</a>
+                    <a 
+                      href="https://www.linkedin.com/in/timothy-sargent-a300705/" 
+                      target="_blank" 
+                      rel="noopener noreferrer" 
+                      className="linkedin-link"
+                    >
+                      LinkedIn Profile
+                    </a>
                   </div>
                   <div className="expansion-indicator"></div>
                 </div>
@@ -398,7 +405,14 @@ const LeadershipSection = () => {
                       SVP; LaSalle co-founder. Leading expert in 
                       financial protocols and trading infrastructure.
                     </p>
-                    <a href="#" className="linkedin-link">LinkedIn Profile</a>
+                    <a 
+                      href="https://www.linkedin.com/in/jimnorthey/" 
+                      target="_blank" 
+                      rel="noopener noreferrer" 
+                      className="linkedin-link"
+                    >
+                      LinkedIn Profile
+                    </a>
                   </div>
                   <div className="expansion-indicator"></div>
                 </div>
@@ -420,7 +434,14 @@ const LeadershipSection = () => {
                       structure analytics. Specialist in algorithmic 
                       trading strategies and execution optimization.
                     </p>
-                    <a href="#" className="https://www.linkedin.com/in/enricojcacciatore/">LinkedIn Profile</a>
+                    <a 
+                      href="https://www.linkedin.com/in/enricojcacciatore/" 
+                      target="_blank" 
+                      rel="noopener noreferrer" 
+                      className="linkedin-link"
+                    >
+                      LinkedIn Profile
+                    </a>
                   </div>
                   <div className="expansion-indicator"></div>
                 </div>
@@ -485,7 +506,14 @@ const LeadershipSection = () => {
                       advises finance industry. Deep expertise in 
                       institutional trading and portfolio management.
                     </p>
-                    <a href="#" className="linkedin-link">LinkedIn Profile</a>
+                    <a 
+                      href="https://www.linkedin.com/in/jeffreyestella/" 
+                      target="_blank" 
+                      rel="noopener noreferrer" 
+                      className="linkedin-link"
+                    >
+                      LinkedIn Profile
+                    </a>
                   </div>
                   <div className="expansion-indicator"></div>
                 </div>
@@ -507,7 +535,14 @@ const LeadershipSection = () => {
                       capital markets digitization. Leading voice in 
                       financial technology innovation and transformation.
                     </p>
-                    <a href="#" className="linkedin-link">LinkedIn Profile</a>
+                    <a 
+                      href="https://www.linkedin.com/in/bill-hartnett-937a813/" 
+                      target="_blank" 
+                      rel="noopener noreferrer" 
+                      className="linkedin-link"
+                    >
+                      LinkedIn Profile
+                    </a>
                   </div>
                   <div className="expansion-indicator"></div>
                 </div>
@@ -529,7 +564,14 @@ const LeadershipSection = () => {
                       COBA co-founder. Expert in market data, analytics 
                       and financial infrastructure development.
                     </p>
-                    <a href="#" className="linkedin-link">LinkedIn Profile</a>
+                    <a 
+                      href="https://www.linkedin.com/in/mschaedel/" 
+                      target="_blank" 
+                      rel="noopener noreferrer" 
+                      className="linkedin-link"
+                    >
+                      LinkedIn Profile
+                    </a>
                   </div>
                   <div className="expansion-indicator"></div>
                 </div>

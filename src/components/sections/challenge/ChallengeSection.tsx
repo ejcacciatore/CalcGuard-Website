@@ -7,12 +7,23 @@ const ChallengeSection = () => {
         .challenge-section {
           width: 100vw;
           min-height: 100vh;
-          background-image: url('/images/main_background.png');
-          background-size: cover;
-          background-position: center;
+          /* Removed background-image and set a solid color for the overlay effect */
+          background-color: #000;
           display: flex;
           align-items: center;
           position: relative;
+          overflow: hidden; /* To contain the video */
+        }
+
+        .background-video {
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          z-index: 0;
+          opacity: 0.3; /* Sets video to 50% transparency */
         }
 
         .content-grid {
@@ -21,6 +32,8 @@ const ChallengeSection = () => {
           width: 100%;
           min-height: 100vh;
           align-items: center;
+          position: relative; /* To appear above the video */
+          z-index: 1;
         }
 
         .left-column {
@@ -28,8 +41,7 @@ const ChallengeSection = () => {
           flex-direction: column;
           justify-content: center;
           padding: 64px;
-          background-color: rgba(255, 255, 255, 0.95);
-          backdrop-filter: blur(10px);
+          /* Removed background styles to allow video to show through */
           height: 100vh;
         }
 
@@ -45,7 +57,7 @@ const ChallengeSection = () => {
         .main-title {
           font-size: 48px;
           font-weight: 400;
-          color: #1e293b;
+          color: #ffffff; /* Changed to white for better contrast */
           line-height: 1.1;
           margin-bottom: 24px;
           font-family: 'Montserrat', sans-serif;
@@ -53,7 +65,7 @@ const ChallengeSection = () => {
 
         .description {
           font-size: 18px;
-          color: #475569;
+          color: #e5e7eb; /* Changed to light gray for better contrast */
           line-height: 1.6;
           max-width: 450px;
           font-family: 'Raleway', sans-serif;
@@ -77,14 +89,9 @@ const ChallengeSection = () => {
 
         /* Tablet Styles */
         @media (max-width: 1024px) {
-          .left-column {
+          .left-column, .right-column {
             padding: 48px;
           }
-          
-          .right-column {
-            padding: 48px;
-          }
-          
           .main-title {
             font-size: 40px;
           }
@@ -97,11 +104,14 @@ const ChallengeSection = () => {
             min-height: auto;
           }
 
-          .left-column {
+          .left-column, .right-column {
             padding: 40px 24px;
             min-height: 50vh;
-            text-align: center;
             height: auto;
+          }
+          
+          .left-column {
+            text-align: center;
           }
 
           .main-title {
@@ -114,12 +124,6 @@ const ChallengeSection = () => {
             max-width: none;
           }
 
-          .right-column {
-            padding: 40px 24px;
-            min-height: 50vh;
-            height: auto;
-          }
-
           .dashboard-image {
             max-width: 100%;
           }
@@ -127,18 +131,12 @@ const ChallengeSection = () => {
 
         /* Small Mobile Styles */
         @media (max-width: 480px) {
-          .left-column {
+          .left-column, .right-column {
             padding: 32px 16px;
           }
-
-          .right-column {
-            padding: 32px 16px;
-          }
-
           .main-title {
             font-size: 28px;
           }
-
           .description {
             font-size: 14px;
           }
@@ -146,6 +144,12 @@ const ChallengeSection = () => {
       `}</style>
 
       <section id="challenge" className="challenge-section">
+        <video autoPlay loop muted playsInline className="background-video">
+            <source 
+              src="/images/ejcacciatore_take_this_image_and_make_it_a_dynamic_image_of_t_f60cf58b-0f57-4308-bc55-35c18375cb92_3.mp4" 
+              type="video/mp4" 
+            />
+        </video>
         <div className="content-grid">
           
           {/* Left Column - Text Content */}

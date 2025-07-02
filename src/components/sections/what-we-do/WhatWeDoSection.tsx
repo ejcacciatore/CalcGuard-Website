@@ -7,10 +7,21 @@ const WhatWeDoSection = () => {
         .what-we-do-section {
           width: 100vw;
           min-height: 100vh;
-          background-color: #ffffff;
           display: flex;
           align-items: center;
           position: relative;
+          overflow: hidden;
+        }
+
+        .video-background {
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 50%;
+          height: 100%;
+          opacity: 0.5;
+          z-index: 0;
+          object-fit: cover;
         }
 
         .content-grid {
@@ -18,6 +29,8 @@ const WhatWeDoSection = () => {
           grid-template-columns: 1fr 1fr;
           width: 100%;
           min-height: 100vh;
+          position: relative;
+          z-index: 1;
         }
 
         .left-column {
@@ -92,15 +105,6 @@ const WhatWeDoSection = () => {
           padding: 64px 96px 64px 64px;
         }
 
-        .right-background {
-          position: absolute;
-          inset: 0;
-          background-image: url('/images/main_background.png');
-          background-size: cover;
-          background-position: center;
-          opacity: 0.05;
-        }
-
         .features-container {
           position: relative;
           display: flex;
@@ -135,151 +139,33 @@ const WhatWeDoSection = () => {
           line-height: 1.5;
           font-family: 'Raleway', sans-serif;
         }
-
-        /* Tablet Styles */
-        @media (max-width: 1024px) {
-          .left-column {
-            padding: 48px;
-          }
-          
-          .right-column {
-            padding: 48px 64px 48px 48px;
-          }
-          
-          .main-title {
-            font-size: 40px;
-          }
-        }
-
-        /* Mobile Styles */
-        @media (max-width: 768px) {
-          .content-grid {
-            grid-template-columns: 1fr;
-            min-height: auto;
-          }
-
-          .left-column {
-            padding: 40px 24px;
-            min-height: 50vh;
-            text-align: center;
-          }
-
-          .corner-design {
-            top: 16px;
-            left: 16px;
-            width: 64px;
-          }
-
-          .left-content {
-            margin-top: 60px;
-            max-width: none;
-          }
-
-          .subtitle {
-            font-size: 12px;
-          }
-
-          .main-title {
-            font-size: 36px;
-            margin-bottom: 20px;
-          }
-
-          .red-line {
-            margin: 0 auto 20px auto;
-            width: 60px;
-          }
-
-          .description {
-            font-size: 14px;
-            margin-bottom: 24px;
-          }
-
-          .control-icon {
-            height: 40px;
-          }
-
-          .right-column {
-            padding: 40px 24px;
-            min-height: 50vh;
-          }
-
-          .features-container {
-            gap: 32px;
-          }
-
-          .feature {
-            text-align: center;
-            align-items: center;
-          }
-
-          .feature-icon {
-            height: 40px;
-            margin-bottom: 10px;
-          }
-
-          .feature-title {
-            font-size: 14px;
-            margin-bottom: 6px;
-          }
-
-          .feature-description {
-            font-size: 13px;
-            max-width: 300px;
-          }
-        }
-
-        /* Small Mobile Styles */
-        @media (max-width: 480px) {
-          .left-column {
-            padding: 32px 16px;
-          }
-
-          .right-column {
-            padding: 32px 16px;
-          }
-
-          .main-title {
-            font-size: 28px;
-          }
-
-          .features-container {
-            gap: 24px;
-          }
-
-          .feature-description {
-            font-size: 12px;
-            max-width: 280px;
-          }
-        }
       `}</style>
 
       <section id="what-we-do" className="what-we-do-section">
+        <video
+          className="video-background"
+          src="/images/ejcacciatore_Futuristic_fintech_data_platform_secure_data_agg_bcfdfb54-ac83-4f0b-b201-707abcb97ed2_3.mp4"
+          autoPlay
+          loop
+          muted
+          playsInline
+        ></video>
+
         <div className="content-grid">
-          
-          {/* Left Column - Text Content */}
           <div className="left-column">
             <img 
               src="/images/left_cornder.png" 
               alt="Corner Design" 
               className="corner-design"
             />
-            
             <div className="left-content">
-              <p className="subtitle">
-                CalcGuard® Technologies
-              </p>
-              
-              <h2 className="main-title">
-                WHAT<br />WE DO
-              </h2>
-              
+              <p className="subtitle">CalcGuard® Technologies</p>
+              <h2 className="main-title">WHAT<br />WE DO</h2>
               <div className="red-line"></div>
-              
               <p className="description">
                 We deliver a scalable B2B platform for secure aggregation, normalization 
                 and analysis of sensitive data, empowering organizations with actionable insights.
               </p>
-              
               <div className="control-icon-container">
                 <img 
                   src="/images/Full_Control_icon.png" 
@@ -290,12 +176,8 @@ const WhatWeDoSection = () => {
             </div>
           </div>
 
-          {/* Right Column - Feature Cards */}
           <div className="right-column">
-            <div className="right-background"></div>
-            
             <div className="features-container">
-              {/* Feature 1 - Unified */}
               <div className="feature">
                 <div className="feature-header">
                   <img 
@@ -303,9 +185,7 @@ const WhatWeDoSection = () => {
                     alt="Unified Icon" 
                     className="feature-icon"
                   />
-                  <h3 className="feature-title">
-                    UNIFIED, SECURED & CONTROLLED
-                  </h3>
+                  <h3 className="feature-title">UNIFIED, SECURED & CONTROLLED</h3>
                 </div>
                 <p className="feature-description">
                   Our modern architecture unifies fragmented data, empowering organizations 
@@ -313,7 +193,6 @@ const WhatWeDoSection = () => {
                 </p>
               </div>
 
-              {/* Feature 2 - Global Equity */}
               <div className="feature">
                 <div className="feature-header">
                   <img 
@@ -321,9 +200,7 @@ const WhatWeDoSection = () => {
                     alt="Global Equity Icon" 
                     className="feature-icon"
                   />
-                  <h3 className="feature-title">
-                    GLOBAL EQUITY TRADING
-                  </h3>
+                  <h3 className="feature-title">GLOBAL EQUITY TRADING</h3>
                 </div>
                 <p className="feature-description">
                   Our current focus is global equity markets, providing advanced analytics 
@@ -331,7 +208,6 @@ const WhatWeDoSection = () => {
                 </p>
               </div>
 
-              {/* Feature 3 - Adaptable */}
               <div className="feature">
                 <div className="feature-header">
                   <img 
@@ -339,9 +215,7 @@ const WhatWeDoSection = () => {
                     alt="Adaptable Icon" 
                     className="feature-icon"
                   />
-                  <h3 className="feature-title">
-                    ADAPTABLE & EXTENSIBLE
-                  </h3>
+                  <h3 className="feature-title">ADAPTABLE & EXTENSIBLE</h3>
                 </div>
                 <p className="feature-description">
                   CalcGuard's platform is architected for rapid expansion into adjacent 
@@ -353,7 +227,7 @@ const WhatWeDoSection = () => {
         </div>
       </section>
     </>
-  )
-}
+  );
+};
 
-export default WhatWeDoSection
+export default WhatWeDoSection;

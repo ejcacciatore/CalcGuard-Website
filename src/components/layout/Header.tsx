@@ -1,25 +1,81 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
 const Header = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  const [activeSection, setActiveSection] = useState('hero')
   
   const navItems = [
-    { name: 'HOME', href: '#home', active: true },
-    { name: 'WHAT WE DO', href: '#what-we-do' },
-    { name: 'CHALLENGE', href: '#challenge' },
-    { name: 'PLATFORM', href: '#platform' },
-    { name: 'INEFFICIENCIES', href: '#inefficiencies' },
-    { name: 'TRINITY', href: '#trinity' },
-    { name: 'EVIDENCE', href: '#evidence' },
-    { name: 'DISCOVERY', href: '#discovery' },
-    { name: 'ANALYTICS', href: '#analytics' },
-    { name: 'AI', href: '#ai-barriers' },
-    { name: 'EDGE', href: '#competitive-edge' },
-    { name: 'LEADERSHIP', href: '#leadership' },
-    { name: 'DISCLAIMER', href: '#disclaimer' }
+    { name: 'HOME', href: '#hero', id: 'hero' },
+    { name: 'WHAT WE DO', href: '#what-we-do', id: 'what-we-do' },
+    { name: 'CHALLENGE', href: '#challenge', id: 'challenge' },
+    { name: 'PLATFORM', href: '#platform', id: 'platform' },
+    { name: 'INEFFICIENCIES', href: '#inefficiencies', id: 'inefficiencies' },
+    { name: 'TRINITY', href: '#trinity', id: 'trinity' },
+    { name: 'EVIDENCE', href: '#evidence', id: 'evidence' },
+    { name: 'DISCOVERY', href: '#discovery', id: 'discovery' },
+    { name: 'ANALYTICS', href: '#analytics', id: 'analytics' },
+    { name: 'AI', href: '#ai-barriers', id: 'ai-barriers' },
+    { name: 'EDGE', href: '#competitive-edge', id: 'competitive-edge' },
+    { name: 'LEADERSHIP', href: '#leadership', id: 'leadership' },
+    { name: 'DISCLAIMER', href: '#disclaimer', id: 'disclaimer' }
   ]
+
+  // Handle smooth scrolling
+  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+    e.preventDefault()
+    const targetId = href.replace('#', '')
+    const targetElement = document.getElementById(targetId)
+    
+    if (targetElement) {
+      targetElement.scrollIntoView({ behavior: 'smooth' })
+    } else if (targetId === 'hero') {
+      // If hero section doesn't exist with ID, scroll to top
+      window.scrollTo({ top: 0, behavior: 'smooth' })
+    }
+    
+    // Close mobile menu if open
+    setMobileMenuOpen(false)
+  }
+
+  // Handle logo click - always go to top/hero
+  const handleLogoClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    e.preventDefault()
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  }
+
+  // Update active section based on scroll position
+  useEffect(() => {
+    const handleScroll = () => {
+      const sections = navItems.map(item => ({
+        id: item.id,
+        element: document.getElementById(item.id)
+      })).filter(section => section.element)
+
+      const scrollPosition = window.scrollY + 100
+
+      // If at the very top, set HOME as active
+      if (window.scrollY < 50) {
+        setActiveSection('hero')
+        return
+      }
+
+      // Find the current section
+      for (let i = sections.length - 1; i >= 0; i--) {
+        const section = sections[i]
+        if (section.element && section.element.offsetTop <= scrollPosition) {
+          setActiveSection(section.id)
+          break
+        }
+      }
+    }
+
+    window.addEventListener('scroll', handleScroll)
+    handleScroll() // Call once to set initial state
+
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
 
   return (
     <>
@@ -72,10 +128,12 @@ const Header = () => {
         .logo-link {
           cursor: pointer;
           transition: transform 0.2s ease;
+          display: flex;
+          align-items: center;
         }
 
         .logo-link:hover {
-          transform: scale(1.1);
+          transform: scale(1.05);
         }
 
         .logo {
@@ -92,6 +150,12 @@ const Header = () => {
           font-weight: 600;
           text-transform: uppercase;
           cursor: pointer;
+          padding: 8px 12px;
+          transition: all 0.2s ease;
+        }
+
+        .mobile-menu-button:hover {
+          color: #ef4444;
         }
 
         .mobile-nav {
@@ -106,6 +170,7 @@ const Header = () => {
           padding: 16px;
           grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
           gap: 8px;
+          box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
 
         .mobile-nav.open {
@@ -128,6 +193,11 @@ const Header = () => {
         .mobile-nav-link.active {
           color: #ef4444;
           background-color: rgba(239, 68, 68, 0.1);
+        }
+
+        .mobile-nav-link:hover {
+          background-color: rgba(239, 68, 68, 0.05);
+          color: #ef4444;
         }
 
         /* Mobile Styles */
@@ -154,11 +224,12 @@ const Header = () => {
         <div className="header-container">
           {/* Desktop Navigation */}
           <nav className="nav-desktop">
-            {navItems.map((item, index) => (
+            {navItems.map((item) => (
               <a
-                key={index}
+                key={item.id}
                 href={item.href}
-                className={`nav-link ${item.active ? 'active' : ''}`}
+                className={`nav-link ${activeSection === item.id ? 'active' : ''}`}
+                onClick={(e) => handleNavClick(e, item.href)}
               >
                 {item.name}
               </a>
@@ -174,7 +245,12 @@ const Header = () => {
           </button>
 
           {/* Logo */}
-          <a href="#home" className="logo-link">
+          <a 
+            href="#hero" 
+            className="logo-link"
+            onClick={handleLogoClick}
+            aria-label="Go to home"
+          >
             <img 
               src="/images/CG_1.png" 
               alt="CalcGuard Logo" 
@@ -185,12 +261,12 @@ const Header = () => {
 
         {/* Mobile Navigation */}
         <nav className={`mobile-nav ${mobileMenuOpen ? 'open' : ''}`}>
-          {navItems.map((item, index) => (
+          {navItems.map((item) => (
             <a
-              key={index}
+              key={item.id}
               href={item.href}
-              className={`mobile-nav-link ${item.active ? 'active' : ''}`}
-              onClick={() => setMobileMenuOpen(false)}
+              className={`mobile-nav-link ${activeSection === item.id ? 'active' : ''}`}
+              onClick={(e) => handleNavClick(e, item.href)}
             >
               {item.name}
             </a>

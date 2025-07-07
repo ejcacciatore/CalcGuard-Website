@@ -21,7 +21,7 @@ const ContactDisclaimerSection = () => {
         }
 
         .left-panel {
-          flex: 0 0 66.67%;
+          flex: 0 0 44.00%;
           background-color: #ffffff;
           position: relative;
           display: flex;
@@ -48,7 +48,7 @@ const ContactDisclaimerSection = () => {
         }
 
         .right-panel {
-          flex: 0 0 33.33%;
+          flex: 0 0 66.00%;
           background-color: #ffffff;
           padding: 60px 40px;
           display: flex;
@@ -238,7 +238,7 @@ const ContactDisclaimerSection = () => {
 
         @media (max-width: 768px) {
           .right-panel {
-            padding: 30px 20px;
+            padding: 70px 30px;
           }
 
           .cg-logo {
@@ -248,19 +248,19 @@ const ContactDisclaimerSection = () => {
           }
 
           .company-title {
-            font-size: 28px;
+            font-size: 24px;
           }
 
           .company-subtitle {
-            font-size: 14px;
+            font-size: 12px;
           }
 
           .disclaimer-text {
-            font-size: 10px;
+            font-size: 8px;
           }
 
           .contact-section-title {
-            font-size: 18px;
+            font-size: 14px;
           }
 
           .contact-label {

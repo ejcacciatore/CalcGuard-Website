@@ -428,7 +428,7 @@ const LeadershipSection = () => {
                     className="member-photo"
                   />
                   <div className="member-info">
-                    <h3 className="member-name">ENRICO CACCIATORE, CPO</h3>
+                    <h3 className="member-name">ENRICO CACCIATORE, CPSO</h3>
                     <p className="member-bio">
                       Ex-Voya quant trading and market 
                       structure analytics. Specialist in algorithmic 

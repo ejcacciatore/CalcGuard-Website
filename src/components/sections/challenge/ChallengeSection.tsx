@@ -1,6 +1,20 @@
 'use client'
 
+import { useState } from 'react'
+
 const ChallengeSection = () => {
+  const [isExpanded, setIsExpanded] = useState(false)
+
+  const handleImageClick = () => {
+    setIsExpanded(!isExpanded)
+  }
+
+  const handleOverlayClick = (e: React.MouseEvent) => {
+    if (e.target === e.currentTarget) {
+      setIsExpanded(false)
+    }
+  }
+
   return (
     <>
       <style jsx>{`
@@ -85,6 +99,76 @@ const ChallengeSection = () => {
           height: auto;
           border-radius: 8px;
           box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+          cursor: pointer;
+          transition: all 0.3s ease;
+        }
+
+        .dashboard-image:hover {
+          transform: scale(1.05);
+          box-shadow: 0 25px 50px rgba(0, 0, 0, 0.4);
+        }
+
+        /* Expanded Image Overlay */
+        .image-overlay {
+          position: fixed;
+          top: 0;
+          left: 0;
+          width: 100vw;
+          height: 100vh;
+          background: rgba(0, 0, 0, 0.9);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          z-index: 9999;
+          opacity: 0;
+          visibility: hidden;
+          transition: all 0.3s ease;
+          cursor: pointer;
+        }
+
+        .image-overlay.active {
+          opacity: 1;
+          visibility: visible;
+        }
+
+        .expanded-image {
+          max-width: 90vw;
+          max-height: 90vh;
+          width: auto;
+          height: auto;
+          border-radius: 12px;
+          box-shadow: 0 40px 80px rgba(0, 0, 0, 0.6);
+          transform: scale(0.8);
+          transition: all 0.3s ease;
+          cursor: default;
+        }
+
+        .image-overlay.active .expanded-image {
+          transform: scale(1.6);
+        }
+
+        .close-button {
+          position: absolute;
+          top: 20px;
+          right: 20px;
+          background: rgba(255, 255, 255, 0.2);
+          border: none;
+          color: white;
+          font-size: 24px;
+          width: 40px;
+          height: 40px;
+          border-radius: 50%;
+          cursor: pointer;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          transition: all 0.3s ease;
+          backdrop-filter: blur(10px);
+        }
+
+        .close-button:hover {
+          background: rgba(255, 255, 255, 0.3);
+          transform: scale(1.1);
         }
 
         /* Tablet Styles */
@@ -94,6 +178,10 @@ const ChallengeSection = () => {
           }
           .main-title {
             font-size: 40px;
+          }
+          
+          .image-overlay.active .expanded-image {
+            transform: scale(1.4);
           }
         }
 
@@ -127,6 +215,12 @@ const ChallengeSection = () => {
           .dashboard-image {
             max-width: 100%;
           }
+
+          .image-overlay.active .expanded-image {
+            transform: scale(1.2);
+            max-width: 95vw;
+            max-height: 80vh;
+          }
         }
 
         /* Small Mobile Styles */
@@ -139,6 +233,10 @@ const ChallengeSection = () => {
           }
           .description {
             font-size: 14px;
+          }
+
+          .image-overlay.active .expanded-image {
+            transform: scale(1.6);
           }
         }
       `}</style>
@@ -175,11 +273,32 @@ const ChallengeSection = () => {
           {/* Right Column - Dashboard Screenshot */}
           <div className="right-column">
             <img 
-              src="/images/main_dashboard.png" 
+              src="/images/dashboard_v1.png" 
               alt="CalcGuard Platform Dashboard" 
               className="dashboard-image"
+              onClick={handleImageClick}
             />
           </div>
+        </div>
+
+        {/* Expanded Image Overlay */}
+        <div 
+          className={`image-overlay ${isExpanded ? 'active' : ''}`}
+          onClick={handleOverlayClick}
+        >
+          <button 
+            className="close-button"
+            onClick={() => setIsExpanded(false)}
+            aria-label="Close expanded image"
+          >
+            ×
+          </button>
+          <img 
+            src="/images/dashboard_v1.png" 
+            alt="CalcGuard Platform Dashboard - Expanded View" 
+            className="expanded-image"
+            onClick={(e) => e.stopPropagation()}
+          />
         </div>
       </section>
     </>

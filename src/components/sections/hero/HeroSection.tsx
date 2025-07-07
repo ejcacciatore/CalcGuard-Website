@@ -88,9 +88,7 @@ const HeroSection = () => {
         .hero-container {
           width: 100vw;
           height: 100vh;
-          background-image: url('/images/main_background.png');
-          background-size: cover;
-          background-position: center;
+          background-color: #000000;
           position: relative;
           padding-top: 60px;
           display: flex;
@@ -101,14 +99,14 @@ const HeroSection = () => {
           cursor: none;
         }
 
-        .background-video {
+        .primary-background-video {
           position: absolute;
           top: 0;
           left: 0;
           width: 100%;
           height: 100%;
           object-fit: cover;
-          opacity: 0.4;
+          opacity: 0.8;
           z-index: 1;
           pointer-events: none;
           transition: opacity 0.3s ease;
@@ -121,8 +119,8 @@ const HeroSection = () => {
           border-radius: 50%;
           background: radial-gradient(
             circle,
-            rgba(255, 255, 255, 0.1) 0%,
-            rgba(255, 255, 255, 0.05) 50%,
+            rgba(255, 255, 255, 0.15) 0%,
+            rgba(255, 255, 255, 0.08) 50%,
             transparent 100%
           );
           pointer-events: none;
@@ -145,11 +143,11 @@ const HeroSection = () => {
         }
 
         .hero-container:hover .video-spotlight {
-          opacity: 0.9;
+          opacity: 1;
         }
 
-        .hero-container:hover .background-video {
-          opacity: 0.05;
+        .hero-container:hover .primary-background-video {
+          opacity: 0.3;
         }
 
         .video-overlay {
@@ -160,9 +158,9 @@ const HeroSection = () => {
           height: 100%;
           background: linear-gradient(
             135deg, 
-            rgba(0, 0, 0, 0.2) 0%, 
-            rgba(0, 0, 0, 0.1) 50%, 
-            rgba(0, 0, 0, 0.3) 100%
+            rgba(0, 0, 0, 0.3) 0%, 
+            rgba(0, 0, 0, 0.2) 50%, 
+            rgba(0, 0, 0, 0.4) 100%
           );
           z-index: 2;
         }
@@ -276,13 +274,13 @@ const HeroSection = () => {
           text-transform: uppercase;
           letter-spacing: 0.12em;
           margin-bottom: 6px;
-          text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+          text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
         }
 
         .scroll-wheel {
           width: 26px;
           height: 42px;
-          border: 2.5px solid rgba(255, 255, 255, 0.7);
+          border: 2.5px solid rgba(255, 255, 255, 0.8);
           border-radius: 20px;
           position: relative;
           overflow: hidden;
@@ -292,7 +290,7 @@ const HeroSection = () => {
         .wheel-dot {
           width: 4px;
           height: 8px;
-          background: rgba(255, 255, 255, 0.8);
+          background: rgba(255, 255, 255, 0.9);
           border-radius: 2px;
           position: absolute;
           top: 6px;
@@ -318,7 +316,7 @@ const HeroSection = () => {
         .scroll-arrow {
           width: 24px;
           height: 24px;
-          border: 2px solid rgba(255, 255, 255, 0.6);
+          border: 2px solid rgba(255, 255, 255, 0.7);
           border-radius: 50%;
           display: flex;
           align-items: center;
@@ -330,8 +328,8 @@ const HeroSection = () => {
           content: '';
           width: 6px;
           height: 6px;
-          border-right: 2px solid rgba(255, 255, 255, 0.8);
-          border-bottom: 2px solid rgba(255, 255, 255, 0.8);
+          border-right: 2px solid rgba(255, 255, 255, 0.9);
+          border-bottom: 2px solid rgba(255, 255, 255, 0.9);
           transform: rotate(45deg);
           margin-top: -2px;
         }
@@ -351,13 +349,13 @@ const HeroSection = () => {
         .scroll-line {
           width: 1px;
           height: 30px;
-          background: linear-gradient(to bottom, rgba(255, 255, 255, 0.6), transparent);
+          background: linear-gradient(to bottom, rgba(255, 255, 255, 0.7), transparent);
           animation: pulse 2s infinite;
         }
 
         @keyframes pulse {
           0%, 100% {
-            opacity: 0.6;
+            opacity: 0.7;
           }
           50% {
             opacity: 1;
@@ -593,9 +591,9 @@ const HeroSection = () => {
           '--mouse-y': `${mousePosition.y}px`
         } as React.CSSProperties}
       >
-        {/* Background Video - Low Opacity */}
+        {/* Primary Background Video - Main Background */}
         <video 
-          className="background-video"
+          className="primary-background-video"
           autoPlay 
           muted 
           loop 
@@ -607,7 +605,7 @@ const HeroSection = () => {
           <source src="/images/20250410_2043_Futuristic Data Symphony_remix_01jrh4v3ecewybpzdbsy98hzht_1.mp4" type="video/mp4" />
         </video>
 
-        {/* Mouse Spotlight Video - High Opacity */}
+        {/* Mouse Spotlight Video - Enhanced Version */}
         <video 
           className="video-spotlight"
           autoPlay 

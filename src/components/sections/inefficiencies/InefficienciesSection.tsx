@@ -4,7 +4,7 @@ const InefficienciesSection = () => {
   return (
     <>
       <style jsx>{`
-        /* --- NEW BACKGROUND STYLES START --- */
+        /* --- NEW BACKGROUND STYLES WITH VIDEO --- */
         .inefficiencies-section {
           width: 100vw;
           min-height: 100vh;
@@ -13,19 +13,28 @@ const InefficienciesSection = () => {
           position: relative;
           overflow: hidden;
           background-color: #0A192F; /* Deep navy base color */
-          background-image:
-            radial-gradient(at 15% 85%, hsla(320, 70%, 35%, 0.25) 0px, transparent 50%),
-            radial-gradient(at 80% 20%, hsla(200, 75%, 40%, 0.3) 0px, transparent 50%),
-            radial-gradient(at 50% 50%, hsla(250, 75%, 25%, 0.2) 0px, transparent 50%);
-          animation: subtle-glow 25s ease-in-out infinite;
         }
 
-        @keyframes subtle-glow {
-          0% { background-size: 100% 100%; }
-          50% { background-size: 150% 150%; }
-          100% { background-size: 100% 100%; }
+        .video-background {
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          opacity: 0.3; /* Increased opacity to make video more visible */
+          z-index: 0;
         }
-        /* --- NEW BACKGROUND STYLES END --- */
+
+        .background-overlay {
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          background: rgba(10, 25, 47, 0.7); /* Dark overlay to maintain text readability */
+          z-index: 1;
+        }
 
         .content-wrapper {
           width: 100%;
@@ -36,7 +45,7 @@ const InefficienciesSection = () => {
           grid-template-columns: 25% 75%;
           gap: 10px;
           align-items: start;
-          position: relative; /* Ensure content is on top */
+          position: relative;
           z-index: 2;
         }
 
@@ -52,7 +61,7 @@ const InefficienciesSection = () => {
         .section-subtitle {
           font-family: 'Raleway', sans-serif;
           font-size: 18px;
-          color: #8892b0; /* Updated for dark mode */
+          color: #8892b0;
           margin-bottom: 24px;
           font-weight: 400;
         }
@@ -61,7 +70,7 @@ const InefficienciesSection = () => {
           font-family: 'Montserrat', sans-serif;
           font-size: 36px;
           font-weight: 700;
-          color: #e2e8f0; /* Updated for dark mode */
+          color: #e2e8f0;
           line-height: 1.2;
           margin-bottom: 24px;
           letter-spacing: -0.02em;
@@ -71,14 +80,14 @@ const InefficienciesSection = () => {
           display: inline-block;
           width: 50px;
           height: 4px;
-          background-color: #64ffda; /* Changed to a modern teal */
+          background-color: #64ffda;
           margin-bottom: 24px;
         }
 
         .description {
           font-family: 'Raleway', sans-serif;
           font-size: 15px;
-          color: #a8b2d1; /* Updated for dark mode */
+          color: #a8b2d1;
           line-height: 1.6;
           font-weight: 400;
           margin-bottom: 24px;
@@ -87,7 +96,7 @@ const InefficienciesSection = () => {
         .conclusion {
           font-family: 'Raleway', sans-serif;
           font-size: 15px;
-          color: #ccd6f6; /* Updated for dark mode */
+          color: #ccd6f6;
           line-height: 1.6;
           font-weight: 500;
         }
@@ -112,7 +121,7 @@ const InefficienciesSection = () => {
           cursor: pointer;
           padding: 12px;
           max-width: 190px;
-          background: rgba(30, 41, 59, 0.5); /* Dark, glassy background */
+          background: rgba(30, 41, 59, 0.5);
           border-radius: 12px;
           border: 1px solid rgba(100, 255, 218, 0.1);
           backdrop-filter: blur(4px);
@@ -121,7 +130,7 @@ const InefficienciesSection = () => {
         .feature-item:hover {
           transform: translateY(-10px) scale(1.08);
           z-index: 10;
-          background: rgba(255, 255, 255, 1); /* Becomes white on hover */
+          background: rgba(255, 255, 255, 1);
           border-color: #e2e8f0;
           box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
         }
@@ -134,21 +143,21 @@ const InefficienciesSection = () => {
           text-transform: uppercase;
           letter-spacing: 0.3px;
           line-height: 1.1;
-          color: #ccd6f6; /* Light text for default state */
+          color: #ccd6f6;
           transition: color 0.3s ease;
         }
 
         .feature-item:hover .feature-title,
         .feature-item:hover .feature-description,
         .feature-item:hover .feature-extended {
-          color: #1a1a1a; /* Dark text for hover state */
+          color: #1a1a1a;
         }
 
         .feature-description, .feature-extended {
           font-family: 'Raleway', sans-serif;
           font-size: 9px;
           line-height: 1.2;
-          color: #8892b0; /* Light text for default state */
+          color: #8892b0;
           transition: color 0.3s ease;
         }
 
@@ -232,6 +241,11 @@ const InefficienciesSection = () => {
           }
           .feature-title { font-size: 12px; }
           .feature-description { font-size: 11px; }
+
+          /* Video adjustments for tablet */
+          .video-background {
+            opacity: 0.25;
+          }
         }
 
         @media (max-width: 768px) {
@@ -275,6 +289,11 @@ const InefficienciesSection = () => {
           .feature-6 .feature-icon {
             width: 60px;
             height: 60px;
+          }
+
+          /* Video adjustments for mobile */
+          .video-background {
+            opacity: 0.2;
           }
         }
 
@@ -321,6 +340,11 @@ const InefficienciesSection = () => {
             width: 50px;
             height: 50px;
           }
+
+          /* Video adjustments for small mobile */
+          .video-background {
+            opacity: 0.15;
+          }
         }
 
         @media (max-width: 360px) {
@@ -339,10 +363,35 @@ const InefficienciesSection = () => {
           .feature-description { 
             font-size: 10px;
           }
+
+          /* Video adjustments for very small mobile */
+          .video-background {
+            opacity: 0.1;
+          }
+        }
+
+        /* Performance optimization for mobile video */
+        @media (max-width: 768px) {
+          .video-background {
+            transform: scale(1.1);
+          }
         }
       `}</style>
 
       <section id="inefficiencies" className="inefficiencies-section">
+        {/* Video Background */}
+        <video
+          className="video-background"
+          src="/images/ineffieciencies_vid.mp4"
+          autoPlay
+          loop
+          muted
+          playsInline
+        ></video>
+        
+        {/* Background Overlay */}
+        <div className="background-overlay"></div>
+
         <div className="content-wrapper">
           {/* Left Column - Main Content */}
           <div className="left-column">

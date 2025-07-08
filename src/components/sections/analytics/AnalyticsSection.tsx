@@ -30,6 +30,9 @@ const AnalyticsSection = () => {
   return (
     <>
       <style jsx>{`
+        /* Import Google Fonts */
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500;1,600;1,700&family=Raleway:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,500;1,600&display=swap');
+
         .analytics-wrapper {
           width: 100vw;
           min-height: 100vh;
@@ -69,7 +72,7 @@ const AnalyticsSection = () => {
           font-size: 16px;
           margin-bottom: 16px;
           font-weight: 500;
-          font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+          font-family: 'Raleway', -apple-system, BlinkMacSystemFont, sans-serif;
         }
 
         .main-title {
@@ -78,7 +81,7 @@ const AnalyticsSection = () => {
           line-height: 1.1;
           margin-bottom: 30px;
           color: #1e293b;
-          font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+          font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, sans-serif;
         }
 
         .title-highlight {
@@ -99,7 +102,7 @@ const AnalyticsSection = () => {
           font-size: 16px;
           color: #475569;
           line-height: 1.6;
-          font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+          font-family: 'Raleway', -apple-system, BlinkMacSystemFont, sans-serif;
         }
 
         /* Right Dark Section */
@@ -175,7 +178,7 @@ const AnalyticsSection = () => {
           font-weight: 800;
           color: rgba(225, 29, 72, 0.3);
           margin-bottom: 8px;
-          font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+          font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, sans-serif;
           transition: all 0.4s ease;
         }
 
@@ -190,7 +193,7 @@ const AnalyticsSection = () => {
           font-weight: 700;
           color: inherit;
           margin-bottom: 8px;
-          font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+          font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, sans-serif;
           text-transform: uppercase;
           letter-spacing: 0.5px;
           transition: all 0.4s ease;
@@ -200,7 +203,7 @@ const AnalyticsSection = () => {
           font-size: 12px;
           color: inherit;
           line-height: 1.5;
-          font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+          font-family: 'Raleway', -apple-system, BlinkMacSystemFont, sans-serif;
           transition: all 0.4s ease;
         }
 
@@ -257,7 +260,7 @@ const AnalyticsSection = () => {
           50% { opacity: 0.8; }
         }
 
-        /* Core Sections - Start Very Transparent with Spinning */
+        /* Core Sections */
         .core-section {
           position: absolute;
           width: 60px;
@@ -281,16 +284,12 @@ const AnalyticsSection = () => {
           transform: scale(1.2);
           border-color: rgba(255, 255, 255, 1);
           box-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
-          animation: spinCore 2s linear infinite;
+          animation: spinCoreUnified 2s linear infinite;
         }
 
         @keyframes spinCore {
           0% { transform: rotate(0deg) scale(1.1); }
           100% { transform: rotate(360deg) scale(1.1); }
-        }
-
-        .core-section.unified-glow {
-          animation: spinCoreUnified 2s linear infinite;
         }
 
         @keyframes spinCoreUnified {
@@ -394,7 +393,7 @@ const AnalyticsSection = () => {
           filter: drop-shadow(0 0 4px rgba(225, 29, 72, 0.6));
         }
 
-        /* Unified Intelligence Label - More Interactive */
+        /* Unified Intelligence Label */
         .unified-label {
           position: absolute;
           bottom: 60px;
@@ -405,7 +404,7 @@ const AnalyticsSection = () => {
           border-radius: 10px;
           box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
           border: 1px solid rgba(0, 0, 0, 0.1);
-          font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+          font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, sans-serif;
           text-align: center;
           min-width: 200px;
           cursor: pointer;
@@ -447,6 +446,7 @@ const AnalyticsSection = () => {
           text-transform: uppercase;
           letter-spacing: 0.5px;
           transition: all 0.3s ease;
+          font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, sans-serif;
         }
 
         .unified-label.active .unified-title {
@@ -459,48 +459,12 @@ const AnalyticsSection = () => {
           color: #64748b;
           line-height: 1.4;
           transition: all 0.3s ease;
+          font-family: 'Raleway', -apple-system, BlinkMacSystemFont, sans-serif;
         }
 
         .unified-label.active .unified-subtitle {
           color: #475569;
           font-weight: 500;
-        }
-
-        /* Main Arrow to Core Center */
-        .center-arrow {
-          position: absolute;
-          right: 120px;
-          top: 50%;
-          transform: translateY(-50%);
-          z-index: 15;
-          transition: all 0.4s ease;
-        }
-
-        .center-arrow.unified-active {
-          transform: translateY(-50%) scale(1.1);
-        }
-
-        .center-arrow-line {
-          stroke: #1e293b;
-          stroke-width: 4;
-          fill: none;
-          transition: all 0.4s ease;
-        }
-
-        .center-arrow-line.unified-active {
-          stroke: #000000;
-          stroke-width: 6;
-          filter: drop-shadow(0 0 6px rgba(0, 0, 0, 0.5));
-        }
-
-        .center-arrow-head {
-          fill: #1e293b;
-          transition: all 0.4s ease;
-        }
-
-        .center-arrow-head.unified-active {
-          fill: #000000;
-          filter: drop-shadow(0 0 4px rgba(0, 0, 0, 0.5));
         }
 
         /* Disclaimer */
@@ -512,38 +476,18 @@ const AnalyticsSection = () => {
           color: #94a3b8;
           max-width: 300px;
           line-height: 1.3;
-          font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+          font-family: 'Raleway', -apple-system, BlinkMacSystemFont, sans-serif;
           font-style: italic;
           z-index: 5;
         }
 
-        /* Responsive Design */
-        @media (max-width: 1400px) {
-          .analytics-container {
-            max-width: 1200px;
-          }
-
-          .main-title {
-            font-size: 52px;
-          }
-
-          .sphere {
-            width: 250px;
-            height: 250px;
-          }
-
-          .sphere-container {
-            width: 250px;
-            height: 250px;
-            right: 150px;
-          }
-        }
-
-        @media (max-width: 1200px) {
+        /* MOBILE OPTIMIZATIONS */
+        @media (max-width: 1024px) {
           .analytics-container {
             flex-direction: column;
             background: #ffffff;
-            max-width: 800px;
+            max-width: 900px;
+            min-height: auto;
           }
 
           .left-section,
@@ -551,54 +495,9 @@ const AnalyticsSection = () => {
             width: 100%;
           }
 
-          .right-section {
-            background: linear-gradient(135deg, #2c3e50 0%, #1a252f 100%);
-            min-height: 700px;
-          }
-
-          .analytics-cards {
-            position: relative;
-            left: auto;
-            top: auto;
-            transform: none;
-            flex-direction: row;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 20px;
-            margin-bottom: 40px;
-          }
-
-          .analytics-card {
-            width: 280px;
-          }
-
-          .sphere-container {
-            position: relative;
-            right: auto;
-            top: auto;
-            transform: none;
-            margin: 40px auto;
-          }
-
-          .unified-label {
-            position: relative;
-            bottom: auto;
-            right: auto;
-            margin: 20px auto 0;
-          }
-
-          .center-arrow {
-            display: none;
-          }
-        }
-
-        @media (max-width: 768px) {
-          .analytics-wrapper {
-            padding: 30px 15px;
-          }
-
           .left-section {
-            padding: 50px 30px;
+            padding: 40px 30px;
+            text-align: center;
           }
 
           .main-title {
@@ -606,17 +505,36 @@ const AnalyticsSection = () => {
           }
 
           .right-section {
-            padding: 40px 20px;
+            background: linear-gradient(135deg, #2c3e50 0%, #1a252f 100%);
+            min-height: 600px;
+            padding: 30px 20px;
           }
 
           .analytics-cards {
+            position: relative;
+            left: auto;
+            top: auto;
+            transform: none;
             flex-direction: column;
             align-items: center;
+            gap: 15px;
+            margin-bottom: 30px;
           }
 
           .analytics-card {
             width: 100%;
-            max-width: 320px;
+            max-width: 350px;
+            padding: 20px;
+          }
+
+          .sphere-container {
+            position: relative;
+            right: auto;
+            top: auto;
+            transform: none;
+            margin: 30px auto;
+            width: 200px;
+            height: 200px;
           }
 
           .sphere {
@@ -624,9 +542,216 @@ const AnalyticsSection = () => {
             height: 200px;
           }
 
+          .core-section {
+            width: 40px;
+            height: 40px;
+          }
+
+          .core-01 {
+            top: 15px;
+          }
+
+          .core-02 {
+            bottom: 35px;
+            left: 20px;
+          }
+
+          .core-03 {
+            bottom: 35px;
+            right: 20px;
+          }
+
+          .unified-label {
+            position: relative;
+            bottom: auto;
+            right: auto;
+            margin: 20px auto 0;
+            max-width: 300px;
+          }
+
+          .connections-svg {
+            display: none;
+          }
+        }
+
+        @media (max-width: 768px) {
+          .analytics-wrapper {
+            padding: 20px 10px;
+          }
+
+          .analytics-container {
+            border-radius: 8px;
+            max-width: 100%;
+          }
+
+          .left-section {
+            padding: 30px 20px;
+          }
+
+          .main-title {
+            font-size: 28px;
+            line-height: 1.2;
+          }
+
+          .section-subtitle {
+            font-size: 14px;
+          }
+
+          .description-text {
+            font-size: 14px;
+          }
+
+          .right-section {
+            padding: 25px 15px;
+            min-height: 500px;
+          }
+
+          .analytics-card {
+            max-width: 100%;
+            padding: 16px;
+          }
+
+          .card-title {
+            font-size: 12px;
+          }
+
+          .card-description {
+            font-size: 11px;
+          }
+
           .sphere-container {
-            width: 200px;
-            height: 200px;
+            width: 150px;
+            height: 150px;
+            margin: 20px auto;
+          }
+
+          .sphere {
+            width: 150px;
+            height: 150px;
+          }
+
+          .core-section {
+            width: 30px;
+            height: 30px;
+          }
+
+          .core-01 {
+            top: 10px;
+          }
+
+          .core-02 {
+            bottom: 25px;
+            left: 15px;
+          }
+
+          .core-03 {
+            bottom: 25px;
+            right: 15px;
+          }
+
+          .core-center {
+            width: 20px;
+            height: 20px;
+          }
+
+          .unified-label {
+            padding: 12px 16px;
+            min-width: auto;
+            width: 100%;
+            max-width: 280px;
+          }
+
+          .unified-title {
+            font-size: 12px;
+          }
+
+          .unified-subtitle {
+            font-size: 10px;
+          }
+
+          .disclaimer {
+            position: relative;
+            bottom: auto;
+            right: auto;
+            margin: 15px auto 0;
+            text-align: center;
+            max-width: 100%;
+            font-size: 8px;
+          }
+        }
+
+        @media (max-width: 480px) {
+          .analytics-wrapper {
+            padding: 15px 8px;
+          }
+
+          .left-section {
+            padding: 25px 15px;
+          }
+
+          .main-title {
+            font-size: 24px;
+          }
+
+          .section-subtitle {
+            font-size: 13px;
+          }
+
+          .description-text {
+            font-size: 13px;
+          }
+
+          .right-section {
+            padding: 20px 10px;
+            min-height: 450px;
+          }
+
+          .analytics-card {
+            padding: 14px;
+          }
+
+          .card-number {
+            font-size: 20px;
+          }
+
+          .card-title {
+            font-size: 11px;
+          }
+
+          .card-description {
+            font-size: 10px;
+          }
+
+          .sphere-container {
+            width: 120px;
+            height: 120px;
+          }
+
+          .sphere {
+            width: 120px;
+            height: 120px;
+          }
+
+          .core-section {
+            width: 25px;
+            height: 25px;
+          }
+
+          .core-center {
+            width: 15px;
+            height: 15px;
+          }
+
+          .unified-label {
+            padding: 10px 12px;
+          }
+
+          .unified-title {
+            font-size: 11px;
+          }
+
+          .unified-subtitle {
+            font-size: 9px;
           }
         }
       `}</style>
@@ -654,69 +779,23 @@ const AnalyticsSection = () => {
           <div className="right-section">
             <div className="visualization-area">
               
-              {/* Connection Lines SVG */}
+              {/* Connection Lines SVG - Hidden on Mobile */}
               <svg className="connections-svg" viewBox="0 0 600 500">
                 <defs>
-                  {/* Arrow markers */}
-                  <marker
-                    id="arrow1"
-                    markerWidth="10"
-                    markerHeight="7"
-                    refX="9"
-                    refY="3.5"
-                    orient="auto"
-                  >
-                    <polygon
-                      points="0 0, 10 3.5, 0 7"
-                      className={`arrow-marker ${activeItem === 0 || unifiedActive ? 'active' : ''} ${unifiedActive ? 'unified-glow' : ''}`}
-                    />
+                  <marker id="arrow1" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+                    <polygon points="0 0, 10 3.5, 0 7" className={`arrow-marker ${activeItem === 0 || unifiedActive ? 'active' : ''} ${unifiedActive ? 'unified-glow' : ''}`} />
                   </marker>
-                  <marker
-                    id="arrow2"
-                    markerWidth="10"
-                    markerHeight="7"
-                    refX="9"
-                    refY="3.5"
-                    orient="auto"
-                  >
-                    <polygon
-                      points="0 0, 10 3.5, 0 7"
-                      className={`arrow-marker ${activeItem === 1 || unifiedActive ? 'active' : ''} ${unifiedActive ? 'unified-glow' : ''}`}
-                    />
+                  <marker id="arrow2" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+                    <polygon points="0 0, 10 3.5, 0 7" className={`arrow-marker ${activeItem === 1 || unifiedActive ? 'active' : ''} ${unifiedActive ? 'unified-glow' : ''}`} />
                   </marker>
-                  <marker
-                    id="arrow3"
-                    markerWidth="10"
-                    markerHeight="7"
-                    refX="9"
-                    refY="3.5"
-                    orient="auto"
-                  >
-                    <polygon
-                      points="0 0, 10 3.5, 0 7"
-                      className={`arrow-marker ${activeItem === 2 || unifiedActive ? 'active' : ''} ${unifiedActive ? 'unified-glow' : ''}`}
-                    />
+                  <marker id="arrow3" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+                    <polygon points="0 0, 10 3.5, 0 7" className={`arrow-marker ${activeItem === 2 || unifiedActive ? 'active' : ''} ${unifiedActive ? 'unified-glow' : ''}`} />
                   </marker>
                 </defs>
                 
-                {/* Connection paths */}
-                <path
-                  d="M 240 120 Q 300 140 360 180"
-                  className={`connection-path ${activeItem === 0 || unifiedActive ? 'active' : ''} ${unifiedActive ? 'unified-glow' : ''}`}
-                  markerEnd="url(#arrow1)"
-                />
-                
-                <path
-                  d="M 240 240 L 360 240"
-                  className={`connection-path ${activeItem === 1 || unifiedActive ? 'active' : ''} ${unifiedActive ? 'unified-glow' : ''}`}
-                  markerEnd="url(#arrow2)"
-                />
-                
-                <path
-                  d="M 240 360 Q 300 340 360 300"
-                  className={`connection-path ${activeItem === 2 || unifiedActive ? 'active' : ''} ${unifiedActive ? 'unified-glow' : ''}`}
-                  markerEnd="url(#arrow3)"
-                />
+                <path d="M 240 120 Q 300 140 360 180" className={`connection-path ${activeItem === 0 || unifiedActive ? 'active' : ''} ${unifiedActive ? 'unified-glow' : ''}`} markerEnd="url(#arrow1)" />
+                <path d="M 240 240 L 360 240" className={`connection-path ${activeItem === 1 || unifiedActive ? 'active' : ''} ${unifiedActive ? 'unified-glow' : ''}`} markerEnd="url(#arrow2)" />
+                <path d="M 240 360 Q 300 340 360 300" className={`connection-path ${activeItem === 2 || unifiedActive ? 'active' : ''} ${unifiedActive ? 'unified-glow' : ''}`} markerEnd="url(#arrow3)" />
               </svg>
               
               {/* Analytics Cards */}
@@ -727,6 +806,7 @@ const AnalyticsSection = () => {
                     className={`analytics-card ${activeItem === index ? 'active' : ''} ${unifiedActive ? 'unified-glow' : ''}`}
                     onMouseEnter={() => setActiveItem(index)}
                     onMouseLeave={() => setActiveItem(null)}
+                    onClick={() => setActiveItem(activeItem === index ? null : index)}
                   >
                     <div className="card-number">{item.num}</div>
                     <div className="card-title">{item.title}</div>
@@ -738,17 +818,12 @@ const AnalyticsSection = () => {
               {/* Custom CSS Sphere */}
               <div className="sphere-container">
                 <div className={`sphere ${activeItem !== null ? 'animate' : ''} ${unifiedActive ? 'unified-active' : ''}`}>
-                  {/* Core Sections */}
                   <div className={`core-section core-01 ${activeItem === 0 || unifiedActive ? 'active' : ''} ${unifiedActive ? 'unified-glow' : ''}`}></div>
                   <div className={`core-section core-02 ${activeItem === 1 || unifiedActive ? 'active' : ''} ${unifiedActive ? 'unified-glow' : ''}`}></div>
                   <div className={`core-section core-03 ${activeItem === 2 || unifiedActive ? 'active' : ''} ${unifiedActive ? 'unified-glow' : ''}`}></div>
-                  
-                  {/* Core Center */}
                   <div className={`core-center ${unifiedActive ? 'unified-active' : ''}`}></div>
                 </div>
               </div>
-
-              {/* Arrow to Core Center - REMOVED */}
 
               {/* Unified Intelligence Label */}
               <div 

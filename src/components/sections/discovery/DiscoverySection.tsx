@@ -4,6 +4,9 @@ const DiscoverySection = () => {
   return (
     <>
       <style jsx>{`
+        /* Import Google Fonts */
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500;1,600;1,700&family=Raleway:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,500;1,600&display=swap');
+
         .discovery-section {
           width: 100vw;
           min-height: 100vh;
@@ -38,6 +41,30 @@ const DiscoverySection = () => {
           justify-content: center;
           position: relative;
           z-index: 10;
+          overflow: hidden;
+        }
+
+        /* Video Background for Left Section Only */
+        .left-video-background {
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          opacity: 0.55; /* Increased opacity to make video more visible */
+          z-index: 1;
+        }
+
+        /* Reduced white overlay to let video show through */
+        .left-video-overlay {
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          background: rgba(255, 255, 255, 0.6); /* Reduced opacity to show video */
+          z-index: 2;
         }
 
         .section-subtitle {
@@ -45,7 +72,9 @@ const DiscoverySection = () => {
           font-size: 16px;
           margin-bottom: 16px;
           font-weight: 500;
-          font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+          font-family: 'Raleway', -apple-system, BlinkMacSystemFont, sans-serif;
+          position: relative;
+          z-index: 10;
         }
 
         .main-title {
@@ -54,8 +83,10 @@ const DiscoverySection = () => {
           line-height: 1.1;
           margin-bottom: 40px;
           color: #111827;
-          font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+          font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, sans-serif;
           max-width: 500px;
+          position: relative;
+          z-index: 10;
         }
 
         .accent-line {
@@ -64,6 +95,8 @@ const DiscoverySection = () => {
           background-color: #e95b5b;
           margin-bottom: 40px;
           border-radius: 2px;
+          position: relative;
+          z-index: 10;
         }
 
         .description-paragraph {
@@ -72,7 +105,9 @@ const DiscoverySection = () => {
           line-height: 1.7;
           margin-bottom: 32px;
           max-width: 480px;
-          font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+          font-family: 'Raleway', -apple-system, BlinkMacSystemFont, sans-serif;
+          position: relative;
+          z-index: 10;
         }
 
         .benefits-text {
@@ -80,8 +115,10 @@ const DiscoverySection = () => {
           color: #374151;
           line-height: 1.6;
           max-width: 460px;
-          font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+          font-family: 'Raleway', -apple-system, BlinkMacSystemFont, sans-serif;
           font-weight: 500;
+          position: relative;
+          z-index: 10;
         }
 
         /* Right Dark Section with Charts */
@@ -104,6 +141,7 @@ const DiscoverySection = () => {
           flex-direction: column;
           gap: 8px;
           justify-content: center;
+          z-index: 5;
         }
 
         .chart-image {
@@ -156,11 +194,6 @@ const DiscoverySection = () => {
           pointer-events: none;
         }
 
-        .chart-container {
-          position: relative;
-          z-index: 5;
-        }
-
         /* Responsive Design */
         @media (max-width: 1200px) {
           .discovery-container {
@@ -178,6 +211,15 @@ const DiscoverySection = () => {
 
           .right-section::before {
             display: none;
+          }
+
+          /* Video adjustments for tablet */
+          .left-video-background {
+            opacity: 0.3;
+          }
+
+          .left-video-overlay {
+            background: rgba(255, 255, 255, 0.65);
           }
         }
 
@@ -209,6 +251,16 @@ const DiscoverySection = () => {
           .chart-container {
             gap: 6px;
           }
+
+          /* Video adjustments for mobile */
+          .left-video-background {
+            opacity: 0.15;
+            transform: scale(1.1);
+          }
+
+          .left-video-overlay {
+            background: rgba(255, 255, 255, 0.7);
+          }
         }
 
         @media (max-width: 680px) {
@@ -227,14 +279,70 @@ const DiscoverySection = () => {
           .section-subtitle {
             font-size: 14px;
           }
+
+          /* Video adjustments for small mobile */
+          .left-video-background {
+            opacity: 0.12;
+          }
+
+          .left-video-overlay {
+            background: rgba(255, 255, 255, 0.75);
+          }
+        }
+
+        @media (max-width: 480px) {
+          .left-section {
+            padding: 25px 15px;
+          }
+
+          .main-title {
+            font-size: 22px;
+          }
+
+          .description-paragraph {
+            font-size: 15px;
+          }
+
+          .benefits-text {
+            font-size: 13px;
+          }
+
+          /* Video adjustments for very small mobile */
+          .left-video-background {
+            opacity: 0.4;
+          }
+
+          .left-video-overlay {
+            background: rgba(255, 255, 255, 0.8);
+          }
+        }
+
+        /* Performance optimization for mobile video */
+        @media (max-width: 768px) {
+          .left-video-background {
+            filter: blur(0.5px);
+          }
         }
       `}</style>
 
       <section id="discovery" className="discovery-section">
         <div className="discovery-container">
           
-          {/* Left White Section with Text */}
+          {/* Left White Section with Video Background */}
           <div className="left-section">
+            {/* Video Background for Left Section Only */}
+            <video
+              className="left-video-background"
+              src="images\page6_video.mp4"
+              autoPlay
+              loop
+              muted
+              playsInline
+            ></video>
+            
+            {/* White overlay for text readability */}
+            <div className="left-video-overlay"></div>
+            
             <p className="section-subtitle">Simplify Complexity.</p>
             
             <h2 className="main-title">
@@ -259,7 +367,7 @@ const DiscoverySection = () => {
             <div className="chart-container">
               <div className="top-chart">
                 <img 
-                  src="\images\Picture8_top_chart.png" 
+                  src="/images/Picture8_top_chart.png" 
                   alt="Advanced Data Visualization - Top Chart" 
                   className="chart-image"
                 />

@@ -57,23 +57,15 @@ const Header = () => {
 
   // Handle more info button interactions
   const handleMoreInfoClick = () => {
-    if (!showMoreInfo) {
-      setShowMoreInfo(true)
-    } else {
-      setMoreInfoOpen(!moreInfoOpen)
-    }
+    setMoreInfoOpen(!moreInfoOpen)
   }
 
   const handleMoreInfoHover = () => {
-    if (!showMoreInfo) {
-      setShowMoreInfo(true)
-    }
+    // Optional: you can add hover behavior here if needed
   }
 
   const handleMoreInfoLeave = () => {
-    if (!moreInfoOpen) {
-      setShowMoreInfo(false)
-    }
+    // Optional: you can add leave behavior here if needed
   }
 
   // Update active section based on scroll position
@@ -112,20 +104,19 @@ const Header = () => {
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       const target = event.target as HTMLElement
-      if (!target.closest('.more-info-container')) {
+      if (!target.closest('.more-info-container-fixed')) {
         setMoreInfoOpen(false)
-        setShowMoreInfo(false)
       }
     }
 
-    if (moreInfoOpen || showMoreInfo) {
+    if (moreInfoOpen) {
       document.addEventListener('click', handleClickOutside)
     }
 
     return () => {
       document.removeEventListener('click', handleClickOutside)
     }
-  }, [moreInfoOpen, showMoreInfo])
+  }, [moreInfoOpen])
 
   return (
     <>
@@ -135,13 +126,25 @@ const Header = () => {
           top: 0;
           left: 0;
           right: 0;
-          background-color: rgba(255, 255, 255, 0.95);
-          backdrop-filter: blur(10px);
-          border-bottom: 3px solid white;
+          background-color: rgba(255, 255, 255, 0.85);
+          backdrop-filter: blur(20px);
+          -webkit-backdrop-filter: blur(20px);
+          border-bottom: 1px solid rgba(255, 255, 255, 0.2);
           z-index: 1000;
           padding: 12px 24px;
+          box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
         }
-
+        .header-blur-bar {
+          position: absolute;
+          top: 0;
+          left: 0;
+          right: 0;
+          height: 100%;
+          background: rgba(255,255,255,0.85);
+          backdrop-filter: blur(20px);
+          -webkit-backdrop-filter: blur(20px);
+          z-index: -1;
+        }
         .header-container {
           display: flex;
           justify-content: space-between;
@@ -152,46 +155,51 @@ const Header = () => {
 
         /* Fixed Position More Info Container */
         .more-info-container-fixed {
-          position: fixed;
-          top: 80px;
-          right: 30px;
+          position: relative;
+          top: 0;
+          right: 0;
           z-index: 1002;
           display: flex;
           align-items: center;
+          margin-left: 24px;
+        }
+
+        .hamburger-button {
+          opacity: 1;
         }
 
         .hamburger-button {
           background: none;
           border: none;
           cursor: pointer;
-          padding: 12px;
+          padding: 8px;
           display: flex;
           flex-direction: column;
           justify-content: center;
           align-items: center;
-          gap: 4px;
+          gap: 3px;
           transition: all 0.3s ease;
-          border-radius: 8px;
+          border-radius: 6px;
           position: relative;
-          opacity: 0.2;
+          opacity: 0.25;
         }
 
         .hamburger-button::before {
           content: '';
           position: absolute;
-          top: -6px;
-          left: -6px;
-          right: -6px;
-          bottom: -6px;
-          background: radial-gradient(circle, rgba(239, 68, 68, 0.06) 0%, transparent 70%);
-          border-radius: 12px;
+          top: -4px;
+          left: -4px;
+          right: -4px;
+          bottom: -4px;
+          background: radial-gradient(circle, rgba(239, 68, 68, 0.08) 0%, transparent 70%);
+          border-radius: 10px;
           opacity: 0;
           transition: opacity 0.4s ease;
           z-index: -1;
         }
 
         .hamburger-button:hover {
-          opacity: 0.8;
+          opacity: 0.9;
         }
 
         .hamburger-button:hover::before {
@@ -199,16 +207,15 @@ const Header = () => {
         }
 
         .hamburger-line {
-          width: 20px;
+          width: 18px;
           height: 2px;
-          background-color: rgba(100, 116, 139, 0.3);
+          background-color: #111;
           transition: all 0.3s ease;
           border-radius: 1px;
         }
 
         .hamburger-button:hover .hamburger-line {
-          background-color: rgba(239, 68, 68, 0.7);
-          opacity: 1;
+          background-color: #ef4444;
         }
 
         .more-info-text {
@@ -219,11 +226,12 @@ const Header = () => {
           position: absolute;
           top: 100%;
           right: 0;
-          background-color: rgba(255, 255, 255, 0.95);
-          backdrop-filter: blur(20px);
-          border: 1px solid rgba(239, 68, 68, 0.1);
-          border-radius: 10px;
-          box-shadow: 0 15px 35px rgba(0, 0, 0, 0.12);
+          background-color: rgba(255, 255, 255, 0.9);
+          backdrop-filter: blur(25px);
+          -webkit-backdrop-filter: blur(25px);
+          border: 1px solid rgba(239, 68, 68, 0.15);
+          border-radius: 12px;
+          box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
           padding: 16px 0;
           min-width: 240px;
           z-index: 1003;
@@ -270,13 +278,15 @@ const Header = () => {
         .nav-link {
           color: #64748b;
           text-decoration: none;
-          font-size: 12px;
+          font-size: 10px;
           font-weight: 600;
           text-transform: uppercase;
           letter-spacing: 0.05em;
-          transition: color 0.3s ease;
+          transition: color 0.3s ease, background 0.3s ease;
           cursor: pointer;
           font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, sans-serif;
+          background: rgba(255,255,255,0.85);
+          backdrop-filter: blur(20px);
         }
 
         .nav-link.active {
@@ -285,6 +295,7 @@ const Header = () => {
 
         .nav-link:hover {
           color: #ef4444;
+          background: transparent;
         }
 
         .logo-link {
@@ -299,7 +310,7 @@ const Header = () => {
         }
 
         .logo {
-          height: 32px;
+          height: 40px;
           width: auto;
         }
 
@@ -435,64 +446,8 @@ const Header = () => {
       `}</style>
 
       <header className="header">
+        <div className="header-blur-bar"></div>
         <div className="header-container">
-          {/* Left Section with More Info Button */}
-          <div className="left-section">
-            <div 
-              className="more-info-container"
-              onMouseEnter={handleMoreInfoHover}
-              onMouseLeave={handleMoreInfoLeave}
-            >
-              <button 
-                className="hamburger-button"
-                onClick={handleMoreInfoClick}
-                aria-label="More information menu"
-              >
-                <div className="hamburger-line"></div>
-                <div className="hamburger-line"></div>
-                <div className="hamburger-line"></div>
-              </button>
-              
-              <span className={`more-info-text ${showMoreInfo ? 'show' : ''}`}>
-                More Info
-              </span>
-
-              <div className={`more-info-dropdown ${moreInfoOpen ? 'open' : ''}`}>
-                {moreInfoItems.map((item, index) => (
-                  <a
-                    key={index}
-                    href={item.href}
-                    className="dropdown-item"
-                  >
-                    {item.name}
-                  </a>
-                ))}
-              </div>
-            </div>
-
-            {/* Desktop Navigation */}
-            <nav className="nav-desktop">
-              {navItems.map((item) => (
-                <a
-                  key={item.id}
-                  href={item.href}
-                  className={`nav-link ${activeSection === item.id ? 'active' : ''}`}
-                  onClick={(e) => handleNavClick(e, item.href)}
-                >
-                  {item.name}
-                </a>
-              ))}
-            </nav>
-          </div>
-
-          {/* Mobile Menu Button */}
-          <button 
-            className="mobile-menu-button"
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-          >
-            {mobileMenuOpen ? 'CLOSE' : 'MENU'}
-          </button>
-
           {/* Logo */}
           <a 
             href="#hero" 
@@ -506,6 +461,57 @@ const Header = () => {
               className="logo"
             />
           </a>
+
+          {/* Desktop Navigation */}
+          <nav className="nav-desktop">
+            {navItems.map((item) => (
+              <a
+                key={item.id}
+                href={item.href}
+                className={`nav-link ${activeSection === item.id ? 'active' : ''}`}
+                onClick={(e) => handleNavClick(e, item.href)}
+              >
+                {item.name}
+              </a>
+            ))}
+          </nav>
+
+          {/* Mobile Menu Button */}
+          <button 
+            className="mobile-menu-button"
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+          >
+            {mobileMenuOpen ? 'CLOSE' : 'MENU'}
+          </button>
+
+          {/* More Info Button - Now on the far right */}
+          <div 
+            className="more-info-container-fixed"
+            onMouseEnter={handleMoreInfoHover}
+            onMouseLeave={handleMoreInfoLeave}
+          >
+            <button 
+              className="hamburger-button"
+              onClick={handleMoreInfoClick}
+              aria-label="More information menu"
+            >
+              <div className="hamburger-line"></div>
+              <div className="hamburger-line"></div>
+              <div className="hamburger-line"></div>
+            </button>
+
+            <div className={`more-info-dropdown ${moreInfoOpen ? 'open' : ''}`}>
+              {moreInfoItems.map((item, index) => (
+                <a
+                  key={index}
+                  href={item.href}
+                  className="dropdown-item"
+                >
+                  {item.name}
+                </a>
+              ))}
+            </div>
+          </div>
         </div>
 
         {/* Mobile Navigation */}

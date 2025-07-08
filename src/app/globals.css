@@ -1,9 +1,19 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Raleway:wght@300;400;500;600;700&display=swap');
 
+/* Box-sizing for all elements */
 * {
   box-sizing: border-box;
+}
+
+/* More specific reset - excludes dropdown and navigation elements */
+body, h1, h2, h3, h4, h5, h6, p, ul, ol, li, div.container, main, section, article, aside, header.main-header, footer.main-footer {
   margin: 0;
   padding: 0;
+}
+
+/* Preserve spacing for navigation and dropdown elements */
+nav, nav *, .dropdown, .dropdown *, .more-info-dropdown, .more-info-dropdown * {
+  /* Don't reset margin/padding for navigation elements */
 }
 
 body {
@@ -56,4 +66,16 @@ button {
 /* Smooth scrolling for the entire page */
 html {
   scroll-behavior: smooth;
+}
+
+/* Ensure dropdown elements maintain proper spacing */
+.more-info-dropdown .dropdown-item {
+  margin: 0;
+  padding: 12px 20px;
+}
+
+/* Ensure navigation links maintain proper spacing */
+.nav-link, .mobile-nav-link {
+  margin: 0;
+  padding: inherit;
 }

@@ -244,7 +244,7 @@ const InefficienciesSection = () => {
 
           /* Video adjustments for tablet */
           .video-background {
-            opacity: 0.25;
+            opacity: 0.3;
           }
         }
 
@@ -293,7 +293,7 @@ const InefficienciesSection = () => {
 
           /* Video adjustments for mobile */
           .video-background {
-            opacity: 0.2;
+            opacity: 0.4;
           }
         }
 
@@ -343,7 +343,7 @@ const InefficienciesSection = () => {
 
           /* Video adjustments for small mobile */
           .video-background {
-            opacity: 0.15;
+            opacity: 0.3;
           }
         }
 
@@ -366,7 +366,7 @@ const InefficienciesSection = () => {
 
           /* Video adjustments for very small mobile */
           .video-background {
-            opacity: 0.1;
+            opacity: 0.4;
           }
         }
 

@@ -215,7 +215,7 @@ const DiscoverySection = () => {
 
           /* Video adjustments for tablet */
           .left-video-background {
-            opacity: 0.3;
+            opacity: 0.4;
           }
 
           .left-video-overlay {
@@ -254,7 +254,7 @@ const DiscoverySection = () => {
 
           /* Video adjustments for mobile */
           .left-video-background {
-            opacity: 0.15;
+            opacity: 0.3;
             transform: scale(1.1);
           }
 
@@ -282,7 +282,7 @@ const DiscoverySection = () => {
 
           /* Video adjustments for small mobile */
           .left-video-background {
-            opacity: 0.12;
+            opacity: 0.3;
           }
 
           .left-video-overlay {

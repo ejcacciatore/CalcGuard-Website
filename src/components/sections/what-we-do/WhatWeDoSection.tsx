@@ -330,11 +330,16 @@ const WhatWeDoSection = () => {
           .main-title {
             font-size: 40px;
           }
+
+          /* Hide corner design on tablet to prevent overlap */
+          .corner-design {
+            display: none;
+          }
         }
 
         @media (max-width: 768px) {
           .left-column, .right-column {
-            padding: 40px 24px;
+            padding: 40px 20px;
           }
 
           .main-title {
@@ -364,19 +369,52 @@ const WhatWeDoSection = () => {
           .extended-description {
             font-size: 12px;
           }
+
+          /* Mobile specific adjustments */
+          .left-content {
+            margin-top: 20px;
+            max-width: 100%;
+          }
+
+          .corner-design {
+            display: none;
+          }
+
+          .right-column {
+            padding: 40px 15px;
+          }
+
+          .features-container {
+            gap: 15px;
+          }
+
+          .feature {
+            margin: 0;
+            padding: 16px;
+          }
         }
 
         @media (max-width: 480px) {
           .left-column, .right-column {
-            padding: 32px 16px;
+            padding: 32px 15px;
           }
 
           .main-title {
             font-size: 28px;
+            line-height: 1.2;
+          }
+
+          .subtitle {
+            font-size: 12px;
+          }
+
+          .description {
+            font-size: 14px;
           }
 
           .feature {
-            padding: 16px;
+            padding: 16px 12px;
+            margin: 0;
           }
 
           .feature-title {
@@ -385,6 +423,43 @@ const WhatWeDoSection = () => {
 
           .feature-description, .extended-description {
             font-size: 12px;
+          }
+
+          .feature-header {
+            gap: 10px;
+          }
+
+          .feature-icon {
+            height: 36px;
+          }
+
+          /* Ensure no content goes off screen */
+          .left-content {
+            margin-top: 10px;
+            width: 100%;
+            max-width: 100%;
+          }
+
+          .right-column {
+            padding: 30px 10px;
+            width: 100%;
+            max-width: 100%;
+            overflow: hidden;
+          }
+
+          .features-container {
+            width: 100%;
+            max-width: 100%;
+          }
+
+          .feature {
+            width: 100%;
+            max-width: 100%;
+            box-sizing: border-box;
+          }
+
+          .corner-design {
+            display: none;
           }
         }
       `}</style>

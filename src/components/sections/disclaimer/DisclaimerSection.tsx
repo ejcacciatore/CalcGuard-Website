@@ -50,7 +50,7 @@ const ContactDisclaimerSection = () => {
         .right-panel {
           flex: 0 0 66.00%;
           background-color: #ffffff;
-          padding: 60px 40px;
+          padding: 60px 60px 60px 40px;
           display: flex;
           flex-direction: column;
           justify-content: space-between;
@@ -60,7 +60,7 @@ const ContactDisclaimerSection = () => {
         .cg-logo {
           position: absolute;
           top: 40px;
-          right: 40px;
+          right: 60px;
           width: 80px;
           height: auto;
           opacity: 0.8;
@@ -79,6 +79,7 @@ const ContactDisclaimerSection = () => {
           justify-content: center;
           align-items: center;
           text-align: center;
+          max-width: calc(100% - 60px);
         }
 
         .company-title {
@@ -114,9 +115,11 @@ const ContactDisclaimerSection = () => {
           font-size: 11px;
           font-weight: 400;
           color: #64748b;
-          line-height: 1.5;
+          line-height: 1.6;
           margin-bottom: 40px;
           text-align: justify;
+          max-width: 100%;
+          padding-right: 20px;
         }
 
         .contact-section-title {
@@ -132,19 +135,22 @@ const ContactDisclaimerSection = () => {
         .contact-methods {
           display: flex;
           flex-direction: column;
-          gap: 20px;
+          gap: 16px;
+          width: 100%;
+          max-width: 450px;
         }
 
         .contact-item {
           display: flex;
           align-items: center;
           gap: 20px;
-          padding: 20px;
+          padding: 20px 24px;
           border-radius: 12px;
           transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
           cursor: pointer;
           border: 2px solid transparent;
           background: #ffffff;
+          width: 100%;
         }
 
         .contact-item:hover {
@@ -155,16 +161,16 @@ const ContactDisclaimerSection = () => {
         }
 
         .contact-icon {
-          width: 28px;
-          height: 28px;
+          width: 32px;
+          height: 32px;
           background: #64748b;
-          border-radius: 6px;
+          border-radius: 8px;
           display: flex;
           align-items: center;
           justify-content: center;
           color: white;
           font-size: 14px;
-          font-weight: 500;
+          font-weight: 600;
           flex-shrink: 0;
           transition: all 0.3s ease;
         }
@@ -176,21 +182,25 @@ const ContactDisclaimerSection = () => {
 
         .contact-info {
           flex: 1;
+          text-align: left;
         }
 
         .contact-label {
           font-family: 'Montserrat', sans-serif;
-          font-size: 18px;
+          font-size: 16px;
           font-weight: 700;
           color: #1e293b;
           margin-bottom: 4px;
+          text-transform: uppercase;
+          letter-spacing: 0.5px;
         }
 
         .contact-value {
           font-family: 'Raleway', sans-serif;
-          font-size: 16px;
-          font-weight: 400;
+          font-size: 15px;
+          font-weight: 500;
           color: #64748b;
+          letter-spacing: 0.3px;
         }
 
         .contact-item:hover .contact-value {
@@ -218,12 +228,12 @@ const ContactDisclaimerSection = () => {
 
           .right-panel {
             flex: 1;
-            padding: 40px 30px;
+            padding: 40px 40px 40px 30px;
           }
 
           .cg-logo {
             top: 30px;
-            right: 30px;
+            right: 40px;
             width: 60px;
           }
 
@@ -234,33 +244,42 @@ const ContactDisclaimerSection = () => {
           .company-subtitle {
             font-size: 18px;
           }
+
+          .main-content {
+            max-width: calc(100% - 40px);
+          }
+
+          .disclaimer-text {
+            padding-right: 15px;
+          }
         }
 
         @media (max-width: 768px) {
           .right-panel {
-            padding: 70px 30px;
+            padding: 30px 30px 30px 20px;
           }
 
           .cg-logo {
             top: 20px;
-            right: 20px;
+            right: 30px;
             width: 50px;
           }
 
           .company-title {
-            font-size: 24px;
+            font-size: 28px;
           }
 
           .company-subtitle {
-            font-size: 12px;
+            font-size: 16px;
           }
 
           .disclaimer-text {
-            font-size: 8px;
+            font-size: 10px;
+            padding-right: 10px;
           }
 
           .contact-section-title {
-            font-size: 14px;
+            font-size: 18px;
           }
 
           .contact-label {
@@ -268,6 +287,17 @@ const ContactDisclaimerSection = () => {
           }
 
           .contact-value {
+            font-size: 13px;
+          }
+
+          .contact-item {
+            padding: 16px 20px;
+            gap: 16px;
+          }
+
+          .contact-icon {
+            width: 28px;
+            height: 28px;
             font-size: 12px;
           }
 
@@ -277,6 +307,65 @@ const ContactDisclaimerSection = () => {
 
           .background-video {
             opacity: 0.5;
+          }
+
+          .main-content {
+            max-width: calc(100% - 30px);
+          }
+        }
+
+        @media (max-width: 480px) {
+          .right-panel {
+            padding: 25px 25px 25px 15px;
+          }
+
+          .cg-logo {
+            right: 25px;
+            width: 45px;
+          }
+
+          .company-title {
+            font-size: 24px;
+          }
+
+          .company-subtitle {
+            font-size: 14px;
+          }
+
+          .disclaimer-text {
+            font-size: 9px;
+            padding-right: 8px;
+          }
+
+          .contact-section-title {
+            font-size: 16px;
+          }
+
+          .contact-methods {
+            max-width: 100%;
+          }
+
+          .contact-item {
+            padding: 14px 16px;
+            gap: 14px;
+          }
+
+          .contact-icon {
+            width: 26px;
+            height: 26px;
+            font-size: 11px;
+          }
+
+          .contact-label {
+            font-size: 13px;
+          }
+
+          .contact-value {
+            font-size: 12px;
+          }
+
+          .main-content {
+            max-width: calc(100% - 25px);
           }
         }
       `}</style>
@@ -343,7 +432,7 @@ const ContactDisclaimerSection = () => {
                 className="contact-item"
                 onMouseEnter={() => setHoveredContact('phone')}
                 onMouseLeave={() => setHoveredContact(null)}
-                onClick={() => window.location.href = 'tel:+1-555-0123'}
+                onClick={() => window.location.href = 'tel:+15550123456'}
               >
                 <div className="contact-icon">📞</div>
                 <div className="contact-info">
@@ -361,20 +450,20 @@ const ContactDisclaimerSection = () => {
                 <div className="contact-icon">in</div>
                 <div className="contact-info">
                   <div className="contact-label">LinkedIn</div>
-                  <div className="contact-value">CalcGuard Technologies</div>
+                  <div className="contact-value">@CalcGuard-Technologies</div>
                 </div>
               </div>
 
               <div 
                 className="contact-item"
-                onMouseEnter={() => setHoveredContact('website')}
+                onMouseEnter={() => setHoveredContact('twitter')}
                 onMouseLeave={() => setHoveredContact(null)}
-                onClick={() => window.open('https://calcguard.com', '_blank')}
+                onClick={() => window.open('https://x.com/calcguard', '_blank')}
               >
-                <div className="contact-icon">🌐</div>
+                <div className="contact-icon">𝕏</div>
                 <div className="contact-info">
-                  <div className="contact-label">Website</div>
-                  <div className="contact-value">www.calcguard.com</div>
+                  <div className="contact-label">X / Twitter</div>
+                  <div className="contact-value">@CalcGuard</div>
                 </div>
               </div>
             </div>

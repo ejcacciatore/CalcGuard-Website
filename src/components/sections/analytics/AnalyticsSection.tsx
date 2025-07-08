@@ -483,11 +483,18 @@ const AnalyticsSection = () => {
 
         /* MOBILE OPTIMIZATIONS */
         @media (max-width: 1024px) {
+          .analytics-wrapper {
+            padding: 20px 10px;
+            min-height: auto;
+            align-items: flex-start;
+          }
+
           .analytics-container {
             flex-direction: column;
             background: #ffffff;
             max-width: 900px;
             min-height: auto;
+            height: auto;
           }
 
           .left-section,
@@ -506,12 +513,22 @@ const AnalyticsSection = () => {
 
           .right-section {
             background: linear-gradient(135deg, #2c3e50 0%, #1a252f 100%);
-            min-height: 600px;
+            min-height: auto;
             padding: 30px 20px;
+            position: relative;
+          }
+
+          .visualization-area {
+            position: static;
+            width: 100%;
+            height: auto;
+            min-height: 600px;
+            display: block;
+            padding: 20px 0;
           }
 
           .analytics-cards {
-            position: relative;
+            position: static;
             left: auto;
             top: auto;
             transform: none;
@@ -528,13 +545,14 @@ const AnalyticsSection = () => {
           }
 
           .sphere-container {
-            position: relative;
+            position: static;
             right: auto;
             top: auto;
             transform: none;
             margin: 30px auto;
             width: 200px;
             height: 200px;
+            display: block;
           }
 
           .sphere {
@@ -562,15 +580,26 @@ const AnalyticsSection = () => {
           }
 
           .unified-label {
-            position: relative;
+            position: static;
             bottom: auto;
             right: auto;
             margin: 20px auto 0;
             max-width: 300px;
+            display: block;
           }
 
           .connections-svg {
             display: none;
+          }
+
+          .disclaimer {
+            position: static;
+            bottom: auto;
+            right: auto;
+            margin: 20px auto 0;
+            text-align: center;
+            max-width: 100%;
+            display: block;
           }
         }
 
@@ -603,6 +632,9 @@ const AnalyticsSection = () => {
 
           .right-section {
             padding: 25px 15px;
+          }
+
+          .visualization-area {
             min-height: 500px;
           }
 
@@ -670,9 +702,6 @@ const AnalyticsSection = () => {
           }
 
           .disclaimer {
-            position: relative;
-            bottom: auto;
-            right: auto;
             margin: 15px auto 0;
             text-align: center;
             max-width: 100%;
@@ -703,6 +732,9 @@ const AnalyticsSection = () => {
 
           .right-section {
             padding: 20px 10px;
+          }
+
+          .visualization-area {
             min-height: 450px;
           }
 

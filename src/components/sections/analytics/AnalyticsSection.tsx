@@ -1,10 +1,18 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect, useRef } from 'react'
 
 const AnalyticsSection = () => {
   const [activeItem, setActiveItem] = useState<number | null>(null)
   const [unifiedActive, setUnifiedActive] = useState(false)
+  const [isInView, setIsInView] = useState(false)
+  const [scrollProgress, setScrollProgress] = useState(0)
+  const [timeProgress, setTimeProgress] = useState(0)
+  const [isPaused, setPaused] = useState(false)
+  
+  const sectionRef = useRef<HTMLElement>(null)
+  const animationRef = useRef<number | null>(null)
+  const timeoutRef = useRef<NodeJS.Timeout | null>(null)
 
   const analyticsItems = [
     {
@@ -26,6 +34,132 @@ const AnalyticsSection = () => {
       color: '#10b981'
     }
   ]
+
+  // Auto-progression timing
+  const ITEM_DURATION = 3000 // 3 seconds per item
+  const UNIFIED_DURATION = 4000 // 4 seconds for unified state
+  const TOTAL_CYCLE = analyticsItems.length * ITEM_DURATION + UNIFIED_DURATION
+
+  // Intersection Observer for scroll detection
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setIsInView(entry.isIntersecting)
+        if (entry.isIntersecting) {
+          // Calculate scroll progress within the section
+          const rect = entry.boundingClientRect
+          const windowHeight = window.innerHeight
+          const progress = Math.max(0, Math.min(1, (windowHeight - rect.top) / windowHeight))
+          setScrollProgress(progress)
+        }
+      },
+      { threshold: [0, 0.25, 0.5, 0.75, 1] }
+    )
+
+    if (sectionRef.current) {
+      observer.observe(sectionRef.current)
+    }
+
+    return () => observer.disconnect()
+  }, [])
+
+  // Enhanced scroll progress tracking
+  useEffect(() => {
+    const handleScroll = () => {
+      if (!sectionRef.current || !isInView) return
+
+      const rect = sectionRef.current.getBoundingClientRect()
+      const windowHeight = window.innerHeight
+      const sectionHeight = rect.height
+      
+      // Calculate how much of the section is visible
+      const visibleTop = Math.max(0, -rect.top)
+      const visibleBottom = Math.min(sectionHeight, windowHeight - rect.top)
+      const visibleHeight = Math.max(0, visibleBottom - visibleTop)
+      
+      const progress = Math.min(1, visibleHeight / (sectionHeight * 0.8))
+      setScrollProgress(progress)
+    }
+
+    window.addEventListener('scroll', handleScroll, { passive: true })
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [isInView])
+
+  // Auto-progression animation
+  useEffect(() => {
+    if (!isInView || isPaused) return
+
+    const startTime = Date.now()
+    
+    const animate = () => {
+      const elapsed = Date.now() - startTime
+      const cycleProgress = (elapsed % TOTAL_CYCLE) / TOTAL_CYCLE
+      const timeProgress = Math.min(1, elapsed / TOTAL_CYCLE)
+      
+      setTimeProgress(timeProgress)
+
+      // Determine current state based on time and scroll
+      const combinedProgress = Math.max(scrollProgress * 0.3, cycleProgress)
+      const currentPhase = Math.floor(combinedProgress * 4) // 0-3 phases
+
+      if (currentPhase === 3) {
+        // Unified state
+        setActiveItem(null)
+        setUnifiedActive(true)
+      } else if (currentPhase >= 0 && currentPhase < 3) {
+        // Individual items
+        setActiveItem(currentPhase)
+        setUnifiedActive(false)
+      }
+
+      animationRef.current = requestAnimationFrame(animate)
+    }
+
+    animationRef.current = requestAnimationFrame(animate)
+
+    return () => {
+      if (animationRef.current) {
+        cancelAnimationFrame(animationRef.current)
+      }
+    }
+  }, [isInView, isPaused, scrollProgress])
+
+  // Manual interaction handlers
+  const handleItemInteraction = (index: number) => {
+    setPaused(true)
+    setActiveItem(index)
+    setUnifiedActive(false)
+    
+    // Resume auto-progression after 5 seconds
+    if (timeoutRef.current) clearTimeout(timeoutRef.current)
+    timeoutRef.current = setTimeout(() => {
+      setPaused(false)
+    }, 5000)
+  }
+
+  const handleUnifiedInteraction = () => {
+    setPaused(true)
+    setActiveItem(null)
+    setUnifiedActive(true)
+    
+    // Resume auto-progression after 5 seconds
+    if (timeoutRef.current) clearTimeout(timeoutRef.current)
+    timeoutRef.current = setTimeout(() => {
+      setPaused(false)
+    }, 5000)
+  }
+
+  // Cleanup
+  useEffect(() => {
+    return () => {
+      if (animationRef.current) {
+        cancelAnimationFrame(animationRef.current)
+      }
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current)
+      }
+    }
+  }, [])
 
   return (
     <>
@@ -96,6 +230,11 @@ const AnalyticsSection = () => {
           background: linear-gradient(90deg, #3b82f6, #e11d48);
           margin-bottom: 24px;
           border-radius: 2px;
+          transition: width 0.6s ease;
+        }
+
+        .accent-line.animated {
+          width: 120px;
         }
 
         .description-text {
@@ -153,12 +292,13 @@ const AnalyticsSection = () => {
         }
 
         .analytics-card.active {
-          transform: scale(1.03);
+          transform: scale(1.03) translateX(10px);
           background: rgba(26, 37, 47, 0.95);
           color: rgba(255, 255, 255, 1);
           border-color: #e11d48;
           box-shadow: 0 10px 30px rgba(225, 29, 72, 0.3);
           backdrop-filter: blur(15px);
+          animation: cardPulse 2s infinite;
         }
 
         .analytics-card.unified-glow {
@@ -167,10 +307,38 @@ const AnalyticsSection = () => {
           background: rgba(26, 37, 47, 0.95);
           color: rgba(255, 255, 255, 1);
           backdrop-filter: blur(15px);
+          animation: cardGlow 2s infinite;
         }
 
-        .analytics-card:not(.active):not(.unified-glow) {
+        .analytics-card.auto-active {
+          transform: scale(1.05) translateX(15px);
+          background: rgba(26, 37, 47, 0.95);
+          color: rgba(255, 255, 255, 1);
+          border-color: #e11d48;
+          box-shadow: 0 15px 40px rgba(225, 29, 72, 0.4);
+          backdrop-filter: blur(15px);
+          animation: autoCardAnimation 3s infinite;
+        }
+
+        @keyframes cardPulse {
+          0%, 100% { transform: scale(1.03) translateX(10px); }
+          50% { transform: scale(1.06) translateX(15px); }
+        }
+
+        @keyframes cardGlow {
+          0%, 100% { box-shadow: 0 10px 30px rgba(225, 29, 72, 0.4); }
+          50% { box-shadow: 0 15px 40px rgba(225, 29, 72, 0.6); }
+        }
+
+        @keyframes autoCardAnimation {
+          0%, 100% { transform: scale(1.05) translateX(15px); }
+          33% { transform: scale(1.08) translateX(20px); }
+          66% { transform: scale(1.06) translateX(18px); }
+        }
+
+        .analytics-card:not(.active):not(.unified-glow):not(.auto-active) {
           opacity: 0.15;
+          transition: opacity 0.6s ease;
         }
 
         .card-number {
@@ -183,7 +351,8 @@ const AnalyticsSection = () => {
         }
 
         .analytics-card.active .card-number,
-        .analytics-card.unified-glow .card-number {
+        .analytics-card.unified-glow .card-number,
+        .analytics-card.auto-active .card-number {
           color: #e11d48;
           text-shadow: 0 0 8px rgba(225, 29, 72, 0.4);
         }
@@ -207,7 +376,7 @@ const AnalyticsSection = () => {
           transition: all 0.4s ease;
         }
 
-        /* Custom CSS Sphere */
+        /* Enhanced Sphere Animation */
         .sphere-container {
           position: absolute;
           right: 180px;
@@ -252,15 +421,28 @@ const AnalyticsSection = () => {
             0 0 0 50px rgba(239, 68, 68, 0.3),
             0 0 0 75px rgba(239, 68, 68, 0.2),
             0 30px 60px rgba(0, 0, 0, 0.5);
-          animation: pulse 2s infinite;
+          animation: spherePulse 2s infinite;
         }
 
-        @keyframes pulse {
-          0%, 100% { opacity: 1; }
-          50% { opacity: 0.8; }
+        .sphere.auto-animate {
+          animation: sphereAutoRotate 4s infinite;
+          transform: scale(1.12);
         }
 
-        /* Core Sections */
+        @keyframes spherePulse {
+          0%, 100% { opacity: 1; transform: scale(1.15) rotate(10deg); }
+          50% { opacity: 0.8; transform: scale(1.18) rotate(15deg); }
+        }
+
+        @keyframes sphereAutoRotate {
+          0% { transform: scale(1.12) rotate(0deg); }
+          25% { transform: scale(1.15) rotate(90deg); }
+          50% { transform: scale(1.18) rotate(180deg); }
+          75% { transform: scale(1.15) rotate(270deg); }
+          100% { transform: scale(1.12) rotate(360deg); }
+        }
+
+        /* Enhanced Core Sections */
         .core-section {
           position: absolute;
           width: 60px;
@@ -276,7 +458,7 @@ const AnalyticsSection = () => {
           transform: scale(1.1);
           border-color: rgba(255, 255, 255, 0.8);
           box-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
-          animation: spinCore 3s linear infinite;
+          animation: coreSpinActive 3s linear infinite;
         }
 
         .core-section.unified-glow {
@@ -284,17 +466,30 @@ const AnalyticsSection = () => {
           transform: scale(1.2);
           border-color: rgba(255, 255, 255, 1);
           box-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
-          animation: spinCoreUnified 2s linear infinite;
+          animation: coreSpinUnified 2s linear infinite;
         }
 
-        @keyframes spinCore {
+        .core-section.auto-active {
+          opacity: 1;
+          transform: scale(1.15);
+          border-color: rgba(255, 255, 255, 0.9);
+          box-shadow: 0 0 18px rgba(255, 255, 255, 0.4);
+          animation: coreAutoSpin 4s linear infinite;
+        }
+
+        @keyframes coreSpinActive {
           0% { transform: rotate(0deg) scale(1.1); }
           100% { transform: rotate(360deg) scale(1.1); }
         }
 
-        @keyframes spinCoreUnified {
+        @keyframes coreSpinUnified {
           0% { transform: rotate(0deg) scale(1.2); }
           100% { transform: rotate(360deg) scale(1.2); }
+        }
+
+        @keyframes coreAutoSpin {
+          0% { transform: rotate(0deg) scale(1.15); }
+          100% { transform: rotate(360deg) scale(1.15); }
         }
 
         .core-01 {
@@ -316,7 +511,7 @@ const AnalyticsSection = () => {
           background: radial-gradient(circle, #10b981, #059669);
         }
 
-        /* Core Center */
+        /* Enhanced Core Center */
         .core-center {
           position: absolute;
           top: 50%;
@@ -335,9 +530,28 @@ const AnalyticsSection = () => {
           transform: translate(-50%, -50%) scale(1.8);
           box-shadow: 0 0 25px rgba(255, 255, 255, 0.8);
           opacity: 1;
+          animation: centerPulse 2s infinite;
         }
 
-        /* Connection Lines */
+        .core-center.auto-active {
+          transform: translate(-50%, -50%) scale(1.5);
+          box-shadow: 0 0 20px rgba(255, 255, 255, 0.6);
+          opacity: 0.9;
+          animation: centerAutoAnimation 3s infinite;
+        }
+
+        @keyframes centerPulse {
+          0%, 100% { transform: translate(-50%, -50%) scale(1.8); }
+          50% { transform: translate(-50%, -50%) scale(2.0); }
+        }
+
+        @keyframes centerAutoAnimation {
+          0%, 100% { transform: translate(-50%, -50%) scale(1.5); }
+          33% { transform: translate(-50%, -50%) scale(1.7); }
+          66% { transform: translate(-50%, -50%) scale(1.6); }
+        }
+
+        /* Enhanced Connection Lines */
         .connections-svg {
           position: absolute;
           top: 0;
@@ -371,9 +585,22 @@ const AnalyticsSection = () => {
           animation: lineGlow 2s infinite;
         }
 
+        .connection-path.auto-active {
+          stroke: #e11d48;
+          stroke-width: 3.5;
+          opacity: 0.8;
+          filter: drop-shadow(0 0 8px rgba(225, 29, 72, 0.5));
+          animation: lineAutoGlow 3s infinite;
+        }
+
         @keyframes lineGlow {
-          0%, 100% { opacity: 1; }
-          50% { opacity: 0.6; }
+          0%, 100% { opacity: 1; stroke-width: 4; }
+          50% { opacity: 0.6; stroke-width: 5; }
+        }
+
+        @keyframes lineAutoGlow {
+          0%, 100% { opacity: 0.8; stroke-width: 3.5; }
+          50% { opacity: 0.9; stroke-width: 4; }
         }
 
         .arrow-marker {
@@ -393,7 +620,13 @@ const AnalyticsSection = () => {
           filter: drop-shadow(0 0 4px rgba(225, 29, 72, 0.6));
         }
 
-        /* Unified Intelligence Label */
+        .arrow-marker.auto-active {
+          fill: #e11d48;
+          opacity: 0.8;
+          filter: drop-shadow(0 0 3px rgba(225, 29, 72, 0.5));
+        }
+
+        /* Enhanced Unified Intelligence Label */
         .unified-label {
           position: absolute;
           bottom: 60px;
@@ -425,16 +658,36 @@ const AnalyticsSection = () => {
           border-color: #e11d48;
           box-shadow: 0 25px 50px rgba(225, 29, 72, 0.4);
           background: linear-gradient(135deg, #fef2f2, #ffffff);
-          animation: pulseUnified 2s infinite;
+          animation: labelPulse 2s infinite;
         }
 
-        @keyframes pulseUnified {
+        .unified-label.auto-active {
+          transform: scale(1.1) translateY(-6px);
+          border-color: #e11d48;
+          box-shadow: 0 20px 40px rgba(225, 29, 72, 0.3);
+          background: linear-gradient(135deg, #fef2f2, #ffffff);
+          animation: labelAutoAnimation 3s infinite;
+        }
+
+        @keyframes labelPulse {
           0%, 100% { 
             box-shadow: 0 25px 50px rgba(225, 29, 72, 0.4);
+            transform: scale(1.12) translateY(-8px);
           }
           50% { 
             box-shadow: 0 30px 60px rgba(225, 29, 72, 0.6);
             transform: scale(1.15) translateY(-10px);
+          }
+        }
+
+        @keyframes labelAutoAnimation {
+          0%, 100% { 
+            box-shadow: 0 20px 40px rgba(225, 29, 72, 0.3);
+            transform: scale(1.1) translateY(-6px);
+          }
+          50% { 
+            box-shadow: 0 25px 50px rgba(225, 29, 72, 0.4);
+            transform: scale(1.12) translateY(-8px);
           }
         }
 
@@ -449,7 +702,8 @@ const AnalyticsSection = () => {
           font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, sans-serif;
         }
 
-        .unified-label.active .unified-title {
+        .unified-label.active .unified-title,
+        .unified-label.auto-active .unified-title {
           color: #e11d48;
           text-shadow: 0 0 10px rgba(225, 29, 72, 0.3);
         }
@@ -462,9 +716,31 @@ const AnalyticsSection = () => {
           font-family: 'Raleway', -apple-system, BlinkMacSystemFont, sans-serif;
         }
 
-        .unified-label.active .unified-subtitle {
+        .unified-label.active .unified-subtitle,
+        .unified-label.auto-active .unified-subtitle {
           color: #475569;
           font-weight: 500;
+        }
+
+        /* Progress Indicator */
+        .progress-indicator {
+          position: absolute;
+          bottom: 20px;
+          left: 50%;
+          transform: translateX(-50%);
+          width: 200px;
+          height: 4px;
+          background: rgba(255, 255, 255, 0.2);
+          border-radius: 2px;
+          overflow: hidden;
+          z-index: 25;
+        }
+
+        .progress-bar {
+          height: 100%;
+          background: linear-gradient(90deg, #3b82f6, #e11d48);
+          border-radius: 2px;
+          transition: width 0.3s ease;
         }
 
         /* Disclaimer */
@@ -544,6 +820,11 @@ const AnalyticsSection = () => {
             padding: 20px;
           }
 
+          .analytics-card.active,
+          .analytics-card.auto-active {
+            transform: scale(1.05);
+          }
+
           .sphere-container {
             position: static;
             right: auto;
@@ -590,6 +871,15 @@ const AnalyticsSection = () => {
 
           .connections-svg {
             display: none;
+          }
+
+          .progress-indicator {
+            position: static;
+            bottom: auto;
+            left: auto;
+            transform: none;
+            margin: 20px auto 0;
+            width: 250px;
           }
 
           .disclaimer {
@@ -701,6 +991,10 @@ const AnalyticsSection = () => {
             font-size: 10px;
           }
 
+          .progress-indicator {
+            width: 200px;
+          }
+
           .disclaimer {
             margin: 15px auto 0;
             text-align: center;
@@ -785,10 +1079,53 @@ const AnalyticsSection = () => {
           .unified-subtitle {
             font-size: 9px;
           }
+
+          .progress-indicator {
+            width: 180px;
+          }
+        }
+
+        /* Pause/Play Button */
+        .control-button {
+          position: absolute;
+          top: 20px;
+          right: 20px;
+          background: rgba(255, 255, 255, 0.1);
+          border: 1px solid rgba(255, 255, 255, 0.3);
+          border-radius: 50%;
+          width: 40px;
+          height: 40px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          cursor: pointer;
+          transition: all 0.3s ease;
+          z-index: 30;
+          backdrop-filter: blur(10px);
+        }
+
+        .control-button:hover {
+          background: rgba(255, 255, 255, 0.2);
+          border-color: rgba(255, 255, 255, 0.5);
+          transform: scale(1.1);
+        }
+
+        .control-button svg {
+          width: 16px;
+          height: 16px;
+          fill: rgba(255, 255, 255, 0.8);
+        }
+
+        @media (max-width: 768px) {
+          .control-button {
+            position: static;
+            margin: 0 auto 20px;
+            display: block;
+          }
         }
       `}</style>
 
-      <section id="analytics" className="analytics-wrapper">
+      <section id="analytics" className="analytics-wrapper" ref={sectionRef}>
         <div className="analytics-container">
           
           {/* Left White Section */}
@@ -799,7 +1136,7 @@ const AnalyticsSection = () => {
               UNIFYING THE ANALYTICS <span className="title-highlight">'TRINITY'</span>
             </h2>
             
-            <div className="accent-line"></div>
+            <div className={`accent-line ${isInView ? 'animated' : ''}`}></div>
             
             <p className="description-text">
               Combining these techniques unifies structured data, relationships and adaptive 
@@ -809,25 +1146,66 @@ const AnalyticsSection = () => {
 
           {/* Right Dark Section */}
           <div className="right-section">
+            {/* Control Button */}
+            <button 
+              className="control-button"
+              onClick={() => setPaused(!isPaused)}
+              title={isPaused ? "Resume Animation" : "Pause Animation"}
+            >
+              {isPaused ? (
+                <svg viewBox="0 0 24 24">
+                  <path d="M8 5v14l11-7z"/>
+                </svg>
+              ) : (
+                <svg viewBox="0 0 24 24">
+                  <path d="M6 4h4v16H6zM14 4h4v16h-4z"/>
+                </svg>
+              )}
+            </button>
+
             <div className="visualization-area">
               
               {/* Connection Lines SVG - Hidden on Mobile */}
               <svg className="connections-svg" viewBox="0 0 600 500">
                 <defs>
                   <marker id="arrow1" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
-                    <polygon points="0 0, 10 3.5, 0 7" className={`arrow-marker ${activeItem === 0 || unifiedActive ? 'active' : ''} ${unifiedActive ? 'unified-glow' : ''}`} />
+                    <polygon points="0 0, 10 3.5, 0 7" className={`arrow-marker ${
+                      activeItem === 0 ? 'active' : 
+                      unifiedActive ? 'unified-glow' : 
+                      (isInView && !isPaused) ? 'auto-active' : ''
+                    }`} />
                   </marker>
                   <marker id="arrow2" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
-                    <polygon points="0 0, 10 3.5, 0 7" className={`arrow-marker ${activeItem === 1 || unifiedActive ? 'active' : ''} ${unifiedActive ? 'unified-glow' : ''}`} />
+                    <polygon points="0 0, 10 3.5, 0 7" className={`arrow-marker ${
+                      activeItem === 1 ? 'active' : 
+                      unifiedActive ? 'unified-glow' : 
+                      (isInView && !isPaused) ? 'auto-active' : ''
+                    }`} />
                   </marker>
                   <marker id="arrow3" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
-                    <polygon points="0 0, 10 3.5, 0 7" className={`arrow-marker ${activeItem === 2 || unifiedActive ? 'active' : ''} ${unifiedActive ? 'unified-glow' : ''}`} />
+                    <polygon points="0 0, 10 3.5, 0 7" className={`arrow-marker ${
+                      activeItem === 2 ? 'active' : 
+                      unifiedActive ? 'unified-glow' : 
+                      (isInView && !isPaused) ? 'auto-active' : ''
+                    }`} />
                   </marker>
                 </defs>
                 
-                <path d="M 240 120 Q 300 140 360 180" className={`connection-path ${activeItem === 0 || unifiedActive ? 'active' : ''} ${unifiedActive ? 'unified-glow' : ''}`} markerEnd="url(#arrow1)" />
-                <path d="M 240 240 L 360 240" className={`connection-path ${activeItem === 1 || unifiedActive ? 'active' : ''} ${unifiedActive ? 'unified-glow' : ''}`} markerEnd="url(#arrow2)" />
-                <path d="M 240 360 Q 300 340 360 300" className={`connection-path ${activeItem === 2 || unifiedActive ? 'active' : ''} ${unifiedActive ? 'unified-glow' : ''}`} markerEnd="url(#arrow3)" />
+                <path d="M 240 120 Q 300 140 360 180" className={`connection-path ${
+                  activeItem === 0 ? 'active' : 
+                  unifiedActive ? 'unified-glow' : 
+                  (isInView && !isPaused) ? 'auto-active' : ''
+                }`} markerEnd="url(#arrow1)" />
+                <path d="M 240 240 L 360 240" className={`connection-path ${
+                  activeItem === 1 ? 'active' : 
+                  unifiedActive ? 'unified-glow' : 
+                  (isInView && !isPaused) ? 'auto-active' : ''
+                }`} markerEnd="url(#arrow2)" />
+                <path d="M 240 360 Q 300 340 360 300" className={`connection-path ${
+                  activeItem === 2 ? 'active' : 
+                  unifiedActive ? 'unified-glow' : 
+                  (isInView && !isPaused) ? 'auto-active' : ''
+                }`} markerEnd="url(#arrow3)" />
               </svg>
               
               {/* Analytics Cards */}
@@ -835,10 +1213,17 @@ const AnalyticsSection = () => {
                 {analyticsItems.map((item, index) => (
                   <div
                     key={item.num}
-                    className={`analytics-card ${activeItem === index ? 'active' : ''} ${unifiedActive ? 'unified-glow' : ''}`}
-                    onMouseEnter={() => setActiveItem(index)}
-                    onMouseLeave={() => setActiveItem(null)}
-                    onClick={() => setActiveItem(activeItem === index ? null : index)}
+                    className={`analytics-card ${
+                      activeItem === index ? 'active' : 
+                      unifiedActive ? 'unified-glow' : 
+                      (isInView && !isPaused && activeItem === index) ? 'auto-active' : ''
+                    }`}
+                    onMouseEnter={() => handleItemInteraction(index)}
+                    onMouseLeave={() => {
+                      if (isPaused) return;
+                      setActiveItem(null);
+                    }}
+                    onClick={() => handleItemInteraction(index)}
                   >
                     <div className="card-number">{item.num}</div>
                     <div className="card-title">{item.title}</div>
@@ -847,23 +1232,53 @@ const AnalyticsSection = () => {
                 ))}
               </div>
 
-              {/* Custom CSS Sphere */}
+              {/* Enhanced Sphere */}
               <div className="sphere-container">
-                <div className={`sphere ${activeItem !== null ? 'animate' : ''} ${unifiedActive ? 'unified-active' : ''}`}>
-                  <div className={`core-section core-01 ${activeItem === 0 || unifiedActive ? 'active' : ''} ${unifiedActive ? 'unified-glow' : ''}`}></div>
-                  <div className={`core-section core-02 ${activeItem === 1 || unifiedActive ? 'active' : ''} ${unifiedActive ? 'unified-glow' : ''}`}></div>
-                  <div className={`core-section core-03 ${activeItem === 2 || unifiedActive ? 'active' : ''} ${unifiedActive ? 'unified-glow' : ''}`}></div>
-                  <div className={`core-center ${unifiedActive ? 'unified-active' : ''}`}></div>
+                <div className={`sphere ${
+                  activeItem !== null ? 'animate' : 
+                  unifiedActive ? 'unified-active' : 
+                  (isInView && !isPaused) ? 'auto-animate' : ''
+                }`}>
+                  <div className={`core-section core-01 ${
+                    activeItem === 0 ? 'active' : 
+                    unifiedActive ? 'unified-glow' : 
+                    (isInView && !isPaused) ? 'auto-active' : ''
+                  }`}></div>
+                  <div className={`core-section core-02 ${
+                    activeItem === 1 ? 'active' : 
+                    unifiedActive ? 'unified-glow' : 
+                    (isInView && !isPaused) ? 'auto-active' : ''
+                  }`}></div>
+                  <div className={`core-section core-03 ${
+                    activeItem === 2 ? 'active' : 
+                    unifiedActive ? 'unified-glow' : 
+                    (isInView && !isPaused) ? 'auto-active' : ''
+                  }`}></div>
+                  <div className={`core-center ${
+                    unifiedActive ? 'unified-active' : 
+                    (isInView && !isPaused) ? 'auto-active' : ''
+                  }`}></div>
                 </div>
               </div>
 
-              {/* Unified Intelligence Label */}
+              {/* Enhanced Unified Intelligence Label */}
               <div 
-                className={`unified-label ${unifiedActive ? 'active' : ''}`}
-                onClick={() => setUnifiedActive(!unifiedActive)}
+                className={`unified-label ${
+                  unifiedActive ? 'active' : 
+                  (isInView && !isPaused) ? 'auto-active' : ''
+                }`}
+                onClick={handleUnifiedInteraction}
               >
                 <div className="unified-title">UNIFIED INTELLIGENCE</div>
-                <div className="unified-subtitle">Holistic insight & faster root causes</div>
+                <div className="unified-subtitle">Holistic insight &amp; faster root causes</div>
+              </div>
+
+              {/* Progress Indicator */}
+              <div className="progress-indicator">
+                <div 
+                  className="progress-bar" 
+                  style={{ width: `${Math.max(scrollProgress, timeProgress) * 100}%` }}
+                />
               </div>
             </div>
 

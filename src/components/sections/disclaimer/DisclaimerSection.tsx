@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import Image from 'next/image'
+import Link from 'next/link'
 
 const ContactDisclaimerSection = () => {
   const [hoveredContact, setHoveredContact] = useState<string | null>(null)
@@ -11,467 +12,189 @@ const ContactDisclaimerSection = () => {
       <style jsx>{`
         @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&family=Raleway:wght@300;400;500;600&display=swap');
 
-        .contact-section {
-          width: 100vw;
-          min-height: 100vh;
-          background-color: #ffffff;
-          display: flex;
-          position: relative;
-          overflow: hidden;
-        }
-
-        .left-panel {
-          flex: 0 0 44.00%;
-          background-color: #ffffff;
-          position: relative;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          overflow: hidden;
-        }
-
-        .background-video {
-          position: absolute;
-          top: 0;
-          left: 0;
-          width: 100%;
-          height: 100%;
-          object-fit: cover;
-          opacity: 0.7;
-          z-index: 1;
-        }
-
-        .left-content {
-          position: relative;
-          z-index: 2;
-          padding: 40px;
-        }
-
-        .right-panel {
-          flex: 0 0 66.00%;
-          background-color: #ffffff;
-          padding: 60px 60px 60px 40px;
-          display: flex;
-          flex-direction: column;
-          justify-content: space-between;
-          position: relative;
-        }
-
-        .cg-logo {
-          position: absolute;
-          top: 40px;
-          right: 60px;
-          width: 80px;
-          height: auto;
-          opacity: 0.8;
-          transition: all 0.3s ease;
-        }
-
-        .cg-logo:hover {
-          opacity: 1;
-          transform: scale(1.05);
-        }
-
-        .main-content {
-          flex: 1;
-          display: flex;
-          flex-direction: column;
-          justify-content: center;
-          align-items: center;
-          text-align: center;
-          max-width: calc(100% - 60px);
-        }
-
-        .company-title {
-          font-family: 'Montserrat', sans-serif;
-          font-size: 48px;
-          font-weight: 800;
+        .footer-grid {
+          display: grid;
+          grid-template-columns: 1fr 2fr 2fr 2fr 2fr;
+          gap: 32px;
+          background: #ffffff;
           color: #1e293b;
-          margin-bottom: 8px;
-          line-height: 1.0;
-          letter-spacing: 2px;
-        }
-
-        .company-subtitle {
-          font-family: 'Montserrat', sans-serif;
-          font-size: 24px;
-          font-weight: 600;
-          color: #64748b;
-          margin-bottom: 40px;
-          line-height: 1.1;
-          letter-spacing: 1px;
-        }
-
-        .red-divider {
-          width: 100px;
-          height: 4px;
-          background: linear-gradient(90deg, #ef4444, #dc2626);
-          margin: 0 auto 40px auto;
-          border-radius: 2px;
-        }
-
-        .disclaimer-text {
           font-family: 'Raleway', sans-serif;
-          font-size: 11px;
-          font-weight: 400;
-          color: #64748b;
-          line-height: 1.6;
-          margin-bottom: 40px;
-          text-align: justify;
-          max-width: 100%;
-          padding-right: 20px;
+          font-size: 14px;
+          padding: 60px 60px 40px;
+          border-top: 1px solid #e2e8f0;
         }
 
-        .contact-section-title {
-          font-family: 'Montserrat', sans-serif;
-          font-size: 24px;
-          font-weight: 700;
-          color: #1e293b;
-          margin-bottom: 30px;
-          text-transform: uppercase;
-          letter-spacing: 1px;
-        }
-
-        .contact-methods {
+        .footer-logo {
           display: flex;
           flex-direction: column;
           gap: 16px;
-          width: 100%;
-          max-width: 450px;
+          align-items: flex-start;
         }
 
-        .contact-item {
-          display: flex;
-          align-items: center;
-          gap: 20px;
-          padding: 20px 24px;
-          border-radius: 12px;
-          transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        .footer-logo img {
+          height: 48px;
+          width: auto;
           cursor: pointer;
-          border: 2px solid transparent;
-          background: #ffffff;
-          width: 100%;
         }
 
-        .contact-item:hover {
-          background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
-          border-color: #e2e8f0;
-          transform: translateX(8px);
-          box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
-        }
-
-        .contact-icon {
-          width: 32px;
-          height: 32px;
-          background: #64748b;
-          border-radius: 8px;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          color: white;
-          font-size: 14px;
+        .footer-section-title {
           font-weight: 600;
-          flex-shrink: 0;
-          transition: all 0.3s ease;
-        }
-
-        .contact-item:hover .contact-icon {
-          background: #1e293b;
-          transform: scale(1.1);
-        }
-
-        .contact-info {
-          flex: 1;
-          text-align: left;
-        }
-
-        .contact-label {
           font-family: 'Montserrat', sans-serif;
-          font-size: 16px;
-          font-weight: 700;
-          color: #1e293b;
-          margin-bottom: 4px;
+          font-size: 12px;
           text-transform: uppercase;
-          letter-spacing: 0.5px;
-        }
-
-        .contact-value {
-          font-family: 'Raleway', sans-serif;
-          font-size: 15px;
-          font-weight: 500;
+          letter-spacing: 0.05em;
+          margin-bottom: 12px;
           color: #64748b;
-          letter-spacing: 0.3px;
         }
 
-        .contact-item:hover .contact-value {
+        .footer-link {
           color: #1e293b;
+          margin-bottom: 10px;
+          cursor: pointer;
+          transition: color 0.2s ease;
         }
 
-        .footer-accent {
-          position: absolute;
-          bottom: 0;
-          right: 0;
-          width: 150px;
-          height: 3px;
-          background: linear-gradient(90deg, transparent 0%, #ef4444 50%, #dc2626 100%);
+        .footer-link:hover {
+          color: #ef4444;
         }
 
-        /* Mobile Styles */
+        .footer-bottom {
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+          padding: 20px;
+          font-size: 12px;
+          color: #94a3b8;
+        }
+
+        .social-button {
+          margin: 4px 0;
+          background: none;
+          border: 1px solid #94a3b8;
+          padding: 6px 12px;
+          border-radius: 999px;
+          font-size: 12px;
+          cursor: pointer;
+          transition: all 0.2s ease;
+        }
+
+        .social-button:hover {
+          border-color: #ef4444;
+          color: #ef4444;
+        }
+
+        .page-links-row {
+          width: 100%;
+          background: #f9fafb;
+          padding: 16px 60px;
+          border-top: 1px solid #e2e8f0;
+          display: flex;
+          flex-wrap: wrap;
+          gap: 20px;
+          justify-content: center;
+          font-family: 'Montserrat', sans-serif;
+          font-size: 13px;
+        }
+
+        .page-link {
+          color: #334155;
+          transition: color 0.2s ease;
+        }
+
+        .page-link:hover {
+          color: #ef4444;
+        }
+
         @media (max-width: 1024px) {
-          .contact-section {
-            flex-direction: column;
-          }
-
-          .left-panel {
-            flex: 0 0 40vh;
-          }
-
-          .right-panel {
-            flex: 1;
-            padding: 40px 40px 40px 30px;
-          }
-
-          .cg-logo {
-            top: 30px;
-            right: 40px;
-            width: 60px;
-          }
-
-          .company-title {
-            font-size: 36px;
-          }
-
-          .company-subtitle {
-            font-size: 18px;
-          }
-
-          .main-content {
-            max-width: calc(100% - 40px);
-          }
-
-          .disclaimer-text {
-            padding-right: 15px;
+          .footer-grid {
+            grid-template-columns: 1fr 1fr;
+            padding: 40px 20px;
           }
         }
 
-        @media (max-width: 768px) {
-          .right-panel {
-            padding: 30px 30px 30px 20px;
+        @media (max-width: 640px) {
+          .footer-grid {
+            grid-template-columns: 1fr;
+            padding: 30px 16px;
           }
-
-          .cg-logo {
-            top: 20px;
-            right: 30px;
-            width: 50px;
-          }
-
-          .company-title {
-            font-size: 28px;
-          }
-
-          .company-subtitle {
-            font-size: 16px;
-          }
-
-          .disclaimer-text {
-            font-size: 10px;
-            padding-right: 10px;
-          }
-
-          .contact-section-title {
-            font-size: 18px;
-          }
-
-          .contact-label {
-            font-size: 14px;
-          }
-
-          .contact-value {
-            font-size: 13px;
-          }
-
-          .contact-item {
+          .page-links-row {
             padding: 16px 20px;
-            gap: 16px;
-          }
-
-          .contact-icon {
-            width: 28px;
-            height: 28px;
+            gap: 12px;
             font-size: 12px;
-          }
-
-          .contact-item:hover {
-            transform: translateX(4px);
-          }
-
-          .background-video {
-            opacity: 0.5;
-          }
-
-          .main-content {
-            max-width: calc(100% - 30px);
-          }
-        }
-
-        @media (max-width: 480px) {
-          .right-panel {
-            padding: 25px 25px 25px 15px;
-          }
-
-          .cg-logo {
-            right: 25px;
-            width: 45px;
-          }
-
-          .company-title {
-            font-size: 24px;
-          }
-
-          .company-subtitle {
-            font-size: 14px;
-          }
-
-          .disclaimer-text {
-            font-size: 9px;
-            padding-right: 8px;
-          }
-
-          .contact-section-title {
-            font-size: 16px;
-          }
-
-          .contact-methods {
-            max-width: 100%;
-          }
-
-          .contact-item {
-            padding: 14px 16px;
-            gap: 14px;
-          }
-
-          .contact-icon {
-            width: 26px;
-            height: 26px;
-            font-size: 11px;
-          }
-
-          .contact-label {
-            font-size: 13px;
-          }
-
-          .contact-value {
-            font-size: 12px;
-          }
-
-          .main-content {
-            max-width: calc(100% - 25px);
           }
         }
       `}</style>
 
-      <section id="disclaimer" className="contact-section">
-        {/* Left Panel - Video Background */}
-        <div className="left-panel">
-          <video
-            className="background-video"
-            autoPlay
-            loop
-            muted
-            playsInline
-          >
-            <source src="/images/ejcacciatore_A_sophisticated_fintech_data_visualization_scene_128ca0ed-50ba-4a42-bca0-9fc6ff249fee_2.mp4" type="video/mp4" />
-            Your browser does not support the video tag.
-          </video>
-          <div className="left-content">
-            {/* Clean video background only */}
-          </div>
+      <footer className="footer-grid">
+        <div className="footer-logo">
+          <Image src="/images/CG_1.png" alt="CalcGuard Logo" width={0} height={0} sizes="100vw" style={{ height: '48px', width: 'auto' }} />
+          <div style={{ fontSize: '12px', color: '#94a3b8' }}>© 2025 CalcGuard Technologies Inc.</div>
+          <div className="footer-link">Do Not Sell or Share My Personal Info</div>
+          <div className="footer-link">US  |  UK  |  EU  |  JP</div>
+          <button className="social-button">YOUTUBE</button>
+          <button className="social-button">𝕏</button>
+          <button className="social-button">LINKEDIN</button>
+          <button className="social-button">GITHUB</button>
         </div>
 
-        {/* Right Panel - Content */}
-        <div className="right-panel">
-          <Image
-            src="/images/CG_1.png"
-            alt="CalcGuard Logo"
-            width={80}
-            height={80}
-            className="cg-logo"
-          />
-
-          <div className="main-content">
-            <h2 className="company-title">CALCGUARD</h2>
-            <h3 className="company-subtitle">TECHNOLOGIES</h3>
-            
-            <div className="red-divider"></div>
-
-            <p className="disclaimer-text">
-              THIS DOCUMENT AND THE INFORMATION CONTAINED WITHIN IT ARE PROVIDED IN CONFIDENCE, 
-              FOR THE SOLE PURPOSE OF EXPLORING BUSINESS OPPORTUNITIES BETWEEN THE DISCLOSING PARTY, 
-              CALCGUARD TECHNOLOGIES, INC., AND THE RECEIVING PARTY AND MAY NOT BE DISCLOSED IN ANY WAY 
-              WHATSOEVER TO ANY THIRD PARTY OR USED FOR ANY OTHER PURPOSE WITHOUT THE EXPRESS WRITTEN 
-              CONSENT OF CALCGUARD TECHNOLOGIES, INC.
-            </p>
-
-            <h4 className="contact-section-title">Learn More & Connect</h4>
-
-            <div className="contact-methods">
-              <div 
-                className="contact-item"
-                onMouseEnter={() => setHoveredContact('email')}
-                onMouseLeave={() => setHoveredContact(null)}
-                onClick={() => window.location.href = 'mailto:info@calcguard.com'}
-              >
-                <div className="contact-icon">@</div>
-                <div className="contact-info">
-                  <div className="contact-label">Email</div>
-                  <div className="contact-value">info@calcguard.com</div>
-                </div>
-              </div>
-
-              <div 
-                className="contact-item"
-                onMouseEnter={() => setHoveredContact('phone')}
-                onMouseLeave={() => setHoveredContact(null)}
-                onClick={() => window.location.href = 'tel:+15550123456'}
-              >
-                <div className="contact-icon">📞</div>
-                <div className="contact-info">
-                  <div className="contact-label">Phone</div>
-                  <div className="contact-value">+1 (555) 012-3456</div>
-                </div>
-              </div>
-
-              <div 
-                className="contact-item"
-                onMouseEnter={() => setHoveredContact('linkedin')}
-                onMouseLeave={() => setHoveredContact(null)}
-                onClick={() => window.open('https://linkedin.com/company/calcguard-technologies', '_blank')}
-              >
-                <div className="contact-icon">in</div>
-                <div className="contact-info">
-                  <div className="contact-label">LinkedIn</div>
-                  <div className="contact-value">@CalcGuard-Technologies</div>
-                </div>
-              </div>
-
-              <div 
-                className="contact-item"
-                onMouseEnter={() => setHoveredContact('twitter')}
-                onMouseLeave={() => setHoveredContact(null)}
-                onClick={() => window.open('https://x.com/calcguard', '_blank')}
-              >
-                <div className="contact-icon">𝕏</div>
-                <div className="contact-info">
-                  <div className="contact-label">X / Twitter</div>
-                  <div className="contact-value">@CalcGuard</div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div className="footer-accent"></div>
+        <div>
+          <div className="footer-section-title">Offerings</div>
+          <div className="footer-link">Routing Transparency</div>
+          <div className="footer-link">Trade Surveillance</div>
+          <div className="footer-link">Data Normalization</div>
+          <div className="footer-link">FIX Integrity</div>
+          <div className="footer-link">TCA Pipelines</div>
+          <div className="footer-link">Dark Pool Analysis</div>
         </div>
-      </section>
+
+        <div>
+          <div className="footer-section-title">Industry Impact</div>
+          <div className="footer-link">Asset Managers</div>
+          <div className="footer-link">Execution Desks</div>
+          <div className="footer-link">Compliance Teams</div>
+          <div className="footer-link">Regulators</div>
+          <div className="footer-link">Broker Dealers</div>
+        </div>
+
+        <div>
+          <div className="footer-section-title">Capabilities</div>
+          <div className="footer-link">Intent Recognition</div>
+          <div className="footer-link">Venue Mapping</div>
+          <div className="footer-link">Microstructure AI</div>
+          <div className="footer-link">Real-Time Routing Logs</div>
+          <div className="footer-link">Execution Quality Ranking</div>
+        </div>
+
+        <div>
+          <div className="footer-section-title">Documents</div>
+          <div className="footer-link">Broker Integration</div>
+          <div className="footer-link">IMAC Council</div>
+          <div className="footer-link">Client Login</div>
+          <div className="footer-link">Platform Docs</div>
+          <div className="footer-link">Privacy Policy</div>
+          <div className="footer-link">Terms of Use</div>
+        </div>
+      </footer>
+
+      <div className="page-links-row">
+        <Link href="/#hero" className="page-link">Home</Link>
+        <Link href="/#what-we-do" className="page-link">What We Do</Link>
+        <Link href="/#challenge" className="page-link">Challenge</Link>
+        <Link href="/#platform" className="page-link">Platform</Link>
+        <Link href="/#leadership" className="page-link">Leadership</Link>
+        <Link href="/#inefficiencies" className="page-link">Inefficiencies</Link>
+        <Link href="/#trinity" className="page-link">Trinity</Link>
+        <Link href="/#sphere" className="page-link">Sphere</Link>
+        <Link href="/#edge" className="page-link">Edge</Link>
+        <Link href="/#news" className="page-link">Current News</Link>
+        <Link href="/#blog" className="page-link">Blog</Link>
+        <Link href="/#events" className="page-link">Events</Link>
+      </div>
+
+      <div className="footer-bottom">
+        Empowering Transparent & Secure Markets — CalcGuard.com
+      </div>
     </>
   )
 }

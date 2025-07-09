@@ -89,13 +89,14 @@ const ChallengeSection = () => {
           display: flex;
           align-items: center;
           justify-content: center;
-          padding: 64px;
+          padding: 32px;
           height: 100vh;
+          transform: translateX(-10%);
         }
 
         .dashboard-image {
-          width: 100%;
-          max-width: 600px;
+          width: 130%;
+          max-width: 780px;
           height: auto;
           border-radius: 8px;
           box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
@@ -179,6 +180,15 @@ const ChallengeSection = () => {
           .main-title {
             font-size: 40px;
           }
+
+          .right-column {
+            transform: translateX(-5%);
+          }
+
+          .dashboard-image {
+            width: 120%;
+            max-width: 650px;
+          }
           
           .image-overlay.active .expanded-image {
             transform: scale(1.4);
@@ -202,6 +212,10 @@ const ChallengeSection = () => {
             text-align: center;
           }
 
+          .right-column {
+            transform: none;
+          }
+
           .main-title {
             font-size: 32px;
             margin-bottom: 20px;
@@ -213,6 +227,7 @@ const ChallengeSection = () => {
           }
 
           .dashboard-image {
+            width: 100%;
             max-width: 100%;
           }
 

@@ -35,7 +35,7 @@ const LeadershipSection = () => {
         .column {
           display: flex;
           flex-direction: column;
-          justify-content: space-between;
+          justify-content: flex-start;
           height: 100%;
         }
 
@@ -57,6 +57,16 @@ const LeadershipSection = () => {
           text-align: left;
         }
 
+        .column-title {
+          font-size: 14px;
+          color: #ef4444;
+          text-transform: uppercase;
+          letter-spacing: 0.1em;
+          font-weight: 700;
+          margin-bottom: 40px;
+          font-family: 'Montserrat', sans-serif;
+        }
+
         .team-members {
           display: flex;
           flex-direction: column;
@@ -69,17 +79,39 @@ const LeadershipSection = () => {
           gap: 16px;
           cursor: pointer;
           transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-          padding: 12px;
+          padding: 16px;
           border-radius: 16px;
           position: relative;
           z-index: 1;
+          border: 2px solid transparent;
+        }
+
+        .left-column .team-member {
+          border-color: #ef4444;
+          background: rgba(239, 68, 68, 0.05);
+        }
+
+        .right-column .team-member {
+          border-color: #1e293b;
+          background: rgba(30, 41, 59, 0.05);
         }
 
         .team-member:hover {
           transform: scale(1.08);
           z-index: 10;
           box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .left-column .team-member:hover {
           background: linear-gradient(135deg, #fef7f7 0%, #fff5f5 100%);
+          border-color: #dc2626;
+          box-shadow: 0 20px 40px rgba(239, 68, 68, 0.2);
+        }
+
+        .right-column .team-member:hover {
+          background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+          border-color: #0f172a;
+          box-shadow: 0 20px 40px rgba(30, 41, 59, 0.2);
         }
 
         .left-column .team-member {
@@ -208,49 +240,13 @@ const LeadershipSection = () => {
           font-family: 'Raleway', sans-serif;
         }
 
-        .section-labels {
-          margin-top: 40px;
-          transition: all 0.3s ease;
-        }
-
-        .section-label {
-          font-size: 11px;
-          color: #64748b;
-          text-transform: uppercase;
-          letter-spacing: 0.1em;
-          font-weight: 600;
-          margin-bottom: 12px;
-          transition: all 0.3s ease;
-        }
-
-        .column:hover .section-label {
-          color: #ef4444;
-          font-size: 12px;
-        }
-
-        .leadership-logo {
-          max-width: 150px;
-          height: auto;
-          opacity: 0.8;
-          transition: all 0.3s ease;
-        }
-
-        .column:hover .leadership-logo {
-          opacity: 1;
-          transform: scale(1.05);
-        }
-
         /* Expansion indicator */
-        .expansion-indicator {
-          position: absolute;
-          bottom: -2px;
-          left: 50%;
-          transform: translateX(-50%);
-          width: 0;
-          height: 3px;
+        .left-column .expansion-indicator {
           background: linear-gradient(90deg, #ef4444, #dc2626);
-          border-radius: 2px;
-          transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .right-column .expansion-indicator {
+          background: linear-gradient(90deg, #1e293b, #0f172a);
         }
 
         .team-member:hover .expansion-indicator {
@@ -265,11 +261,18 @@ const LeadershipSection = () => {
           left: 0;
           right: 0;
           bottom: 0;
-          background: linear-gradient(135deg, rgba(239, 68, 68, 0.05) 0%, rgba(220, 38, 38, 0.05) 100%);
           border-radius: 16px;
           opacity: 0;
           transition: opacity 0.3s ease;
           z-index: -1;
+        }
+
+        .left-column .team-member::before {
+          background: linear-gradient(135deg, rgba(239, 68, 68, 0.08) 0%, rgba(220, 38, 38, 0.08) 100%);
+        }
+
+        .right-column .team-member::before {
+          background: linear-gradient(135deg, rgba(30, 41, 59, 0.08) 0%, rgba(15, 23, 42, 0.08) 100%);
         }
 
         .team-member:hover::before {
@@ -357,6 +360,8 @@ const LeadershipSection = () => {
             
             {/* Left Column: CalcGuard Leaders */}
             <div className="column left-column">
+              <h3 className="column-title">CalcGuard Leaders</h3>
+              
               <div className="team-members">
                 
                 <div 
@@ -446,15 +451,6 @@ const LeadershipSection = () => {
                   <div className="expansion-indicator"></div>
                 </div>
               </div>
-
-              <div className="section-labels">
-                <div className="section-label">CalcGuard Leaders</div>
-                <img 
-                  src="/images/CG_Leadership.png" 
-                  alt="CalcGuard Leadership" 
-                  className="leadership-logo"
-                />
-              </div>
             </div>
 
             {/* Center Column: Main Text */}
@@ -487,6 +483,8 @@ const LeadershipSection = () => {
 
             {/* Right Column: Industry Advisors */}
             <div className="column right-column">
+              <h3 className="column-title">Industry Advisors</h3>
+              
               <div className="team-members">
                 
                 <div 
@@ -575,15 +573,6 @@ const LeadershipSection = () => {
                   </div>
                   <div className="expansion-indicator"></div>
                 </div>
-              </div>
-
-              <div className="section-labels">
-                <div className="section-label">Industry Advisors</div>
-                <img 
-                  src="/images/Industry_Leadership.png" 
-                  alt="Industry Leadership" 
-                  className="leadership-logo"
-                />
               </div>
             </div>
 

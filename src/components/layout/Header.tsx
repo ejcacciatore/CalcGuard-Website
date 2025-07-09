@@ -1,122 +1,56 @@
 'use client'
 
 import { useState, useEffect } from 'react'
+import Link from 'next/link'
+import { Menu, Search } from 'lucide-react'
+import { useScrollDirection } from '@/lib/hooks/useScrollDirection'
+import HamburgerOverlay from '@/components/layout/HamburgerOverlay'
+import { useRouter, usePathname } from 'next/navigation'
+
+const lightSections = ['what-we-do', 'platform', 'leadership']
 
 const Header = () => {
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  const [menuOpen, setMenuOpen] = useState(false)
   const [activeSection, setActiveSection] = useState('hero')
-  const [moreInfoOpen, setMoreInfoOpen] = useState(false)
-  const [showMoreInfo, setShowMoreInfo] = useState(false)
-  
-  const navItems = [
-    { name: 'HOME', href: '#hero', id: 'hero' },
-    { name: 'WHAT WE DO', href: '#what-we-do', id: 'what-we-do' },
-    { name: 'CHALLENGE', href: '#challenge', id: 'challenge' },
-    { name: 'PLATFORM', href: '#platform', id: 'platform' },
-    { name: 'INEFFICIENCIES', href: '#inefficiencies', id: 'inefficiencies' },
-    { name: 'TRINITY', href: '#trinity', id: 'trinity' },
-    { name: 'EVIDENCE', href: '#evidence', id: 'evidence' },
-    { name: 'DISCOVERY', href: '#discovery', id: 'discovery' },
-    { name: 'ANALYTICS', href: '#analytics', id: 'analytics' },
-    { name: 'AI', href: '#ai-barriers', id: 'ai-barriers' },
-    { name: 'EDGE', href: '#competitive-edge', id: 'competitive-edge' },
-    { name: 'LEADERSHIP', href: '#leadership', id: 'leadership' },
-    { name: 'DISCLAIMER', href: '#disclaimer', id: 'disclaimer' }
-  ]
+  const scrollDirection = useScrollDirection()
+  const router = useRouter()
+  const pathname = usePathname()
 
-  const moreInfoItems = [
-    { name: 'LOGIN', href: '/login' },
-    { name: 'NEWS', href: '/news' },
-    { name: 'BLOG', href: '/blog' },
-    { name: 'IMAC', href: '/imac' },
-    { name: 'BROKER INTEGRATION DOCS', href: '/broker-docs' }
-  ]
+  const isLightBackground = lightSections.includes(activeSection)
 
-  // Handle smooth scrolling
-  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
-    e.preventDefault()
-    const targetId = href.replace('#', '')
-    const targetElement = document.getElementById(targetId)
-    
-    if (targetElement) {
-      targetElement.scrollIntoView({ behavior: 'smooth' })
-    } else if (targetId === 'hero') {
-      // If hero section doesn't exist with ID, scroll to top
-      window.scrollTo({ top: 0, behavior: 'smooth' })
+  const scrollToTop = () => {
+    if (pathname === '/') {
+      const el = document.getElementById('hero')
+      if (el) {
+        el.scrollIntoView({ behavior: 'smooth' })
+      } else {
+        window.scrollTo({ top: 0, behavior: 'smooth' })
+      }
+    } else {
+      router.push('/')
     }
-    
-    // Close mobile menu if open
-    setMobileMenuOpen(false)
   }
 
-  // Handle logo click - always go to top/hero
-  const handleLogoClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
-    e.preventDefault()
-    window.scrollTo({ top: 0, behavior: 'smooth' })
-  }
-
-  // Handle more info button interactions
-  const handleMoreInfoClick = () => {
-    setMoreInfoOpen(!moreInfoOpen)
-  }
-
-  const handleMoreInfoHover = () => {
-    // Optional: you can add hover behavior here if needed
-  }
-
-  const handleMoreInfoLeave = () => {
-    // Optional: you can add leave behavior here if needed
-  }
-
-  // Update active section based on scroll position
   useEffect(() => {
-    const handleScroll = () => {
-      const sections = navItems.map(item => ({
-        id: item.id,
-        element: document.getElementById(item.id)
-      })).filter(section => section.element)
+    const sections = ['hero', 'what-we-do', 'challenge', 'platform', 'leadership', 'disclaimer']
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setActiveSection(entry.target.id)
+          }
+        })
+      },
+      { threshold: 0.6 }
+    )
 
-      const scrollPosition = window.scrollY + 100
+    sections.forEach((id) => {
+      const el = document.getElementById(id)
+      if (el) observer.observe(el)
+    })
 
-      // If at the very top, set HOME as active
-      if (window.scrollY < 50) {
-        setActiveSection('hero')
-        return
-      }
-
-      // Find the current section
-      for (let i = sections.length - 1; i >= 0; i--) {
-        const section = sections[i]
-        if (section.element && section.element.offsetTop <= scrollPosition) {
-          setActiveSection(section.id)
-          break
-        }
-      }
-    }
-
-    window.addEventListener('scroll', handleScroll)
-    handleScroll() // Call once to set initial state
-
-    return () => window.removeEventListener('scroll', handleScroll)
+    return () => observer.disconnect()
   }, [])
-
-  // Close dropdown when clicking outside
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      const target = event.target as HTMLElement
-      if (!target.closest('.more-info-container-fixed')) {
-        setMoreInfoOpen(false)
-      }
-    }
-
-    if (moreInfoOpen) {
-      document.addEventListener('click', handleClickOutside)
-    }
-
-    return () => {
-      document.removeEventListener('click', handleClickOutside)
-    }
-  }, [moreInfoOpen])
 
   return (
     <>
@@ -125,409 +59,158 @@ const Header = () => {
           position: fixed;
           top: 0;
           left: 0;
-          right: 0;
-          background-color: rgba(255, 255, 255, 0.85);
-          backdrop-filter: blur(20px);
-          -webkit-backdrop-filter: blur(20px);
-          border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+          width: 100%;
           z-index: 1000;
-          padding: 12px 24px;
-          box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-        }
-        .header-blur-bar {
-          position: absolute;
-          top: 0;
-          left: 0;
-          right: 0;
-          height: 100%;
-          background: rgba(255,255,255,0.85);
-          backdrop-filter: blur(20px);
-          -webkit-backdrop-filter: blur(20px);
-          z-index: -1;
-        }
-        .header-container {
+          background: rgba(255, 255, 255, 0.005);
+          backdrop-filter: saturate(150%) blur(10px);
+          -webkit-backdrop-filter: saturate(150%) blur(5px);
+          border-bottom: 1px solid rgba(255, 255, 255, 0.004);
+          padding: 3px 17px;
           display: flex;
           justify-content: space-between;
           align-items: center;
-          max-width: 1400px;
-          margin: 0 auto;
+          transform: translateY(0);
+          transition: transform 0.3s ease, background 0.3s ease;
         }
 
-        /* Fixed Position More Info Container */
-        .more-info-container-fixed {
-          position: relative;
-          top: 0;
-          right: 0;
-          z-index: 1002;
-          display: flex;
-          align-items: center;
-          margin-left: 24px;
+        .header.hide {
+          transform: translateY(-100%);
         }
 
-        .hamburger-button {
-          opacity: 1;
+        .dark-header .logo-text,
+        .dark-header .icon-button,
+        .dark-header .get-started {
+          color: #111 !important;
         }
 
-        .hamburger-button {
-          background: none;
-          border: none;
-          cursor: pointer;
-          padding: 8px;
+        .dark-header .logo-img {
+          filter: brightness(0);
+        }
+
+        .logo-block {
           display: flex;
           flex-direction: column;
-          justify-content: center;
-          align-items: center;
-          gap: 3px;
-          transition: all 0.3s ease;
-          border-radius: 6px;
-          position: relative;
-          opacity: 0.25;
-        }
-
-        .hamburger-button::before {
-          content: '';
-          position: absolute;
-          top: -4px;
-          left: -4px;
-          right: -4px;
-          bottom: -4px;
-          background: radial-gradient(circle, rgba(239, 68, 68, 0.08) 0%, transparent 70%);
-          border-radius: 10px;
-          opacity: 0;
-          transition: opacity 0.4s ease;
-          z-index: -1;
-        }
-
-        .hamburger-button:hover {
-          opacity: 0.9;
-        }
-
-        .hamburger-button:hover::before {
-          opacity: 1;
-        }
-
-        .hamburger-line {
-          width: 18px;
-          height: 2px;
-          background-color: #111;
-          transition: all 0.3s ease;
-          border-radius: 1px;
-        }
-
-        .hamburger-button:hover .hamburger-line {
-          background-color: #ef4444;
-        }
-
-        .more-info-text {
-          display: none;
-        }
-
-        .more-info-dropdown {
-          position: absolute;
-          top: 100%;
-          right: 0;
-          background-color: rgba(255, 255, 255, 0.9);
-          backdrop-filter: blur(25px);
-          -webkit-backdrop-filter: blur(25px);
-          border: 1px solid rgba(239, 68, 68, 0.15);
-          border-radius: 12px;
-          box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
-          padding: 16px 0;
-          min-width: 240px;
-          z-index: 1003;
-          opacity: 0;
-          visibility: hidden;
-          transform: translateY(-15px) translateX(10px);
-          transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-          margin-top: 12px;
-        }
-
-        .more-info-dropdown.open {
-          opacity: 1;
-          visibility: visible;
-          transform: translateY(0) translateX(0);
-        }
-
-        .dropdown-item {
-          display: block;
-          padding: 14px 24px;
-          color: #64748b;
-          text-decoration: none;
-          font-size: 12px;
-          font-weight: 600;
-          text-transform: uppercase;
-          letter-spacing: 0.05em;
-          transition: all 0.3s ease;
-          font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, sans-serif;
-          border-left: 3px solid transparent;
-        }
-
-        .dropdown-item:hover {
-          background-color: rgba(239, 68, 68, 0.04);
-          color: #ef4444;
-          border-left-color: #ef4444;
-          transform: translateX(6px);
-        }
-
-        .nav-desktop {
-          display: flex;
-          gap: 24px;
-          flex-wrap: wrap;
-        }
-
-        .nav-link {
-          color: #64748b;
-          text-decoration: none;
-          font-size: 10px;
-          font-weight: 600;
-          text-transform: uppercase;
-          letter-spacing: 0.05em;
-          transition: color 0.3s ease, background 0.3s ease;
+          align-items: flex-start;
           cursor: pointer;
-          font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, sans-serif;
-          background: rgba(255,255,255,0.85);
-          backdrop-filter: blur(20px);
+          transition: transform 0.3s ease;
         }
 
-        .nav-link.active {
-          color: #ef4444;
+        .logo-block:hover {
+          transform: scale(1.04);
         }
 
-        .nav-link:hover {
-          color: #ef4444;
-          background: transparent;
+        .logo-img {
+          height: 30px;
+          transition: filter 0.3s ease;
         }
 
-        .logo-link {
-          cursor: pointer;
-          transition: transform 0.2s ease;
+        .logo-text {
+          font-family: 'Montserrat', sans-serif;
+          font-size: 0.72rem;
+          font-weight: 450;
+          text-transform: uppercase;
+          letter-spacing: 0.04em;
+          color: #ffffff;
+          line-height: 1.1;
+          margin-top: 2px;
+          transition: color 0.3s ease;
+        }
+
+        .actions {
           display: flex;
           align-items: center;
+          gap: 6px;
         }
 
-        .logo-link:hover {
-          transform: scale(1.05);
-        }
-
-        .logo {
-          height: 40px;
-          width: auto;
-        }
-
-        .mobile-menu-button {
-          display: none;
-          background: none;
+        .icon-button {
+          background: #ffffff;
           border: none;
-          color: #64748b;
-          font-size: 14px;
-          font-weight: 600;
-          text-transform: uppercase;
+          border-radius: 2px;
+          color: #111;
           cursor: pointer;
-          padding: 8px 12px;
-          transition: all 0.2s ease;
-          font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, sans-serif;
+          padding: 4px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          transition: opacity 0.2s ease;
+          width: 34px;
+          height: 34px;
         }
 
-        .mobile-menu-button:hover {
-          color: #ef4444;
+        .icon-button:hover {
+          opacity: 0.85;
         }
 
-        .mobile-nav {
-          display: none;
-          position: absolute;
-          top: 100%;
-          left: 0;
-          right: 0;
-          background-color: rgba(255, 255, 255, 0.98);
-          backdrop-filter: blur(10px);
-          border-bottom: 1px solid rgba(0,0,0,0.1);
-          padding: 16px;
-          grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-          gap: 8px;
-          box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        .get-started {
+          font-family: 'Montserrat', sans-serif;
+          font-size: 0.75rem;
+          font-weight: 500;
+          background: #ffffff;
+          color: #111;
+          border: none;
+          padding: 6px 16px;
+          border-radius: 2px;
+          cursor: pointer;
+          transition: background 0.2s ease;
         }
 
-        .mobile-nav.open {
-          display: grid;
+        .get-started:hover {
+          background: #f1f1f1;
         }
 
-        .mobile-nav-link {
-          color: #64748b;
-          text-decoration: none;
-          font-size: 10px;
-          font-weight: 600;
-          text-transform: uppercase;
-          letter-spacing: 0.05em;
-          padding: 8px;
-          text-align: center;
-          border-radius: 4px;
-          transition: all 0.2s ease;
-          font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, sans-serif;
-        }
-
-        .mobile-nav-link.active {
-          color: #ef4444;
-          background-color: rgba(239, 68, 68, 0.1);
-        }
-
-        .mobile-nav-link:hover {
-          background-color: rgba(239, 68, 68, 0.05);
-          color: #ef4444;
-        }
-
-        /* Mobile Styles */
         @media (max-width: 768px) {
           .header {
-            padding: 8px 16px;
+            padding: 6px 14px;
           }
-          
-          .nav-desktop {
-            display: none;
-          }
-          
-          .mobile-menu-button {
-            display: block;
-          }
-          
-          .logo {
+
+          .logo-img {
             height: 24px;
           }
 
-          .more-info-container-fixed {
-            top: 60px;
-            right: 20px;
+          .logo-text {
+            font-size: 0.7rem;
           }
 
-          .hamburger-button {
-            padding: 6px;
+          .get-started {
+            padding: 5px 12px;
+            font-size: 0.7rem;
           }
 
-          .hamburger-line {
-            width: 14px;
-          }
-
-          .more-info-dropdown {
-            min-width: 200px;
-          }
-
-          .more-info-text {
-            font-size: 8px;
-            margin-left: 4px;
-          }
-
-          .dropdown-item {
-            font-size: 10px;
-            padding: 10px 16px;
-          }
-        }
-
-        @media (max-width: 480px) {
-          .more-info-container-fixed {
-            top: 55px;
-            right: 15px;
-          }
-
-          .more-info-dropdown {
-            min-width: 180px;
-          }
-
-          .hamburger-line {
-            width: 12px;
-          }
-
-          .hamburger-button {
-            padding: 4px;
-          }
-
-          .more-info-text {
-            font-size: 7px;
+          .icon-button {
+            width: 30px;
+            height: 30px;
           }
         }
       `}</style>
 
-      <header className="header">
-        <div className="header-blur-bar"></div>
-        <div className="header-container">
-          {/* Logo */}
-          <a 
-            href="#hero" 
-            className="logo-link"
-            onClick={handleLogoClick}
-            aria-label="Go to home"
-          >
-            <img 
-              src="/images/CG_1.png" 
-              alt="CalcGuard Logo" 
-              className="logo"
-            />
-          </a>
-
-          {/* Desktop Navigation */}
-          <nav className="nav-desktop">
-            {navItems.map((item) => (
-              <a
-                key={item.id}
-                href={item.href}
-                className={`nav-link ${activeSection === item.id ? 'active' : ''}`}
-                onClick={(e) => handleNavClick(e, item.href)}
-              >
-                {item.name}
-              </a>
-            ))}
-          </nav>
-
-          {/* Mobile Menu Button */}
-          <button 
-            className="mobile-menu-button"
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-          >
-            {mobileMenuOpen ? 'CLOSE' : 'MENU'}
-          </button>
-
-          {/* More Info Button - Now on the far right */}
-          <div 
-            className="more-info-container-fixed"
-            onMouseEnter={handleMoreInfoHover}
-            onMouseLeave={handleMoreInfoLeave}
-          >
-            <button 
-              className="hamburger-button"
-              onClick={handleMoreInfoClick}
-              aria-label="More information menu"
-            >
-              <div className="hamburger-line"></div>
-              <div className="hamburger-line"></div>
-              <div className="hamburger-line"></div>
-            </button>
-
-            <div className={`more-info-dropdown ${moreInfoOpen ? 'open' : ''}`}>
-              {moreInfoItems.map((item, index) => (
-                <a
-                  key={index}
-                  href={item.href}
-                  className="dropdown-item"
-                >
-                  {item.name}
-                </a>
-              ))}
-            </div>
-          </div>
+      <header
+        className={`header ${scrollDirection === 'down' ? 'hide' : ''} ${
+          isLightBackground ? 'dark-header' : ''
+        }`}
+      >
+        <div className="logo-block" onClick={scrollToTop}>
+          <img src="/images/CG_1.png" alt="CG Logo" className="logo-img" />
+          <span className="logo-text">
+            CALCGUARD<sup>®</sup>
+            <br />
+            TECHNOLOGIES
+          </span>
         </div>
 
-        {/* Mobile Navigation */}
-        <nav className={`mobile-nav ${mobileMenuOpen ? 'open' : ''}`}>
-          {navItems.map((item) => (
-            <a
-              key={item.id}
-              href={item.href}
-              className={`mobile-nav-link ${activeSection === item.id ? 'active' : ''}`}
-              onClick={(e) => handleNavClick(e, item.href)}
-            >
-              {item.name}
-            </a>
-          ))}
-        </nav>
+        <div className="actions">
+          <Link href="/get-started">
+            <button className="get-started">Get Started</button>
+          </Link>
+          <button className="icon-button" onClick={() => alert('🔍 Search placeholder')}>
+            <Search size={16} />
+          </button>
+          <button className="icon-button" onClick={() => setMenuOpen(true)}>
+            <Menu size={18} />
+          </button>
+        </div>
       </header>
+
+      {menuOpen && <HamburgerOverlay onClose={() => setMenuOpen(false)} />}
     </>
   )
 }

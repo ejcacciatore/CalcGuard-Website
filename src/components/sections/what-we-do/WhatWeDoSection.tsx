@@ -29,9 +29,6 @@ const WhatWeDoSection = () => {
   return (
     <>
       <style jsx>{`
-        /* Import Google Fonts */
-        @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500;1,600;1,700&family=Raleway:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,500;1,600&display=swap');
-
         .what-we-do-section {
           width: 100vw;
           min-height: 100vh;
@@ -62,43 +59,51 @@ const WhatWeDoSection = () => {
         }
 
         .left-column {
+          position: relative;
           display: flex;
           flex-direction: column;
           justify-content: center;
           padding: 64px;
-          position: relative;
+          overflow: hidden;
         }
 
-        .corner-design {
+        .left-overlay {
           position: absolute;
-          top: 32px;
-          left: 32px;
-          width: 96px;
-          height: auto;
+          top: 0;
+          left: 0;
+          height: 100%;
+          width: 100%;
+          background: linear-gradient(to right, rgba(0, 0, 0, 0.4), transparent);
+          z-index: 1;
+          pointer-events: none;
         }
 
         .left-content {
           max-width: 400px;
           margin-top: 80px;
+          position: relative;
+          z-index: 2;
         }
 
         .subtitle {
           font-size: 14px;
-          color: #475569;
+          color: #e2e8f0;
           text-transform: uppercase;
           letter-spacing: 0.1em;
           font-weight: 600;
           margin-bottom: 8px;
-          font-family: 'Raleway', -apple-system, BlinkMacSystemFont, sans-serif;
+          font-family: 'Raleway', sans-serif;
+          text-shadow: 0 1px 3px rgba(0,0,0,0.5);
         }
 
         .main-title {
           font-size: 48px;
           font-weight: 400;
-          color: #1e293b;
+          color: #f8fafc;
           line-height: 1.1;
           margin-bottom: 24px;
           font-family: 'Montserrat', sans-serif;
+          text-shadow: 0 2px 4px rgba(0,0,0,0.5);
         }
 
         .red-line {
@@ -109,11 +114,13 @@ const WhatWeDoSection = () => {
         }
 
         .description {
-          font-size: 16px;
-          color: #334155;
-          line-height: 1.6;
+          font-size: 17px;
+          font-weight: 500;
+          color: #f8fafc;
+          line-height: 1.5;
           margin-bottom: 32px;
           font-family: 'Raleway', sans-serif;
+          text-shadow: 0 1px 3px rgba(0, 0, 0, 0.6);
         }
 
         .control-icon-container {
@@ -249,28 +256,6 @@ const WhatWeDoSection = () => {
           opacity: 1;
         }
 
-        .feature::before {
-          content: '';
-          position: absolute;
-          top: 0;
-          left: 0;
-          width: 4px;
-          height: 100%;
-          background: linear-gradient(180deg, #ef4444, #dc2626);
-          transform: scaleY(0);
-          transition: transform 0.3s ease;
-          transform-origin: bottom;
-        }
-
-        .feature:hover::before {
-          transform: scaleY(1);
-        }
-
-        .feature.expanded::before {
-          transform: scaleY(1);
-          background: linear-gradient(180deg, #ef4444, #dc2626, #ef4444);
-        }
-
         .expand-indicator {
           position: absolute;
           top: 24px;
@@ -307,161 +292,6 @@ const WhatWeDoSection = () => {
         .feature.expanded .expand-indicator::after {
           color: white;
         }
-
-        /* Mobile Styles */
-        @media (max-width: 1024px) {
-          .content-grid {
-            grid-template-columns: 1fr;
-          }
-
-          .left-column, .right-column {
-            padding: 48px 32px;
-          }
-
-          .video-background {
-            width: 100%;
-            opacity: 0.3;
-          }
-
-          .left-content {
-            margin-top: 40px;
-          }
-
-          .main-title {
-            font-size: 40px;
-          }
-
-          /* Hide corner design on tablet to prevent overlap */
-          .corner-design {
-            display: none;
-          }
-        }
-
-        @media (max-width: 768px) {
-          .left-column, .right-column {
-            padding: 40px 20px;
-          }
-
-          .main-title {
-            font-size: 32px;
-          }
-
-          .feature {
-            padding: 20px;
-          }
-
-          .feature-header {
-            gap: 12px;
-          }
-
-          .feature-icon {
-            height: 40px;
-          }
-
-          .feature-title {
-            font-size: 14px;
-          }
-
-          .feature-description {
-            font-size: 13px;
-          }
-
-          .extended-description {
-            font-size: 12px;
-          }
-
-          /* Mobile specific adjustments */
-          .left-content {
-            margin-top: 20px;
-            max-width: 100%;
-          }
-
-          .corner-design {
-            display: none;
-          }
-
-          .right-column {
-            padding: 40px 15px;
-          }
-
-          .features-container {
-            gap: 15px;
-          }
-
-          .feature {
-            margin: 0;
-            padding: 16px;
-          }
-        }
-
-        @media (max-width: 480px) {
-          .left-column, .right-column {
-            padding: 32px 15px;
-          }
-
-          .main-title {
-            font-size: 28px;
-            line-height: 1.2;
-          }
-
-          .subtitle {
-            font-size: 12px;
-          }
-
-          .description {
-            font-size: 14px;
-          }
-
-          .feature {
-            padding: 16px 12px;
-            margin: 0;
-          }
-
-          .feature-title {
-            font-size: 13px;
-          }
-
-          .feature-description, .extended-description {
-            font-size: 12px;
-          }
-
-          .feature-header {
-            gap: 10px;
-          }
-
-          .feature-icon {
-            height: 36px;
-          }
-
-          /* Ensure no content goes off screen */
-          .left-content {
-            margin-top: 10px;
-            width: 100%;
-            max-width: 100%;
-          }
-
-          .right-column {
-            padding: 30px 10px;
-            width: 100%;
-            max-width: 100%;
-            overflow: hidden;
-          }
-
-          .features-container {
-            width: 100%;
-            max-width: 100%;
-          }
-
-          .feature {
-            width: 100%;
-            max-width: 100%;
-            box-sizing: border-box;
-          }
-
-          .corner-design {
-            display: none;
-          }
-        }
       `}</style>
 
       <section id="what-we-do" className="what-we-do-section">
@@ -476,11 +306,7 @@ const WhatWeDoSection = () => {
 
         <div className="content-grid">
           <div className="left-column">
-            <img 
-              src="/images/left_cornder.png" 
-              alt="Corner Design" 
-              className="corner-design"
-            />
+            <div className="left-overlay" />
             <div className="left-content">
               <p className="subtitle">CalcGuard® Technologies</p>
               <h2 className="main-title">WHAT<br />WE DO</h2>
@@ -530,7 +356,7 @@ const WhatWeDoSection = () => {
         </div>
       </section>
     </>
-  );
-};
+  )
+}
 
-export default WhatWeDoSection;
+export default WhatWeDoSection

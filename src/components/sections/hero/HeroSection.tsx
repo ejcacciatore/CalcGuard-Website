@@ -7,12 +7,10 @@ const HeroSection = () => {
   const [isPaused, setIsPaused] = useState(false)
   const progressRef = useRef<HTMLDivElement | null>(null)
 
-  // Auto scroll after delay
   useEffect(() => {
     let animationFrame: number
     let start: number | null = null
-
-    const duration = 6000 // 6 seconds
+    const duration = 6000
     const step = (timestamp: number) => {
       if (isPaused) return
       if (!start) start = timestamp
@@ -25,9 +23,7 @@ const HeroSection = () => {
         scrollToNext()
       }
     }
-
     animationFrame = requestAnimationFrame(step)
-
     return () => cancelAnimationFrame(animationFrame)
   }, [isPaused])
 
@@ -38,7 +34,6 @@ const HeroSection = () => {
     }
   }
 
-  // Pause on user interaction
   useEffect(() => {
     const pause = () => setIsPaused(true)
     window.addEventListener('wheel', pause)
@@ -253,7 +248,10 @@ const HeroSection = () => {
 
         @media (max-width: 768px) {
           .title {
-            font-size: 2.25rem;
+            font-size: 1.55rem;
+            letter-spacing: -0.4px;
+            white-space: nowrap;
+            padding: 0.2em 0.4em;
           }
 
           .progress-bar {
@@ -312,4 +310,4 @@ const HeroSection = () => {
   )
 }
 
-export default HeroSection
+export default HeroSection;

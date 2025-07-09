@@ -2,10 +2,21 @@
 
 import { useState } from 'react'
 import Image from 'next/image'
-import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 
 const ContactDisclaimerSection = () => {
   const [hoveredContact, setHoveredContact] = useState<string | null>(null)
+  const router = useRouter()
+
+  const goToSection = (id: string) => {
+    const isHome = window.location.pathname === '/'
+    if (isHome) {
+      const el = document.getElementById(id)
+      if (el) el.scrollIntoView({ behavior: 'smooth' })
+    } else {
+      router.push(`/#${id}`)
+    }
+  }
 
   return (
     <>
@@ -100,6 +111,7 @@ const ContactDisclaimerSection = () => {
         .page-link {
           color: #334155;
           transition: color 0.2s ease;
+          cursor: pointer;
         }
 
         .page-link:hover {
@@ -178,18 +190,18 @@ const ContactDisclaimerSection = () => {
       </footer>
 
       <div className="page-links-row">
-        <Link href="/#hero" className="page-link">Home</Link>
-        <Link href="/#what-we-do" className="page-link">What We Do</Link>
-        <Link href="/#challenge" className="page-link">Challenge</Link>
-        <Link href="/#platform" className="page-link">Platform</Link>
-        <Link href="/#leadership" className="page-link">Leadership</Link>
-        <Link href="/#inefficiencies" className="page-link">Inefficiencies</Link>
-        <Link href="/#trinity" className="page-link">Trinity</Link>
-        <Link href="/#sphere" className="page-link">Sphere</Link>
-        <Link href="/#edge" className="page-link">Edge</Link>
-        <Link href="/#news" className="page-link">Current News</Link>
-        <Link href="/#blog" className="page-link">Blog</Link>
-        <Link href="/#events" className="page-link">Events</Link>
+        <span className="page-link" onClick={() => goToSection('hero')}>Home</span>
+        <span className="page-link" onClick={() => goToSection('what-we-do')}>What We Do</span>
+        <span className="page-link" onClick={() => goToSection('challenge')}>Challenge</span>
+        <span className="page-link" onClick={() => goToSection('platform')}>Platform</span>
+        <span className="page-link" onClick={() => goToSection('leadership')}>Leadership</span>
+        <span className="page-link" onClick={() => goToSection('inefficiencies')}>Inefficiencies</span>
+        <span className="page-link" onClick={() => goToSection('trinity')}>Trinity</span>
+        <span className="page-link" onClick={() => goToSection('sphere')}>Sphere</span>
+        <span className="page-link" onClick={() => goToSection('edge')}>Edge</span>
+        <span className="page-link" onClick={() => goToSection('news')}>Current News</span>
+        <span className="page-link" onClick={() => goToSection('blog')}>Blog</span>
+        <span className="page-link" onClick={() => goToSection('events')}>Events</span>
       </div>
 
       <div className="footer-bottom">
@@ -199,4 +211,4 @@ const ContactDisclaimerSection = () => {
   )
 }
 
-export default ContactDisclaimerSection
+export default ContactDisclaimerSection;

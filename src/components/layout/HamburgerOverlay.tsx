@@ -8,10 +8,16 @@ const HamburgerOverlay = ({ onClose }: { onClose: () => void }) => {
   const router = useRouter()
 
   const scrollTo = (id: string) => {
-    const el = document.getElementById(id)
-    if (el) {
-      el.scrollIntoView({ behavior: 'smooth' })
-      onClose()
+    const isHome = window.location.pathname === '/'
+    if (isHome) {
+      const el = document.getElementById(id)
+      if (el) {
+        el.scrollIntoView({ behavior: 'smooth' })
+        onClose()
+      }
+    } else {
+      router.push(`/#${id}`)
+      setTimeout(() => onClose(), 300)
     }
   }
 
@@ -175,8 +181,8 @@ const HamburgerOverlay = ({ onClose }: { onClose: () => void }) => {
             <span className="link" onClick={() => scrollTo('challenge')}>Challenge</span>
             <span className="link" onClick={() => scrollTo('platform')}>Platform</span>
             <span className="link" onClick={() => scrollTo('leadership')}>Leadership</span>
-            <span className="link" onClick={() => scrollTo('disclaimer')}>Disclaimer / Info</span>
-
+            <span className="link" onClick={() => goTo('/disclaimer')}>Disclaimer / Info</span>
+           
             <div className="column-title" style={{ marginTop: '24px' }}>More Pages</div>
 
             <div className="sublink-block">

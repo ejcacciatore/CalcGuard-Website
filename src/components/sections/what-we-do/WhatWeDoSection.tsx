@@ -36,13 +36,14 @@ const WhatWeDoSection = () => {
           align-items: center;
           position: relative;
           overflow: hidden;
+          flex-direction: column;
         }
 
         .video-background {
           position: absolute;
           top: 0;
           left: 0;
-          width: 50%;
+          width: 100%;
           height: 100%;
           opacity: 0.5;
           z-index: 0;
@@ -292,6 +293,29 @@ const WhatWeDoSection = () => {
         .feature.expanded .expand-indicator::after {
           color: white;
         }
+
+        @media (max-width: 768px) {
+          .content-grid {
+            display: flex;
+            flex-direction: column;
+          }
+          .video-background {
+            height: 50vh;
+            width: 100%;
+          }
+          .left-column, .right-column {
+            padding: 24px;
+          }
+          .left-column {
+            background-color: rgba(0,0,0,0.5);
+          }
+          .main-title {
+            font-size: 32px;
+          }
+          .description {
+            font-size: 15px;
+          }
+        }
       `}</style>
 
       <section id="what-we-do" className="what-we-do-section">
@@ -359,4 +383,4 @@ const WhatWeDoSection = () => {
   )
 }
 
-export default WhatWeDoSection
+export default WhatWeDoSection;

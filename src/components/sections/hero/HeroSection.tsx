@@ -82,28 +82,44 @@ const HeroSection = () => {
 
         .title {
           z-index: 2;
-          font-size: 3.5rem;
-          font-weight: 400;
-          color: white;
-          font-family: 'Montserrat', sans-serif;
+          font-size: 4.2rem;
+          font-weight: 300;
+          color: #ffffff;
+          font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
           display: inline-block;
           text-align: center;
           transform: translateY(-14vh);
-          letter-spacing: -0.65px;
-          backdrop-filter: blur(3px);
-          padding: 0.25em 0.5em;
-          border-radius: 10px;
+          letter-spacing: -2.8px;
+          backdrop-filter: blur(2px);
+          padding: 0.15em 0.4em;
+          border-radius: 8px;
+          background: rgba(0, 0, 0, 0.05);
+          text-shadow: 
+            0 2px 4px rgba(0, 0, 0, 0.08),
+            0 4px 12px rgba(0, 0, 0, 0.4),
+            0 0 20px rgba(255, 255, 255, 0.1);
+          border: 1px solid rgba(255, 255, 255, 0.08);
         }
 
         .title span {
           display: inline-block;
           opacity: 0;
           transform: translateY(20px);
-          animation: brightenLetter 0.5s ease-out forwards;
+          animation: brightenLetter 0.6s ease-out forwards;
         }
 
         .title span:nth-child(n) {
-          animation-delay: calc(0.04s * var(--i));
+          animation-delay: calc(0.03s * var(--i));
+        }
+
+        .title .b2b {
+          font-weight: 400;
+          letter-spacing: -0.8px;
+          color: #ffffff;
+          text-shadow: 
+            0 2px 6px rgba(0, 0, 0, 0.9),
+            0 4px 16px rgba(0, 0, 0, 0.6),
+            0 0 30px rgba(255, 255, 255, 0.2);
         }
 
         @keyframes brightenLetter {
@@ -248,10 +264,14 @@ const HeroSection = () => {
 
         @media (max-width: 768px) {
           .title {
-            font-size: 1.55rem;
-            letter-spacing: -0.4px;
+            font-size: 2.2rem;
+            letter-spacing: -0.8px;
             white-space: nowrap;
-            padding: 0.2em 0.4em;
+            padding: 0.1em 0.3em;
+          }
+
+          .title .b2b {
+            letter-spacing: -0.5px;
           }
 
           .progress-bar {
@@ -271,6 +291,17 @@ const HeroSection = () => {
             height: 32px;
           }
         }
+
+        @media (max-width: 480px) {
+          .title {
+            font-size: 1.8rem;
+            letter-spacing: -0.6px;
+          }
+
+          .title .b2b {
+            letter-spacing: -0.3px;
+          }
+        }
       `}</style>
 
       <section id="hero" className="hero">
@@ -281,12 +312,19 @@ const HeroSection = () => {
           />
         </video>
 
-        <div className="overlay" />
-        <div className="brand">CALCGUARD® TECHNOLOGIES</div>
-
         <h1 className="title">
-          {'Seamless B2B Infrastructure'.split('').map((char, idx) => (
+          {'Seamless '.split('').map((char, idx) => (
             <span key={idx} style={{ ['--i' as any]: idx }}>
+              {char === ' ' ? '\u00A0' : char}
+            </span>
+          ))}
+          {'B2B'.split('').map((char, idx) => (
+            <span key={idx + 9} className="b2b" style={{ ['--i' as any]: idx + 9 }}>
+              {char}
+            </span>
+          ))}
+          {' Infrastructure'.split('').map((char, idx) => (
+            <span key={idx + 12} style={{ ['--i' as any]: idx + 12 }}>
               {char === ' ' ? '\u00A0' : char}
             </span>
           ))}

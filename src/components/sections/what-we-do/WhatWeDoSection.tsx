@@ -107,19 +107,13 @@ const WhatWeDoSection = () => {
           text-shadow: 0 2px 4px rgba(0,0,0,0.5);
         }
 
-        .red-line {
-          width: 80px;
-          height: 4px;
-          background-color: #ef4444;
-          margin-bottom: 24px;
-        }
 
         .description {
-          font-size: 17px;
+          font-size: 21px;
           font-weight: 500;
           color: #f8fafc;
           line-height: 1.5;
-          margin-bottom: 32px;
+          margin-bottom: 60px;
           font-family: 'Raleway', sans-serif;
           text-shadow: 0 1px 3px rgba(0, 0, 0, 0.6);
         }

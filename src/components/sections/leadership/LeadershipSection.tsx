@@ -70,25 +70,28 @@ const LeadershipSection = () => {
         .team-members {
           display: flex;
           flex-direction: column;
-          gap: 40px;
+          gap: 80px;
         }
 
         .team-member {
           display: flex;
-          align-items: center;
-          gap: 16px;
+          align-items: flex-start;
+          gap: 20px;
           cursor: pointer;
           transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-          padding: 16px;
+          padding: 24px;
           border-radius: 16px;
           position: relative;
           z-index: 1;
           border: 2px solid transparent;
+          min-height: 140px;
         }
 
         .left-column .team-member {
           border-color: #ef4444;
           background: rgba(239, 68, 68, 0.05);
+          flex-direction: row-reverse;
+          justify-content: flex-end;
         }
 
         .right-column .team-member {
@@ -97,9 +100,10 @@ const LeadershipSection = () => {
         }
 
         .team-member:hover {
-          transform: scale(1.08);
+          transform: scale(1.05);
           z-index: 10;
           box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+          min-height: 160px;
         }
 
         .left-column .team-member:hover {
@@ -114,14 +118,9 @@ const LeadershipSection = () => {
           box-shadow: 0 20px 40px rgba(30, 41, 59, 0.2);
         }
 
-        .left-column .team-member {
-          flex-direction: row-reverse;
-          justify-content: flex-end;
-        }
-
         .member-photo {
-          width: 80px;
-          height: 80px;
+          width: 90px;
+          height: 90px;
           border-radius: 12px;
           object-fit: cover;
           flex-shrink: 0;
@@ -133,15 +132,15 @@ const LeadershipSection = () => {
         .team-member:hover .member-photo {
           width: 110px;
           height: 110px;
-          border-radius: 20px;
+          border-radius: 16px;
           border-color: #ef4444;
           box-shadow: 0 15px 35px rgba(239, 68, 68, 0.3);
-          transform: rotate(-2deg);
         }
 
         .member-info {
           flex-grow: 1;
           transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+          min-height: 100px;
         }
 
         .team-member:hover .member-info {
@@ -152,7 +151,7 @@ const LeadershipSection = () => {
           font-size: 16px;
           font-weight: 700;
           color: #1e293b;
-          margin-bottom: 6px;
+          margin-bottom: 8px;
           font-family: 'Montserrat', sans-serif;
           transition: all 0.3s ease;
         }
@@ -160,34 +159,39 @@ const LeadershipSection = () => {
         .team-member:hover .member-name {
           color: #ef4444;
           font-size: 18px;
-          margin-bottom: 8px;
+          margin-bottom: 10px;
         }
 
         .member-bio {
           font-size: 13px;
           color: #64748b;
-          line-height: 1.4;
-          margin-bottom: 8px;
+          line-height: 1.5;
+          margin-bottom: 10px;
           font-family: 'Raleway', sans-serif;
           transition: all 0.3s ease;
-          max-height: 60px;
           overflow: hidden;
+          display: -webkit-box;
+          -webkit-line-clamp: 4;
+          -webkit-box-orient: vertical;
         }
 
         .team-member:hover .member-bio {
+          -webkit-line-clamp: unset;
+          max-height: none;
+          overflow: visible;
           color: #374151;
           font-size: 14px;
-          max-height: 100px;
-          line-height: 1.5;
+          line-height: 1.6;
         }
 
         .linkedin-link {
-          font-size: 12px;
+          font-size: 14px;
           color: #0366d6;
           text-decoration: none;
           font-weight: 500;
           transition: all 0.3s ease;
-          opacity: 0.7;
+          opacity: 0.8;
+          margin-top: auto;
         }
 
         .linkedin-link:hover {
@@ -196,7 +200,7 @@ const LeadershipSection = () => {
         }
 
         .team-member:hover .linkedin-link {
-          font-size: 13px;
+          font-size: 16px;
           opacity: 1;
           font-weight: 600;
         }
@@ -240,46 +244,6 @@ const LeadershipSection = () => {
           font-family: 'Raleway', sans-serif;
         }
 
-        /* Expansion indicator */
-        .left-column .expansion-indicator {
-          background: linear-gradient(90deg, #ef4444, #dc2626);
-        }
-
-        .right-column .expansion-indicator {
-          background: linear-gradient(90deg, #1e293b, #0f172a);
-        }
-
-        .team-member:hover .expansion-indicator {
-          width: 80%;
-        }
-
-        /* Hover background effect */
-        .team-member::before {
-          content: '';
-          position: absolute;
-          top: 0;
-          left: 0;
-          right: 0;
-          bottom: 0;
-          border-radius: 16px;
-          opacity: 0;
-          transition: opacity 0.3s ease;
-          z-index: -1;
-        }
-
-        .left-column .team-member::before {
-          background: linear-gradient(135deg, rgba(239, 68, 68, 0.08) 0%, rgba(220, 38, 38, 0.08) 100%);
-        }
-
-        .right-column .team-member::before {
-          background: linear-gradient(135deg, rgba(30, 41, 59, 0.08) 0%, rgba(15, 23, 42, 0.08) 100%);
-        }
-
-        .team-member:hover::before {
-          opacity: 1;
-        }
-
-        /* Mobile Styles */
         @media (max-width: 1024px) {
           .leadership-grid {
             grid-template-columns: 1fr;
@@ -300,6 +264,7 @@ const LeadershipSection = () => {
           .team-member {
             flex-direction: column;
             text-align: center;
+            align-items: center;
           }
 
           .left-column .team-member {
@@ -309,273 +274,100 @@ const LeadershipSection = () => {
           .team-members {
             gap: 30px;
           }
-
-          .team-member:hover {
-            transform: scale(1.05);
-          }
-
-          .team-member:hover .member-photo {
-            width: 100px;
-            height: 100px;
-            transform: rotate(0deg);
-          }
-        }
-
-        @media (max-width: 768px) {
-          .leadership-section {
-            padding: 60px 16px;
-          }
-
-          .main-title {
-            font-size: 28px;
-          }
-
-          .member-photo {
-            width: 70px;
-            height: 70px;
-          }
-
-          .team-member:hover .member-photo {
-            width: 90px;
-            height: 90px;
-          }
-
-          .member-name {
-            font-size: 14px;
-          }
-
-          .member-bio {
-            font-size: 12px;
-          }
-
-          .team-member:hover {
-            transform: scale(1.03);
-          }
         }
       `}</style>
 
       <section id="leadership" className="leadership-section">
         <div className="leadership-container">
           <div className="leadership-grid">
-            
-            {/* Left Column: CalcGuard Leaders */}
+            {/* LEFT */}
             <div className="column left-column">
               <h3 className="column-title">CalcGuard Leaders</h3>
-              
               <div className="team-members">
-                
-                <div 
-                  className="team-member"
-                  onMouseEnter={() => setHoveredMember('tim')}
-                  onMouseLeave={() => setHoveredMember(null)}
-                >
-                  <img 
-                    src="/images/tim.png" 
-                    alt="Tim Sargent" 
-                    className="member-photo"
-                  />
-                  <div className="member-info">
-                    <h3 className="member-name">TIM SARGENT, CEO</h3>
-                    <p className="member-bio">
-                      Founded QSG, sold to IHS Markit; led wall street quant, 
-                      index and trading groups. Expert in quantitative finance 
-                      and market structure with 20+ years experience.
-                    </p>
-                    <a 
-                      href="https://www.linkedin.com/in/timothy-sargent-a300705/" 
-                      target="_blank" 
-                      rel="noopener noreferrer" 
-                      className="linkedin-link"
-                    >
-                      LinkedIn Profile
-                    </a>
+                {[
+                  {
+                    name: 'TIM SARGENT, CEO',
+                    image: '/images/tim.png',
+                    bio: 'Founded QSG, sold to IHS Markit; led wall street quant, index and trading groups. Expert in quantitative finance and market structure with 20+ years experience building scalable financial technology solutions.',
+                    link: 'https://www.linkedin.com/in/timothy-sargent-a300705/',
+                  },
+                  {
+                    name: 'JIM NORTHEY, CTO',
+                    image: '/images/jim.png',
+                    bio: 'FIX co-chair, 3 ISO committees; ex-Itiviti SVP; LaSalle co-founder. Leading expert in financial protocols and trading infrastructure with deep expertise in market connectivity standards.',
+                    link: 'https://www.linkedin.com/in/jimnorthey/',
+                  },
+                  {
+                    name: 'ENRICO CACCIATORE, CPSO',
+                    image: '/images/enrico.png',
+                    bio: 'Ex-Voya quant trading and market structure analytics. Specialist in algorithmic trading strategies and execution optimization with extensive experience in institutional trading platforms.',
+                    link: 'https://www.linkedin.com/in/enricojcacciatore/',
+                  },
+                ].map((member, i) => (
+                  <div className="team-member" key={i}>
+                    <img src={member.image} alt={member.name} className="member-photo" />
+                    <div className="member-info">
+                      <h3 className="member-name">{member.name}</h3>
+                      <p className="member-bio">{member.bio}</p>
+                      <a href={member.link} target="_blank" rel="noopener noreferrer" className="linkedin-link">LinkedIn Profile</a>
+                    </div>
                   </div>
-                  <div className="expansion-indicator"></div>
-                </div>
-
-                <div 
-                  className="team-member"
-                  onMouseEnter={() => setHoveredMember('jim')}
-                  onMouseLeave={() => setHoveredMember(null)}
-                >
-                  <img 
-                    src="/images/jim.png" 
-                    alt="Jim Northey" 
-                    className="member-photo"
-                  />
-                  <div className="member-info">
-                    <h3 className="member-name">JIM NORTHEY, CTO</h3>
-                    <p className="member-bio">
-                      FIX co-chair, 3 ISO committees; ex-Itiviti 
-                      SVP; LaSalle co-founder. Leading expert in 
-                      financial protocols and trading infrastructure.
-                    </p>
-                    <a 
-                      href="https://www.linkedin.com/in/jimnorthey/" 
-                      target="_blank" 
-                      rel="noopener noreferrer" 
-                      className="linkedin-link"
-                    >
-                      LinkedIn Profile
-                    </a>
-                  </div>
-                  <div className="expansion-indicator"></div>
-                </div>
-
-                <div 
-                  className="team-member"
-                  onMouseEnter={() => setHoveredMember('enrico')}
-                  onMouseLeave={() => setHoveredMember(null)}
-                >
-                  <img 
-                    src="/images/enrico.png" 
-                    alt="Enrico Cacciatore" 
-                    className="member-photo"
-                  />
-                  <div className="member-info">
-                    <h3 className="member-name">ENRICO CACCIATORE, CPSO</h3>
-                    <p className="member-bio">
-                      Ex-Voya quant trading and market 
-                      structure analytics. Specialist in algorithmic 
-                      trading strategies and execution optimization.
-                    </p>
-                    <a 
-                      href="https://www.linkedin.com/in/enricojcacciatore/" 
-                      target="_blank" 
-                      rel="noopener noreferrer" 
-                      className="linkedin-link"
-                    >
-                      LinkedIn Profile
-                    </a>
-                  </div>
-                  <div className="expansion-indicator"></div>
-                </div>
+                ))}
               </div>
             </div>
 
-            {/* Center Column: Main Text */}
+            {/* CENTER */}
             <div className="column center-column">
-              <div>
-                <p className="subtitle">
-                  Focus, Expertise & Accountability
-                </p>
-                
-                <h2 className="main-title">
-                  A LEADERSHIP<br />
-                  TRIPLE THREAT
-                </h2>
-                
-                <div className="red-line"></div>
-                
-                <p className="description">
-                  We've engineered a leadership triumvirate - combining CalcGuard 
-                  management, industry advisors and an investment management advisory 
-                  council (IMAC) - to ensure broad perspectives and proactively 
-                  eliminate blind spots.
-                </p>
-                
-                <p className="description">
-                  The IMAC unifies industry voices to advance transparency, standardize 
-                  platform definitions, align integration priorities and drive innovation.
-                </p>
-              </div>
+              <p className="subtitle">Focus, Expertise & Accountability</p>
+              <h2 className="main-title">A LEADERSHIP<br />TRIPLE THREAT</h2>
+              <div className="red-line"></div>
+              <p className="description">
+                We've engineered a leadership triumvirate - combining CalcGuard 
+                management, industry advisors and an investment management advisory 
+                council (IMAC) - to ensure broad perspectives and proactively 
+                eliminate blind spots.
+              </p>
+              <p className="description">
+                The IMAC unifies industry voices to advance transparency, standardize 
+                platform definitions, align integration priorities and drive innovation.
+              </p>
             </div>
 
-            {/* Right Column: Industry Advisors */}
+            {/* RIGHT */}
             <div className="column right-column">
               <h3 className="column-title">Industry Advisors</h3>
-              
               <div className="team-members">
-                
-                <div 
-                  className="team-member"
-                  onMouseEnter={() => setHoveredMember('jeff')}
-                  onMouseLeave={() => setHoveredMember(null)}
-                >
-                  <img 
-                    src="/images/jeff.png" 
-                    alt="Jeff Estella" 
-                    className="member-photo"
-                  />
-                  <div className="member-info">
-                    <h3 className="member-name">JEFF ESTELLA</h3>
-                    <p className="member-bio">
-                      Senior trading roles at MFS; now 
-                      advises finance industry. Deep expertise in 
-                      institutional trading and portfolio management.
-                    </p>
-                    <a 
-                      href="https://www.linkedin.com/in/jeffreyestella/" 
-                      target="_blank" 
-                      rel="noopener noreferrer" 
-                      className="linkedin-link"
-                    >
-                      LinkedIn Profile
-                    </a>
+                {[
+                  {
+                    name: 'JEFF ESTELLA',
+                    image: '/images/jeff.png',
+                    bio: 'Senior trading roles at MFS; now advises finance industry. Deep expertise in institutional trading and portfolio management with focus on execution quality and market structure optimization.',
+                    link: 'https://www.linkedin.com/in/jeffreyestella/',
+                  },
+                  {
+                    name: 'BILL HARTNETT',
+                    image: '/images/bill.png',
+                    bio: 'Ex-Citi fintech investor with deep expertise in capital markets digitization. Leading voice in financial technology innovation and transformation with extensive experience in venture capital and strategic investments.',
+                    link: 'https://www.linkedin.com/in/bill-hartnett-937a813/',
+                  },
+                  {
+                    name: 'MARK SCHAEDEL',
+                    image: '/images/mark.png',
+                    bio: 'Leads DataBP; 13 years at NYSE, IHS Markit, COBA co-founder. Expert in market data, analytics and financial infrastructure development with proven track record in building enterprise data solutions.',
+                    link: 'https://www.linkedin.com/in/mschaedel/',
+                  },
+                ].map((member, i) => (
+                  <div className="team-member" key={i}>
+                    <img src={member.image} alt={member.name} className="member-photo" />
+                    <div className="member-info">
+                      <h3 className="member-name">{member.name}</h3>
+                      <p className="member-bio">{member.bio}</p>
+                      <a href={member.link} target="_blank" rel="noopener noreferrer" className="linkedin-link">LinkedIn Profile</a>
+                    </div>
                   </div>
-                  <div className="expansion-indicator"></div>
-                </div>
-
-                <div 
-                  className="team-member"
-                  onMouseEnter={() => setHoveredMember('bill')}
-                  onMouseLeave={() => setHoveredMember(null)}
-                >
-                  <img 
-                    src="/images/bill.png" 
-                    alt="Bill Hartnett" 
-                    className="member-photo"
-                  />
-                  <div className="member-info">
-                    <h3 className="member-name">BILL HARTNETT</h3>
-                    <p className="member-bio">
-                      Ex-Citi fintech investor with deep expertise in 
-                      capital markets digitization. Leading voice in 
-                      financial technology innovation and transformation.
-                    </p>
-                    <a 
-                      href="https://www.linkedin.com/in/bill-hartnett-937a813/" 
-                      target="_blank" 
-                      rel="noopener noreferrer" 
-                      className="linkedin-link"
-                    >
-                      LinkedIn Profile
-                    </a>
-                  </div>
-                  <div className="expansion-indicator"></div>
-                </div>
-
-                <div 
-                  className="team-member"
-                  onMouseEnter={() => setHoveredMember('mark')}
-                  onMouseLeave={() => setHoveredMember(null)}
-                >
-                  <img 
-                    src="/images/mark.png" 
-                    alt="Mark Schaedel" 
-                    className="member-photo"
-                  />
-                  <div className="member-info">
-                    <h3 className="member-name">MARK SCHAEDEL</h3>
-                    <p className="member-bio">
-                      Leads DataBP; 13 years at NYSE, IHS Markit, 
-                      COBA co-founder. Expert in market data, analytics 
-                      and financial infrastructure development.
-                    </p>
-                    <a 
-                      href="https://www.linkedin.com/in/mschaedel/" 
-                      target="_blank" 
-                      rel="noopener noreferrer" 
-                      className="linkedin-link"
-                    >
-                      LinkedIn Profile
-                    </a>
-                  </div>
-                  <div className="expansion-indicator"></div>
-                </div>
+                ))}
               </div>
             </div>
-
           </div>
         </div>
       </section>

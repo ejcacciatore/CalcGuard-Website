@@ -87,17 +87,18 @@ const HeroSection = () => {
 
         .title {
           z-index: 2;
-          font-size: 3.5rem;
-          font-weight: 300;
+          font-size: 6.5rem;
+          font-weight: 1000;
           color: white;
           font-family: 'Montserrat', sans-serif;
           display: inline-block;
           text-align: center;
           transform: translateY(-14vh);
-          letter-spacing: -0.25px;
+          letter-spacing: -1.9px;
           backdrop-filter: blur(2px);
           padding: 0.25em 0.5em;
           border-radius: 6px;
+          text-shadow: 0 2px 8px rgba(0, 0, 0, 0.7);
         }
 
         .title span {
@@ -119,23 +120,6 @@ const HeroSection = () => {
           }
         }
 
-        .brand {
-          position: absolute;
-          top: 24px;
-          left: 24px;
-          z-index: 2;
-          font-size: 0.9rem;
-          font-weight: 600;
-          color: white;
-          font-family: 'Montserrat', sans-serif;
-          background: rgba(0,0,0,0.4);
-          padding: 6px 12px;
-          border-radius: 4px;
-          border: 1px solid rgba(255,255,255,0.1);
-          text-transform: uppercase;
-          letter-spacing: 0.05em;
-        }
-
         .progress-bar {
           position: absolute;
           bottom: 0;
@@ -148,7 +132,8 @@ const HeroSection = () => {
 
         @media (max-width: 768px) {
           .title {
-            font-size: 2.25rem;
+            font-size: 2.75rem;
+            font-weight: 700;
           }
 
           .progress-bar {
@@ -166,10 +151,9 @@ const HeroSection = () => {
         </video>
 
         <div className="overlay" />
-        <div className="brand">CALCGUARD® TECHNOLOGIES</div>
 
         <h1 className="title">
-          {'Seamless B2B Infrastructure'.split('').map((char, idx) => (
+          {'Moster Seamless B2B Infrastructure'.split('').map((char, idx) => (
             <span key={idx} style={{ ['--i' as any]: idx }}>
               {char === ' ' ? '\u00A0' : char}
             </span>

@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import { useScrollDirection } from '@/lib/hooks/useScrollDirection'
-import { Menu, X, Search } from 'lucide-react'
+import { Menu, X } from 'lucide-react'
 
 const navItems = [
   { name: 'Home', id: 'hero' },
@@ -42,12 +42,12 @@ const Header = () => {
           width: 100%;
           z-index: 1000;
 
-          background: rgba(255, 255, 255, 0.01);
-          backdrop-filter: saturate(180%) blur(28px);
-          -webkit-backdrop-filter: saturate(180%) blur(28px);
-          border-bottom: 1px solid rgba(255, 255, 255, 0.02);
+          background: rgba(255, 255, 255, 0.002);
+          backdrop-filter: saturate(20%) blur(0px);
+          -webkit-backdrop-filter: saturate(20%) blur(0px);
+          border-bottom: 1px solid rgba(255, 255, 255, 0.008);
 
-          padding: 10px 24px;
+          padding: 12px 24px;
           display: flex;
           justify-content: space-between;
           align-items: center;
@@ -59,122 +59,146 @@ const Header = () => {
           transform: translateY(-100%);
         }
 
-        .logo-block {
+        .logo-section {
           display: flex;
-          flex-direction: column;
-          align-items: flex-start;
+          align-items: center;
+          gap: 16px;
           cursor: pointer;
           transition: transform 0.3s ease;
         }
 
-        .logo-block:hover {
-          transform: scale(1.05);
+        .logo-section:hover {
+          transform: scale(1.02);
         }
 
         .logo-img {
-          height: 36px;
-          margin-bottom: 2px;
+          height: 48px;
+          filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
         }
 
-        .logo-text {
+        .company-name {
           font-family: 'Montserrat', sans-serif;
-          font-size: 0.8rem;
-          font-weight: 300;
+          font-size: 1.1rem;
+          font-weight: 700;
           text-transform: uppercase;
-          letter-spacing: 0.04em;
+          letter-spacing: 0.05em;
           color: #ffffff;
-          line-height: 1.1;
-          margin-top: 2px;
+          line-height: 1.2;
+          text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
         }
 
         .actions {
           display: flex;
           align-items: center;
-          gap: 14px;
+          gap: 16px;
         }
 
-        .icon-button {
-          background: none;
-          border: none;
-          color: #111;
+         .icon-button {
+          background: rgba(255, 255, 255, 0.1);
+          border: 1px solid rgba(255, 255, 255, 0.2);
+          color: #ffffff;
           cursor: pointer;
-          padding: 4px;
-          transition: opacity 0.2s ease;
+          padding: 8px;
+          border-radius: 6px;
+          transition: all 0.3s ease;
+          backdrop-filter: blur(10px);
         }
 
         .icon-button:hover {
-          opacity: 0.75;
+          background: rgba(255, 255, 255, 0.15);
+          border-color: rgba(255, 255, 255, 0.3);
+          transform: translateY(-1px);
         }
 
         .menu-panel {
           position: fixed;
           top: 0;
           right: 0;
-          width: 260px;
+          width: 300px;
           height: 100vh;
-          background: rgba(255, 255, 255, 0.9);
+          background: rgba(0, 0, 0, 0.95);
           backdrop-filter: blur(25px);
-          box-shadow: -2px 0 8px rgba(0, 0, 0, 0.1);
+          box-shadow: -4px 0 20px rgba(0, 0, 0, 0.3);
           display: flex;
           flex-direction: column;
-          padding: 24px;
+          padding: 32px 24px;
           z-index: 999;
           transition: transform 0.3s ease;
         }
 
+        .menu-header {
+          margin-bottom: 40px;
+          padding-bottom: 20px;
+          border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .menu-title {
+          font-family: 'Montserrat', sans-serif;
+          font-size: 1.2rem;
+          font-weight: 700;
+          color: #ffffff;
+          margin-bottom: 8px;
+        }
+
         .nav-link {
           font-family: 'Montserrat', sans-serif;
-          font-size: 11px;
+          font-size: 14px;
           font-weight: 600;
           text-transform: uppercase;
-          color: #374151;
-          margin-bottom: 18px;
+          color: rgba(255, 255, 255, 0.7);
+          margin-bottom: 20px;
           cursor: pointer;
-          transition: color 0.2s ease;
+          transition: all 0.3s ease;
+          padding: 8px 0;
+          border-bottom: 1px solid transparent;
         }
 
         .nav-link:hover,
         .nav-link.active {
           color: #ef4444;
+          border-bottom-color: #ef4444;
+          transform: translateX(8px);
         }
 
         @media (max-width: 768px) {
           .header {
-            padding: 8px 16px;
+            padding: 10px 16px;
           }
 
           .logo-img {
-            height: 30px;
+            height: 40px;
           }
 
-          .logo-text {
-            font-size: 0.75rem;
+          .company-name {
+            font-size: 0.9rem;
+          }
+
+          .get-started-btn {
+            padding: 8px 16px;
+            font-size: 0.8rem;
+          }
+
+          .menu-panel {
+            width: 280px;
+            padding: 24px 20px;
           }
         }
       `}</style>
 
       <header className={`header ${scrollDirection === 'down' ? 'hide' : ''}`}>
-        <div className="logo-block" onClick={() => handleScrollTo('hero')}>
-          <img src="/images/CG_1.png" alt="CG Logo" className="logo-img" />
-          <span className="logo-text">
-            CALCGUARD<sup>®</sup>
-            <br />
-            TECHNOLOGIES
-          </span>
+        <div className="logo-section" onClick={() => handleScrollTo('hero')}>
+          <img src="/images/CG_1.png" alt="CalcGuard Logo" className="logo-img" />
+          <div className="company-name">
+            CALCGUARD<sup>®</sup> TECHNOLOGIES Inc
+          </div>
         </div>
 
-        <div className="actions">
-          <button className="icon-button" onClick={() => alert('🔍 Search placeholder')}>
-            <Search size={20} />
-          </button>
-          <button className="icon-button" onClick={() => setMenuOpen(!menuOpen)}>
-            {menuOpen ? <X size={24} /> : <Menu size={24} />}
-          </button>
-        </div>
-      </header>
-
+        
       {menuOpen && (
         <div className="menu-panel">
+          <div className="menu-header">
+            <div className="menu-title">Navigation</div>
+          </div>
           {navItems.map((item) => (
             <span
               key={item.id}
@@ -186,6 +210,7 @@ const Header = () => {
           ))}
         </div>
       )}
+      </header>
     </>
   )
 }

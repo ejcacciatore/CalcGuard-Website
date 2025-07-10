@@ -1,8 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import Link from 'next/link'
-import { Menu, Search } from 'lucide-react'
+import { Menu } from 'lucide-react'
 import { useScrollDirection } from '@/lib/hooks/useScrollDirection'
 import HamburgerOverlay from '@/components/layout/HamburgerOverlay'
 import { useRouter, usePathname } from 'next/navigation'
@@ -61,11 +60,11 @@ const Header = () => {
           left: 0;
           width: 100%;
           z-index: 1000;
-          background: rgba(255, 255, 255, 0.005);
-          backdrop-filter: saturate(150%) blur(10px);
-          -webkit-backdrop-filter: saturate(150%) blur(5px);
-          border-bottom: 1px solid rgba(255, 255, 255, 0.004);
-          padding: 3px 17px;
+          background: rgba(255, 255, 255, 0.02);
+          backdrop-filter: saturate(110%) blur(2px);
+          -webkit-backdrop-filter: saturate(110%) blur(2px);
+          border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+          padding: 8px 20px;
           display: flex;
           justify-content: space-between;
           align-items: center;
@@ -77,9 +76,8 @@ const Header = () => {
           transform: translateY(-100%);
         }
 
-        .dark-header .logo-text,
-        .dark-header .icon-button,
-        .dark-header .get-started {
+        .dark-header .company-name,
+        .dark-header .icon-button {
           color: #111 !important;
         }
 
@@ -87,98 +85,97 @@ const Header = () => {
           filter: brightness(0);
         }
 
-        .logo-block {
+        .logo-container {
           display: flex;
-          flex-direction: column;
-          align-items: flex-start;
+          align-items: center;
+          gap: 16px;
           cursor: pointer;
           transition: transform 0.3s ease;
         }
 
-        .logo-block:hover {
-          transform: scale(1.04);
+        .logo-container:hover {
+          transform: scale(1.02);
         }
 
         .logo-img {
-          height: 30px;
+          height: 35px;
           transition: filter 0.3s ease;
         }
 
-        .logo-text {
+        .company-name {
           font-family: 'Montserrat', sans-serif;
-          font-size: 0.72rem;
-          font-weight: 450;
-          text-transform: uppercase;
-          letter-spacing: 0.04em;
+          font-weight: 400;
+          font-size: 14px;
           color: #ffffff;
-          line-height: 1.1;
-          margin-top: 2px;
+          text-transform: uppercase;
+          letter-spacing: 0.02em;
+          line-height: 1.2;
           transition: color 0.3s ease;
+          white-space: nowrap;
         }
 
         .actions {
           display: flex;
           align-items: center;
-          gap: 6px;
         }
 
         .icon-button {
-          background: #ffffff;
+          background: rgba(255, 255, 255, 0.08);
           border: none;
-          border-radius: 2px;
-          color: #111;
+          border-radius: 4px;
+          color: #ffffff;
           cursor: pointer;
-          padding: 4px;
+          padding: 8px;
           display: flex;
           align-items: center;
           justify-content: center;
-          transition: opacity 0.2s ease;
-          width: 34px;
-          height: 34px;
+          transition: background 0.2s ease, transform 0.2s ease;
+          width: 40px;
+          height: 40px;
+          backdrop-filter: blur(1px);
         }
 
         .icon-button:hover {
-          opacity: 0.85;
-        }
-
-        .get-started {
-          font-family: 'Montserrat', sans-serif;
-          font-size: 0.75rem;
-          font-weight: 500;
-          background: #ffffff;
-          color: #111;
-          border: none;
-          padding: 6px 16px;
-          border-radius: 2px;
-          cursor: pointer;
-          transition: background 0.2s ease;
-        }
-
-        .get-started:hover {
-          background: #f1f1f1;
+          background: rgba(255, 255, 255, 0.12);
+          transform: scale(1.05);
         }
 
         @media (max-width: 768px) {
           .header {
-            padding: 6px 14px;
+            padding: 6px 16px;
           }
 
+          .logo-img {
+            height: 28px;
+          }
+
+          .company-name {
+            font-size: 12px;
+          }
+
+          .logo-container {
+            gap: 12px;
+          }
+
+          .icon-button {
+            width: 36px;
+            height: 36px;
+            padding: 6px;
+          }
+        }
+
+        @media (max-width: 480px) {
+          .company-name {
+            font-size: 10px;
+            letter-spacing: 0.01em;
+          }
+          
           .logo-img {
             height: 24px;
           }
 
-          .logo-text {
-            font-size: 0.7rem;
-          }
-
-          .get-started {
-            padding: 5px 12px;
-            font-size: 0.7rem;
-          }
-
-          .icon-button {
-            width: 30px;
-            height: 30px;
+          .logo-container {
+            gap: 8px;
           }
         }
       `}</style>
@@ -188,24 +185,17 @@ const Header = () => {
           isLightBackground ? 'dark-header' : ''
         }`}
       >
-        <div className="logo-block" onClick={scrollToTop}>
+        <div className="logo-container" onClick={scrollToTop}>
           <img src="/images/CG_1.png" alt="CG Logo" className="logo-img" />
-          <span className="logo-text">
-            CALCGUARD<sup>®</sup>
-            <br />
+          <div className="company-name">
+            CALCGUARD<sup>®</sup><br />
             TECHNOLOGIES
-          </span>
+          </div>
         </div>
 
         <div className="actions">
-          <Link href="/get-started">
-            <button className="get-started">Get Started</button>
-          </Link>
-          <button className="icon-button" onClick={() => alert('🔍 Search placeholder')}>
-            <Search size={16} />
-          </button>
           <button className="icon-button" onClick={() => setMenuOpen(true)}>
-            <Menu size={18} />
+            <Menu size={20} />
           </button>
         </div>
       </header>

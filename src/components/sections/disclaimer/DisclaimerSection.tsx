@@ -10,11 +10,104 @@ const ContactDisclaimerSection = () => {
 
   const goToSection = (id: string) => {
     const isHome = window.location.pathname === '/'
+    
     if (isHome) {
-      const el = document.getElementById(id)
-      if (el) el.scrollIntoView({ behavior: 'smooth' })
+      let element: Element | null = null
+      
+      // For sections that have both overview and detailed pages, 
+      // target the detailed section components, not the overview
+      if (['what-we-do', 'challenge', 'platform'].includes(id)) {
+        // Try to find the main section component (not the overview subsection)
+        const detailedSelectors = [
+          // Look for the main section component wrapper
+          `section.${id}-section`,
+          `div.${id}-section`, 
+          `section[data-section="${id}"][class*="section"]`,
+          // Look for section that contains the detailed content (not just overview)
+          `section:has(.${id}-content)`,
+          `div:has(.${id}-content)`,
+          // Find sections that come after overview
+          `section[id="${id}"]:not(.section-block)`,
+          `div[id="${id}"]:not(.section-block)`
+        ]
+        
+        for (const selector of detailedSelectors) {
+          try {
+            element = document.querySelector(selector)
+            if (element) {
+              // Check if this is likely the detailed section (not overview)
+              const htmlElement = element as HTMLElement
+              const isOverviewSection = element.closest('.overview-root') || 
+                                      element.classList.contains('section-block') ||
+                                      htmlElement.offsetHeight < 200 // Small sections are likely overview
+              if (!isOverviewSection) {
+                break // Found the detailed section
+              } else {
+                element = null // Keep looking
+              }
+            }
+          } catch (e) {
+            continue
+          }
+        }
+        
+        // If still not found, try to get all sections with this ID and pick the larger one
+        if (!element) {
+          const allSections = document.querySelectorAll(`[id="${id}"], section[data-section="${id}"]`)
+          let bestMatch: Element | null = null
+          let maxHeight = 0
+          
+          allSections.forEach(section => {
+            const htmlSection = section as HTMLElement
+            const isOverview = section.closest('.overview-root') || section.classList.contains('section-block')
+            if (!isOverview && htmlSection.offsetHeight > maxHeight) {
+              maxHeight = htmlSection.offsetHeight
+              bestMatch = section
+            }
+          })
+          
+          element = bestMatch
+        }
+      } else {
+        // For other sections, use standard lookup
+        element = document.getElementById(id)
+      }
+      
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth', block: 'start' })
+        return
+      }
+      
+      // Fallback: try standard selectors
+      const fallbackSelectors = [
+        `section[id="${id}"]`,
+        `div[id="${id}"]`,
+        `[data-section="${id}"]`
+      ]
+      
+      for (const selector of fallbackSelectors) {
+        try {
+          element = document.querySelector(selector)
+          if (element) {
+            element.scrollIntoView({ behavior: 'smooth', block: 'start' })
+            return
+          }
+        } catch (e) {
+          continue
+        }
+      }
+      
+      // If section not found on home page, navigate to separate page
+      router.push(`/${id}`)
     } else {
-      router.push(`/#${id}`)
+      // If not on home page, navigate based on section type
+      const mainPageSections = ['hero', 'what-we-do', 'challenge', 'platform', 'leadership', 'discovery']
+      
+      if (mainPageSections.includes(id)) {
+        router.push(`/#${id}`)
+      } else {
+        router.push(`/${id}`)
+      }
     }
   }
 
@@ -23,64 +116,73 @@ const ContactDisclaimerSection = () => {
       <style jsx>{`
         @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&family=Raleway:wght@300;400;500;600&display=swap');
 
-        .footer-grid {
-          display: grid;
-          grid-template-columns: 1fr 2fr 2fr 2fr 2fr;
-          gap: 32px;
+        .footer-container {
           background: #ffffff;
           color: #1e293b;
           font-family: 'Raleway', sans-serif;
-          font-size: 14px;
-          padding: 60px 60px 40px;
           border-top: 1px solid #e2e8f0;
         }
 
-        .footer-logo {
+        .footer-main {
           display: flex;
-          flex-direction: column;
-          gap: 16px;
+          justify-content: space-between;
           align-items: flex-start;
+          padding: 60px 60px 40px;
+          gap: 40px;
         }
 
-        .footer-logo img {
+        .footer-logo-section {
+          display: flex;
+          align-items: center;
+          gap: 16px;
+        }
+
+        .footer-logo-section img {
           height: 48px;
           width: auto;
           cursor: pointer;
         }
 
-        .footer-section-title {
-          font-weight: 600;
+        .company-name {
           font-family: 'Montserrat', sans-serif;
-          font-size: 12px;
+          font-weight: 400;
+          font-size: 16px;
+          color: #1e293b;
           text-transform: uppercase;
-          letter-spacing: 0.05em;
-          margin-bottom: 12px;
+          letter-spacing: 0.02em;
+          line-height: 1.2;
+        }
+
+        .contact-section {
+          display: flex;
+          flex-direction: column;
+          gap: 12px;
+          align-items: flex-end;
+          text-align: right;
+        }
+
+        .contact-item {
+          font-size: 14px;
           color: #64748b;
         }
 
-        .footer-link {
+        .contact-item a {
           color: #1e293b;
-          margin-bottom: 10px;
-          cursor: pointer;
+          text-decoration: none;
           transition: color 0.2s ease;
         }
 
-        .footer-link:hover {
+        .contact-item a:hover {
           color: #ef4444;
         }
 
-        .footer-bottom {
+        .social-buttons {
           display: flex;
-          flex-direction: column;
-          justify-content: center;
-          align-items: center;
-          padding: 20px;
-          font-size: 12px;
-          color: #94a3b8;
+          gap: 8px;
+          margin-top: 8px;
         }
 
         .social-button {
-          margin: 4px 0;
           background: none;
           border: 1px solid #94a3b8;
           padding: 6px 12px;
@@ -88,6 +190,7 @@ const ContactDisclaimerSection = () => {
           font-size: 12px;
           cursor: pointer;
           transition: all 0.2s ease;
+          color: #64748b;
         }
 
         .social-button:hover {
@@ -95,15 +198,24 @@ const ContactDisclaimerSection = () => {
           color: #ef4444;
         }
 
-        .page-links-row {
-          width: 100%;
-          background: #f9fafb;
-          padding: 16px 60px;
+        .footer-bottom {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          padding: 20px 60px;
           border-top: 1px solid #e2e8f0;
+          background: #f9fafb;
+        }
+
+        .copyright {
+          font-size: 12px;
+          color: #94a3b8;
+        }
+
+        .page-links {
           display: flex;
           flex-wrap: wrap;
           gap: 20px;
-          justify-content: center;
           font-family: 'Montserrat', sans-serif;
           font-size: 13px;
         }
@@ -119,91 +231,119 @@ const ContactDisclaimerSection = () => {
         }
 
         @media (max-width: 1024px) {
-          .footer-grid {
-            grid-template-columns: 1fr 1fr;
+          .footer-main {
+            flex-direction: column;
+            gap: 30px;
             padding: 40px 20px;
+          }
+
+          .footer-logo-section {
+            justify-content: center;
+          }
+
+          .contact-section {
+            align-items: center;
+            text-align: center;
+          }
+
+          .footer-bottom {
+            flex-direction: column;
+            gap: 16px;
+            padding: 20px;
+          }
+
+          .page-links {
+            justify-content: center;
           }
         }
 
         @media (max-width: 640px) {
-          .footer-grid {
-            grid-template-columns: 1fr;
+          .footer-main {
             padding: 30px 16px;
           }
-          .page-links-row {
-            padding: 16px 20px;
+
+          .footer-logo-section {
+            flex-direction: column;
+            gap: 8px;
+            text-align: center;
+          }
+
+          .company-name {
+            font-size: 14px;
+          }
+
+          .page-links {
             gap: 12px;
             font-size: 12px;
+          }
+
+          .footer-bottom {
+            padding: 16px;
           }
         }
       `}</style>
 
-      <footer className="footer-grid">
-        <div className="footer-logo">
-          <Image src="/images/CG_1.png" alt="CalcGuard Logo" width={0} height={0} sizes="100vw" style={{ height: '48px', width: 'auto' }} />
-          <div style={{ fontSize: '12px', color: '#94a3b8' }}>© 2025 CalcGuard Technologies Inc.</div>
-          <button className="social-button">𝕏</button>
-          <button className="social-button">LINKEDIN</button>
-          <button className="social-button">GITHUB</button>
+      <footer className="footer-container">
+        <div className="footer-main">
+          <div className="footer-logo-section">
+            <Image 
+              src="/images/CG_1.png" 
+              alt="CalcGuard Logo" 
+              width={0} 
+              height={0} 
+              sizes="100vw" 
+              style={{ height: '48px', width: 'auto' }} 
+            />
+            <div className="company-name">
+              CALCGUARD<sup>®</sup><br />
+              TECHNOLOGIES
+            </div>
+          </div>
+
+          <div className="contact-section">
+            <div className="contact-item">
+              <strong>Phone:</strong> <a href="tel:+1234567890">(123) 456-7890</a>
+            </div>
+            <div className="contact-item">
+              <strong>Email:</strong> <a href="mailto:info@calcguard.com">info@calcguard.com</a>
+            </div>
+            <div className="social-buttons">
+              <button 
+                className="social-button"
+                onClick={() => window.open('https://x.com/CalcGuard', '_blank')}
+              >
+                𝕏
+              </button>
+              <button 
+                className="social-button"
+                onClick={() => window.open('https://www.linkedin.com/company/calcguard-technologies/posts/?feedView=all', '_blank')}
+              >
+                LINKEDIN
+              </button>
+            </div>
+          </div>
         </div>
 
-        <div>
-          <div className="footer-section-title">Offerings</div>
-          <div className="footer-link">Routing Transparency</div>
-          <div className="footer-link">Trade Surveillance</div>
-          <div className="footer-link">Data Normalization</div>
-          <div className="footer-link">FIX Integrity</div>
-          <div className="footer-link">TCA Pipelines</div>
-          <div className="footer-link">Dark Pool Analysis</div>
-        </div>
-
-        <div>
-          <div className="footer-section-title">Industry Impact</div>
-          <div className="footer-link">Asset Managers</div>
-          <div className="footer-link">Execution Desks</div>
-          <div className="footer-link">Compliance Teams</div>
-          <div className="footer-link">Regulators</div>
-          <div className="footer-link">Broker Dealers</div>
-        </div>
-
-        <div>
-          <div className="footer-section-title">Capabilities</div>
-          <div className="footer-link">Intent Recognition</div>
-          <div className="footer-link">Venue Mapping</div>
-          <div className="footer-link">Microstructure AI</div>
-          <div className="footer-link">Real-Time Routing Logs</div>
-          <div className="footer-link">Execution Quality Ranking</div>
-        </div>
-
-        <div>
-          <div className="footer-section-title">Documents</div>
-          <div className="footer-link">Broker Integration</div>
-          <div className="footer-link">IMAC Council</div>
-          <div className="footer-link">Client Login</div>
-          <div className="footer-link">Platform Docs</div>
-          <div className="footer-link">Privacy Policy</div>
-          <div className="footer-link">Terms of Use</div>
+        <div className="footer-bottom">
+          <div className="copyright">
+            © 2025 CalcGuard Technologies Inc.
+          </div>
+          
+          <div className="page-links">
+            <span className="page-link" onClick={() => goToSection('hero')}>Home</span>
+            <span className="page-link" onClick={() => goToSection('what-we-do')}>What We Do</span>
+            <span className="page-link" onClick={() => goToSection('challenge')}>Challenge</span>
+            <span className="page-link" onClick={() => goToSection('platform')}>Platform</span>
+            <span className="page-link" onClick={() => goToSection('leadership')}>Leadership</span>
+            <span className="page-link" onClick={() => goToSection('discovery')}>Discovery</span>
+            <span className="page-link" onClick={() => goToSection('inefficiencies')}>Inefficiencies</span>
+            <span className="page-link" onClick={() => goToSection('trinity')}>Trinity</span>
+            <span className="page-link" onClick={() => goToSection('edge')}>Edge</span>
+            <span className="page-link" onClick={() => goToSection('news')}>Current News</span>
+            <span className="page-link" onClick={() => goToSection('blog')}>Blog</span>
+          </div>
         </div>
       </footer>
-
-      <div className="page-links-row">
-        <span className="page-link" onClick={() => goToSection('hero')}>Home</span>
-        <span className="page-link" onClick={() => goToSection('what-we-do')}>What We Do</span>
-        <span className="page-link" onClick={() => goToSection('challenge')}>Challenge</span>
-        <span className="page-link" onClick={() => goToSection('platform')}>Platform</span>
-        <span className="page-link" onClick={() => goToSection('leadership')}>Leadership</span>
-        <span className="page-link" onClick={() => goToSection('inefficiencies')}>Inefficiencies</span>
-        <span className="page-link" onClick={() => goToSection('trinity')}>Trinity</span>
-        <span className="page-link" onClick={() => goToSection('sphere')}>Sphere</span>
-        <span className="page-link" onClick={() => goToSection('edge')}>Edge</span>
-        <span className="page-link" onClick={() => goToSection('news')}>Current News</span>
-        <span className="page-link" onClick={() => goToSection('blog')}>Blog</span>
-        <span className="page-link" onClick={() => goToSection('events')}>Events</span>
-      </div>
-
-      <div className="footer-bottom">
-        Empowering Transparent & Secure Markets — CalcGuard.com
-      </div>
     </>
   )
 }

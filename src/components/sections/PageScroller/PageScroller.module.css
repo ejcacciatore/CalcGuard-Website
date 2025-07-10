@@ -1,0 +1,296 @@
+.pageScrollerContainer {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  background: #f0f0f0;
+  overflow: hidden;
+}
+
+/* Compact Palantir-style progress bar */
+.progressBarSystem {
+  position: absolute;
+  top: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 100;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  padding: 16px 24px;
+  border-radius: 8px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+}
+
+.progressBarsWrapper {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+}
+
+.progressBarItem {
+  cursor: pointer;
+  opacity: 0.4;
+  transition: all 0.3s ease;
+}
+
+.progressBarItem.active {
+  opacity: 1;
+}
+
+.progressBarItem.completed {
+  opacity: 0.6;
+}
+
+.progressBarItem:hover {
+  opacity: 0.8;
+}
+
+.progressBarLabel {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 1.2px;
+  color: #666;
+  margin-bottom: 6px;
+  text-transform: uppercase;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  transition: color 0.3s ease;
+  white-space: nowrap;
+}
+
+.progressBarItem.active .progressBarLabel {
+  color: #000;
+}
+
+.progressBarTrack {
+  width: 120px;
+  height: 2px;
+  background: rgba(0, 0, 0, 0.1);
+  border-radius: 2px;
+  overflow: hidden;
+  position: relative;
+}
+
+.progressBarFill {
+  height: 100%;
+  background: #000;
+  transition: width 0.1s linear;
+  border-radius: 2px;
+}
+
+/* Content area below progress bars */
+.contentArea {
+  position: absolute;
+  top: 120px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  overflow: hidden;
+}
+
+.contentSlider {
+  display: flex;
+  height: 100%;
+  transition: transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  will-change: transform;
+}
+
+.sectionWrapper {
+  min-width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px;
+}
+
+/* Mobile responsive */
+@media (max-width: 1024px) {
+  .progressBarTrack {
+    width: 100px;
+  }
+
+  .progressBarsWrapper {
+    gap: 16px;
+  }
+}
+
+@media (max-width: 768px) {
+  .progressBarSystem {
+    top: 20px;
+    padding: 12px 16px;
+    width: calc(100% - 32px);
+  }
+
+  .progressBarsWrapper {
+    gap: 12px;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .progressBarItem {
+    flex-shrink: 0;
+  }
+
+  .progressBarLabel {
+    font-size: 8px;
+    letter-spacing: 0.8px;
+  }
+
+  .progressBarTrack {
+    width: 80px;
+  }
+
+  .contentArea {
+    top: 100px;
+  }
+}.pageScrollerContainer {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  background: #f0f0f0;
+  overflow: hidden;
+}
+
+/* Compact Palantir-style progress bar */
+.progressBarSystem {
+  position: absolute;
+  top: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 100;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  padding: 16px 24px;
+  border-radius: 8px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+}
+
+.progressBarsWrapper {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+}
+
+.progressBarItem {
+  cursor: pointer;
+  opacity: 0.4;
+  transition: all 0.3s ease;
+}
+
+.progressBarItem.active {
+  opacity: 1;
+}
+
+.progressBarItem.completed {
+  opacity: 0.6;
+}
+
+.progressBarItem:hover {
+  opacity: 0.8;
+}
+
+.progressBarLabel {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 1.2px;
+  color: #666;
+  margin-bottom: 6px;
+  text-transform: uppercase;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  transition: color 0.3s ease;
+  white-space: nowrap;
+}
+
+.progressBarItem.active .progressBarLabel {
+  color: #000;
+}
+
+.progressBarTrack {
+  width: 120px;
+  height: 2px;
+  background: rgba(0, 0, 0, 0.1);
+  border-radius: 2px;
+  overflow: hidden;
+  position: relative;
+}
+
+.progressBarFill {
+  height: 100%;
+  background: #000;
+  transition: width 0.1s linear;
+  border-radius: 2px;
+}
+
+/* Content area below progress bars */
+.contentArea {
+  position: absolute;
+  top: 100px; /* Reduced from 120px to give more room */
+  left: 0;
+  right: 0;
+  bottom: 0;
+  overflow: hidden;
+}
+
+.contentSlider {
+  display: flex;
+  height: 100%;
+  transition: transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  will-change: transform;
+}
+
+.sectionWrapper {
+  min-width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: flex-start; /* Changed from center to flex-start */
+  justify-content: center;
+  padding: 80px 40px 40px 40px; /* Added more top padding */
+  overflow-y: auto; /* Allow scrolling if content is too tall */
+}
+
+/* Mobile responsive */
+@media (max-width: 1024px) {
+  .progressBarTrack {
+    width: 100px;
+  }
+
+  .progressBarsWrapper {
+    gap: 16px;
+  }
+}
+
+@media (max-width: 768px) {
+  .progressBarSystem {
+    top: 20px;
+    padding: 12px 16px;
+    width: calc(100% - 32px);
+  }
+
+  .progressBarsWrapper {
+    gap: 12px;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .progressBarItem {
+    flex-shrink: 0;
+  }
+
+  .progressBarLabel {
+    font-size: 8px;
+    letter-spacing: 0.8px;
+  }
+
+  .progressBarTrack {
+    width: 80px;
+  }
+
+  .contentArea {
+    top: 80px; /* Further reduced for mobile */
+  }
+  
+  .sectionWrapper {
+    padding: 60px 20px 20px 20px; /* Adjusted padding for mobile */
+  }
+}

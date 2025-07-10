@@ -142,9 +142,6 @@ const ContactDisclaimerSection = () => {
         <div className="footer-logo">
           <Image src="/images/CG_1.png" alt="CalcGuard Logo" width={0} height={0} sizes="100vw" style={{ height: '48px', width: 'auto' }} />
           <div style={{ fontSize: '12px', color: '#94a3b8' }}>© 2025 CalcGuard Technologies Inc.</div>
-          <div className="footer-link">Do Not Sell or Share My Personal Info</div>
-          <div className="footer-link">US  |  UK  |  EU  |  JP</div>
-          <button className="social-button">YOUTUBE</button>
           <button className="social-button">𝕏</button>
           <button className="social-button">LINKEDIN</button>
           <button className="social-button">GITHUB</button>

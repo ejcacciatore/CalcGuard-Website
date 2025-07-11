@@ -37,32 +37,37 @@ const TrinitySection = () => {
         .top-section {
           background-color: #ffffff;
           display: flex;
-          align-items: center;
-          padding: 60px;
+          align-items: stretch;
+          padding: 0;
           position: relative;
           z-index: 10;
           overflow: visible;
+          min-height: 400px;
         }
 
         .top-image-container {
-          width: 50%;
-          padding-right: 40px;
+          width: 40%;
+          padding: 0;
+          display: flex;
+          align-items: stretch;
         }
 
         .top-image {
           width: 100%;
-          height: auto;
+          height: 100%;
           object-fit: cover;
+          display: block;
         }
 
         .top-content {
-          width: 50%;
+          width: 60%;
           display: flex;
           justify-content: space-around;
           gap: 20px;
-          padding-left: 40px;
+          padding: 60px 40px;
           position: relative;
           overflow: visible;
+          background-color: #ffffff;
         }
 
         .feature-column {
@@ -178,17 +183,22 @@ const TrinitySection = () => {
         .bottom-section {
           background-color: #2E4B4C;
           color: #ffffff;
-          padding: 60px;
+          padding: 0;
           display: flex;
-          align-items: flex-end;
+          align-items: stretch;
           position: relative;
           z-index: 5;
+          min-height: 400px;
         }
 
         .bottom-text-container {
-          width: 50%;
+          width: 65%;
           position: relative;
           z-index: 10;
+          padding: 60px;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
         }
 
         .sub-heading {
@@ -215,66 +225,263 @@ const TrinitySection = () => {
           font-size: 18px;
           color: #e2e8f0;
           line-height: 1.6;
-          max-width: 500px;
+          max-width: 600px;
           font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
         }
 
         .bottom-image-container {
-          position: absolute;
-          bottom: 0;
-          right: 0;
-          width: 55%;
-          height: 100%;
-          z-index: 6;
+          width: 35%;
+          position: relative;
+          overflow: hidden;
+          display: flex;
+          align-items: center;
+          justify-content: center;
         }
 
         .bottom-image {
           width: 100%;
           height: 100%;
           object-fit: cover;
+          display: block;
         }
         
         /* --- Responsive Styles --- */
         @media (max-width: 1024px) {
           .top-section, .bottom-section {
             flex-direction: column;
-            padding: 40px;
+            min-height: auto;
           }
+          
+          .top-section {
+            padding: 0;
+          }
+          
           .bottom-section {
-            padding-top: 40px;
+            padding: 0;
           }
+          
           .top-image-container, .top-content, .bottom-text-container, .bottom-image-container {
             width: 100%;
             position: relative;
-            height: auto;
           }
+          
+          .top-image-container {
+            min-height: 250px;
+            max-height: 300px;
+          }
+          
           .top-content {
             flex-direction: column;
-            padding-left: 0;
-            margin-top: 40px;
-            gap: 40px;
+            padding: 40px 30px;
+            gap: 30px;
           }
+          
+          .bottom-text-container {
+            padding: 40px 30px;
+          }
+          
           .bottom-image-container {
-            margin-top: 40px;
+            min-height: 250px;
+            max-height: 300px;
             order: -1;
+          }
+          
+          .feature-column {
+            max-width: 100%;
+            width: 100%;
+          }
+          
+          .feature-column.highlight {
+            width: 100%;
+            max-width: 100%;
+            transform: scale(1.05);
+          }
+          
+          .feature-column:first-child.highlight,
+          .feature-column:last-child.highlight {
+            transform: scale(1.05);
           }
         }
         
         @media (max-width: 768px) {
+          .page-container {
+            margin: 0;
+            box-shadow: none;
+          }
+          
           .main-heading {
-            font-size: 32px;
+            font-size: 28px;
+            line-height: 1.2;
           }
           
           .feature-column {
-            padding: 20px;
+            padding: 20px 15px;
+            margin-bottom: 20px;
+          }
+          
+          .feature-title {
+            font-size: 15px;
+            margin-bottom: 10px;
+          }
+          
+          .feature-description {
+            font-size: 14px;
+            line-height: 1.5;
+          }
+          
+          .top-content {
+            padding: 30px 20px;
+            gap: 20px;
+          }
+          
+          .bottom-text-container {
+            padding: 30px 20px;
+          }
+          
+          .description-text {
+            font-size: 16px;
+            line-height: 1.5;
+          }
+          
+          .sub-heading {
+            font-size: 14px;
+          }
+          
+          .top-image-container {
+            min-height: 200px;
+            max-height: 250px;
+          }
+          
+          .bottom-image-container {
+            min-height: 200px;
+            max-height: 250px;
+          }
+          
+          .feature-column.highlight {
+            transform: scale(1.02);
+            padding: 25px 20px;
+          }
+          
+          .feature-expanded {
+            font-size: 12px;
+          }
+          
+          .feature-column.highlight .feature-expanded {
+            max-height: 80px;
+            font-size: 12px;
+            padding: 8px 12px;
+          }
+        }
+
+        @media (max-width: 480px) {
+          .main-heading {
+            font-size: 24px;
+            line-height: 1.3;
+          }
+          
+          .top-content {
+            padding: 25px 15px;
+            gap: 15px;
+          }
+          
+          .bottom-text-container {
+            padding: 25px 15px;
+          }
+          
+          .feature-column {
+            padding: 15px 10px;
+            margin-bottom: 15px;
           }
           
           .feature-title {
             font-size: 14px;
+            margin-bottom: 8px;
           }
           
           .feature-description {
             font-size: 13px;
+          }
+          
+          .description-text {
+            font-size: 15px;
+          }
+          
+          .sub-heading {
+            font-size: 13px;
+            margin-bottom: 10px;
+          }
+          
+          .top-image-container {
+            min-height: 180px;
+            max-height: 220px;
+          }
+          
+          .bottom-image-container {
+            min-height: 180px;
+            max-height: 220px;
+          }
+          
+          .feature-icon {
+            height: 40px;
+            width: 40px;
+            margin-bottom: 15px;
+          }
+          
+          .feature-column.highlight {
+            transform: scale(1.01);
+            padding: 20px 15px;
+          }
+          
+          .feature-column.highlight .feature-title {
+            font-size: 15px;
+          }
+          
+          .feature-column.highlight .feature-description {
+            font-size: 14px;
+          }
+        }
+
+        @media (max-width: 360px) {
+          .page-wrapper {
+            padding: 0;
+          }
+          
+          .main-heading {
+            font-size: 22px;
+          }
+          
+          .top-content {
+            padding: 20px 12px;
+          }
+          
+          .bottom-text-container {
+            padding: 20px 12px;
+          }
+          
+          .feature-column {
+            padding: 12px 8px;
+          }
+          
+          .feature-title {
+            font-size: 13px;
+          }
+          
+          .feature-description {
+            font-size: 12px;
+          }
+          
+          .description-text {
+            font-size: 14px;
+          }
+          
+          .top-image-container {
+            min-height: 160px;
+            max-height: 200px;
+          }
+          
+          .bottom-image-container {
+            min-height: 160px;
+            max-height: 200px;
           }
         }
       `}</style>
@@ -334,13 +541,13 @@ const TrinitySection = () => {
           </div>
 
           <div className="bottom-section">
-            <div className="bottom-image-container">
-              <img src="/images/page6_bottom_right.png" alt="Boats docked in a marina" className="bottom-image"/>
-            </div>
             <div className="bottom-text-container">
               <p className="sub-heading">Why existing solutions fall short</p>
               <h2 className="main-heading">DATA LAKE <span aria-hidden="true">≠</span> DATA-DRIVEN DECISION MAKING</h2>
               <p className="description-text">Turning raw data into trusted, timely insights requires advanced workflow applications and business-context integration.</p>
+            </div>
+            <div className="bottom-image-container">
+              <img src="/images/page6_bottom_right.png" alt="Boats docked in a marina" className="bottom-image"/>
             </div>
           </div>
         </div>

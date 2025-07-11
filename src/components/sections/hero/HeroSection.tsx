@@ -82,14 +82,14 @@ const HeroSection = () => {
 
         .title {
           z-index: 2;
-          font-size: 4.2rem;
+          font-size: clamp(1.5rem, 4vw, 4.2rem);
           font-weight: 300;
           color: #ffffff;
           font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
           display: inline-block;
           text-align: center;
-          transform: translateY(-14vh);
-          letter-spacing: -1.2px;
+          transform: translateY(-8vh);
+          letter-spacing: -0.02em;
           backdrop-filter: blur(4px);
           padding: 0.15em 0.4em;
           border-radius: 8px;
@@ -99,6 +99,11 @@ const HeroSection = () => {
             0 4px 12px rgba(0, 0, 0, 0.4),
             0 0 20px rgba(255, 255, 255, 0.1);
           border: 1px solid rgba(255, 255, 255, 0.08);
+          max-width: 90vw;
+          line-height: 1.1;
+          word-break: keep-all;
+          overflow-wrap: break-word;
+          hyphens: none;
         }
 
         .title span {
@@ -106,20 +111,12 @@ const HeroSection = () => {
           opacity: 0;
           transform: translateY(20px);
           animation: brightenLetter 0.6s ease-out forwards;
+          font-weight: 300; /* Consistent weight for all characters */
+          letter-spacing: inherit; /* Inherit consistent spacing */
         }
 
         .title span:nth-child(n) {
           animation-delay: calc(0.03s * var(--i));
-        }
-
-        .title .b2b {
-          font-weight: 600;
-          letter-spacing: -0.8px;
-          color: #ffffff;
-          text-shadow: 
-            0 2px 6px rgba(0, 0, 0, 0.9),
-            0 4px 16px rgba(0, 0, 0, 0.6),
-            0 0 30px rgba(255, 255, 255, 0.2);
         }
 
         @keyframes brightenLetter {
@@ -148,7 +145,7 @@ const HeroSection = () => {
         }
 
         .scroll-indicator {
-          position: absolute;
+          position: fixed;
           bottom: 40px;
           left: 50%;
           transform: translateX(-50%);
@@ -170,6 +167,8 @@ const HeroSection = () => {
           margin-bottom: 12px;
           text-transform: uppercase;
           opacity: 0.8;
+          text-align: center;
+          white-space: nowrap;
         }
 
         .scroll-icon {
@@ -262,19 +261,27 @@ const HeroSection = () => {
           z-index: 3;
         }
 
-        @media (max-width: 768px) {
+        /* Tablet responsive */
+        @media (max-width: 1024px) {
           .title {
-            font-size: 2.2rem;
-            letter-spacing: -0.8px;
-            padding: 0.1em 0.3em;
-            max-width: 90vw;
-            word-wrap: break-word;
-            white-space: normal;
-            line-height: 1.1;
+            font-size: clamp(1.4rem, 3.5vw, 3.5rem);
+            transform: translateY(-6vh);
+            max-width: 85vw;
           }
 
-          .title .b2b {
-            letter-spacing: -0.5px;
+          .scroll-indicator {
+            bottom: 35px;
+          }
+        }
+
+        /* Mobile responsive */
+        @media (max-width: 768px) {
+          .title {
+            font-size: clamp(1.2rem, 3vw, 2.5rem);
+            transform: translateY(-5vh);
+            padding: 0.1em 0.3em;
+            max-width: 90vw;
+            letter-spacing: -0.01em;
           }
 
           .progress-bar {
@@ -283,46 +290,36 @@ const HeroSection = () => {
 
           .scroll-indicator {
             bottom: 30px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: auto;
-            text-align: center;
           }
 
           .scroll-text {
             font-size: 0.7rem;
-            text-align: center;
-            white-space: nowrap;
           }
 
           .scroll-icon {
             width: 20px;
             height: 32px;
-            margin: 0 auto;
           }
 
           .scroll-arrow {
-            margin: 8px auto 0;
+            margin: 6px auto 0;
+            border-left: 5px solid transparent;
+            border-right: 5px solid transparent;
+            border-top: 6px solid rgba(255, 255, 255, 0.6);
           }
         }
 
+        /* Small mobile */
         @media (max-width: 480px) {
           .title {
-            font-size: 1.6rem;
-            letter-spacing: -0.4px;
+            font-size: clamp(1rem, 2.8vw, 2rem);
+            transform: translateY(-4vh);
             max-width: 95vw;
             padding: 0.1em 0.2em;
-            transform: translateY(-10vh);
-          }
-
-          .title .b2b {
-            letter-spacing: -0.2px;
           }
 
           .scroll-indicator {
             bottom: 25px;
-            left: 50%;
-            transform: translateX(-50%);
           }
 
           .scroll-text {
@@ -336,16 +333,12 @@ const HeroSection = () => {
           }
         }
 
-        @media (max-width: 375px) {
+        /* Extra small mobile */
+        @media (max-width: 360px) {
           .title {
-            font-size: 1.4rem;
-            letter-spacing: -0.3px;
+            font-size: clamp(0.9rem, 2.5vw, 1.8rem);
+            transform: translateY(-3vh);
             max-width: 98vw;
-            transform: translateY(-8vh);
-          }
-
-          .title .b2b {
-            letter-spacing: -0.1px;
           }
 
           .scroll-indicator {
@@ -373,18 +366,8 @@ const HeroSection = () => {
         </video>
 
         <h1 className="title">
-          {'Seamless '.split('').map((char, idx) => (
+          {'Seamless B2B Infrastructure'.split('').map((char, idx) => (
             <span key={idx} style={{ ['--i' as any]: idx }}>
-              {char === ' ' ? '\u00A0' : char}
-            </span>
-          ))}
-          {'B2B'.split('').map((char, idx) => (
-            <span key={idx + 9} className="b2b" style={{ ['--i' as any]: idx + 9 }}>
-              {char}
-            </span>
-          ))}
-          {' Infrastructure'.split('').map((char, idx) => (
-            <span key={idx + 12} style={{ ['--i' as any]: idx + 12 }}>
               {char === ' ' ? '\u00A0' : char}
             </span>
           ))}

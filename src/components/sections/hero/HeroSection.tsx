@@ -89,13 +89,13 @@ const HeroSection = () => {
           display: inline-block;
           text-align: center;
           transform: translateY(-14vh);
-          letter-spacing: -2.8px;
-          backdrop-filter: blur(2px);
+          letter-spacing: -1.2px;
+          backdrop-filter: blur(4px);
           padding: 0.15em 0.4em;
           border-radius: 8px;
-          background: rgba(0, 0, 0, 0.05);
+          background: rgba(0, 0, 0, 0.15);
           text-shadow: 
-            0 2px 4px rgba(0, 0, 0, 0.08),
+            0 2px 4px rgba(0, 0, 0, 0.8),
             0 4px 12px rgba(0, 0, 0, 0.4),
             0 0 20px rgba(255, 255, 255, 0.1);
           border: 1px solid rgba(255, 255, 255, 0.08);
@@ -113,7 +113,7 @@ const HeroSection = () => {
         }
 
         .title .b2b {
-          font-weight: 400;
+          font-weight: 600;
           letter-spacing: -0.8px;
           color: #ffffff;
           text-shadow: 
@@ -266,8 +266,11 @@ const HeroSection = () => {
           .title {
             font-size: 2.2rem;
             letter-spacing: -0.8px;
-            white-space: nowrap;
             padding: 0.1em 0.3em;
+            max-width: 90vw;
+            word-wrap: break-word;
+            white-space: normal;
+            line-height: 1.1;
           }
 
           .title .b2b {
@@ -280,26 +283,83 @@ const HeroSection = () => {
 
           .scroll-indicator {
             bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: auto;
+            text-align: center;
           }
 
           .scroll-text {
             font-size: 0.7rem;
+            text-align: center;
+            white-space: nowrap;
           }
 
           .scroll-icon {
             width: 20px;
             height: 32px;
+            margin: 0 auto;
+          }
+
+          .scroll-arrow {
+            margin: 8px auto 0;
           }
         }
 
         @media (max-width: 480px) {
           .title {
-            font-size: 1.8rem;
-            letter-spacing: -0.6px;
+            font-size: 1.6rem;
+            letter-spacing: -0.4px;
+            max-width: 95vw;
+            padding: 0.1em 0.2em;
+            transform: translateY(-10vh);
           }
 
           .title .b2b {
+            letter-spacing: -0.2px;
+          }
+
+          .scroll-indicator {
+            bottom: 25px;
+            left: 50%;
+            transform: translateX(-50%);
+          }
+
+          .scroll-text {
+            font-size: 0.65rem;
+            margin-bottom: 8px;
+          }
+
+          .scroll-icon {
+            width: 18px;
+            height: 28px;
+          }
+        }
+
+        @media (max-width: 375px) {
+          .title {
+            font-size: 1.4rem;
             letter-spacing: -0.3px;
+            max-width: 98vw;
+            transform: translateY(-8vh);
+          }
+
+          .title .b2b {
+            letter-spacing: -0.1px;
+          }
+
+          .scroll-indicator {
+            bottom: 20px;
+          }
+
+          .scroll-text {
+            font-size: 0.6rem;
+            margin-bottom: 6px;
+          }
+
+          .scroll-icon {
+            width: 16px;
+            height: 24px;
           }
         }
       `}</style>

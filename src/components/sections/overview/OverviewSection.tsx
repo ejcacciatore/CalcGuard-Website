@@ -72,11 +72,112 @@ const OverviewSection = () => {
     return () => observer.disconnect()
   }, [])
 
-  const handleSectionClick = (sectionId: string) => {
-    const element = document.getElementById(sectionId)
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' })
+  // Use the same scrollTo logic as HamburgerOverlay
+  const scrollTo = (id: string) => {
+    const isHome = window.location.pathname === '/'
+    if (isHome) {
+      let element: Element | null = null
+      
+      // For sections that have both overview and detailed pages, 
+      // target the detailed section components, not the overview
+      if (['what-we-do', 'challenge', 'platform'].includes(id)) {
+        // Try to find the main section component (not the overview subsection)
+        const detailedSelectors = [
+          // Look for the main section component wrapper
+          `section.${id}-section`,
+          `div.${id}-section`, 
+          `section[data-section="${id}"][class*="section"]`,
+          // Look for section that contains the detailed content (not just overview)
+          `section:has(.${id}-content)`,
+          `div:has(.${id}-content)`,
+          // Find sections that come after overview
+          `section[id="${id}"]:not(.section-block)`,
+          `div[id="${id}"]:not(.section-block)`
+        ]
+        
+        for (const selector of detailedSelectors) {
+          try {
+            element = document.querySelector(selector)
+            if (element) {
+              // Check if this is likely the detailed section (not overview)
+              const htmlElement = element as HTMLElement
+              const isOverviewSection = element.closest('.overview-root') || 
+                                      element.classList.contains('section-block') ||
+                                      htmlElement.offsetHeight < 200 // Small sections are likely overview
+              if (!isOverviewSection) {
+                break // Found the detailed section
+              } else {
+                element = null // Keep looking
+              }
+            }
+          } catch (e) {
+            continue
+          }
+        }
+        
+        // If still not found, try to get all sections with this ID and pick the larger one
+        if (!element) {
+          const allSections = document.querySelectorAll(`[id="${id}"], section[data-section="${id}"]`)
+          let bestMatch: Element | null = null
+          let maxHeight = 0
+          
+          allSections.forEach(section => {
+            const htmlSection = section as HTMLElement
+            const isOverview = section.closest('.overview-root') || section.classList.contains('section-block')
+            if (!isOverview && htmlSection.offsetHeight > maxHeight) {
+              maxHeight = htmlSection.offsetHeight
+              bestMatch = section
+            }
+          })
+          
+          element = bestMatch
+        }
+      } else {
+        // For other sections, use standard lookup
+        element = document.getElementById(id)
+      }
+      
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth', block: 'start' })
+        return
+      }
+      
+      // Fallback: try standard selectors
+      const fallbackSelectors = [
+        `section[id="${id}"]`,
+        `div[id="${id}"]`,
+        `[data-section="${id}"]`
+      ]
+      
+      for (const selector of fallbackSelectors) {
+        try {
+          element = document.querySelector(selector)
+          if (element) {
+            element.scrollIntoView({ behavior: 'smooth', block: 'start' })
+            return
+          }
+        } catch (e) {
+          continue
+        }
+      }
+      
+      // Debug: log available sections
+      console.log(`Section not found: ${id}. Available sections:`, 
+        Array.from(document.querySelectorAll('section[id], div[id]')).map(el => {
+          const htmlEl = el as HTMLElement
+          return {
+            id: el.id, 
+            classes: el.className,
+            height: htmlEl.offsetHeight,
+            isOverview: el.closest('.overview-root') ? 'yes' : 'no'
+          }
+        })
+      )
     }
+  }
+
+  const handleSectionClick = (sectionId: string) => {
+    scrollTo(sectionId)
   }
 
   return (

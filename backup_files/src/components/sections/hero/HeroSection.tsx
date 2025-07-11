@@ -145,7 +145,7 @@ const HeroSection = () => {
       <section id="hero" className="hero">
         <video className="background-video" autoPlay muted loop playsInline>
           <source
-            src="/images/20250410_2043_Futuristic Data Symphony_remix_01jrh4v3ecewybpzdbsy98hzht_1.mp4"
+            src="/images/CG Datacenter Splash.mp4"
             type="video/mp4"
           />
         </video>

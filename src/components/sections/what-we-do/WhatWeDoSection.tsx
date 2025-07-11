@@ -107,7 +107,6 @@ const WhatWeDoSection = () => {
           text-shadow: 0 2px 4px rgba(0,0,0,0.5);
         }
 
-
         .description {
           font-size: 21px;
           font-weight: 500;
@@ -119,7 +118,8 @@ const WhatWeDoSection = () => {
         }
 
         .control-icon-container {
-          text-align: center;
+          text-align: left; /* Changed from center to left */
+          margin-left: -20px; /* Move icon slightly left */
         }
 
         .control-icon {
@@ -288,26 +288,132 @@ const WhatWeDoSection = () => {
           color: white;
         }
 
+        /* Tablet responsive */
+        @media (max-width: 1024px) {
+          .right-column {
+            padding: 48px 64px 48px 48px;
+          }
+          
+          .left-column {
+            padding: 48px;
+          }
+          
+          .main-title {
+            font-size: 42px;
+          }
+          
+          .description {
+            font-size: 19px;
+          }
+        }
+
+        /* Mobile responsive - FIXED */
         @media (max-width: 768px) {
           .content-grid {
             display: flex;
             flex-direction: column;
           }
+          
           .video-background {
             height: 50vh;
             width: 100%;
           }
-          .left-column, .right-column {
-            padding: 24px;
-          }
+          
           .left-column {
             background-color: rgba(0,0,0,0.5);
+            padding: 24px 20px; /* Reduced side padding */
+            min-height: 50vh;
           }
+          
+          .left-content {
+            max-width: none; /* Remove width constraint */
+            margin-top: 40px;
+          }
+          
+          .control-icon-container {
+            text-align: left;
+            margin-left: -10px; /* Less negative margin on mobile */
+            margin-top: 20px;
+          }
+          
+          .right-column {
+            padding: 32px 16px; /* Much more space on sides */
+            background-color: #f8fafc;
+            min-height: 50vh;
+          }
+          
+          .features-container {
+            gap: 16px;
+          }
+          
+          .feature {
+            padding: 20px 16px; /* More internal padding */
+            margin: 0; /* Remove any margins */
+          }
+          
+          .feature-header {
+            gap: 12px;
+          }
+          
+          .feature-icon {
+            height: 40px;
+          }
+          
+          .feature-title {
+            font-size: 14px;
+            line-height: 1.3;
+          }
+          
+          .feature-description {
+            font-size: 13px;
+          }
+          
+          .extended-description {
+            font-size: 12px;
+          }
+          
           .main-title {
             font-size: 32px;
           }
+          
+          .description {
+            font-size: 16px;
+            margin-bottom: 30px;
+          }
+        }
+
+        /* Small mobile phones */
+        @media (max-width: 480px) {
+          .left-column {
+            padding: 20px 16px;
+          }
+          
+          .right-column {
+            padding: 24px 12px; /* Even more space on very small screens */
+          }
+          
+          .feature {
+            padding: 16px 12px;
+          }
+          
+          .feature-title {
+            font-size: 13px;
+          }
+          
+          .feature-description {
+            font-size: 12px;
+          }
+          
+          .main-title {
+            font-size: 28px;
+          }
+          
           .description {
             font-size: 15px;
+          }
+          
+          .control-icon {
+            height: 40px;
           }
         }
       `}</style>

@@ -201,16 +201,44 @@ const OverviewSection = () => {
         .mission-statement {
           font-family: 'Montserrat', sans-serif;
           font-weight: 500;
-          font-size: clamp(2rem, 4.5vw, 4rem);
+          font-size: clamp(1.8rem, 3.8vw, 3.5rem); /* Reduced from 4.5vw and 4rem */
           line-height: 1.15;
           text-align: center;
           max-width: 100rem;
           margin: 0 auto;
           color: #111;
           letter-spacing: -0.02em;
-          word-break: break-word;
+          word-break: keep-all;
           overflow-wrap: break-word;
+          hyphens: none;
           white-space: normal;
+        }
+
+        /* Force better word wrapping on mobile */
+        @media (max-width: 768px) {
+          .mission-statement {
+            font-size: clamp(1.1rem, 3.5vw, 2rem) !important; /* Much smaller */
+            max-width: 95%;
+            word-spacing: 0.1em;
+            line-height: 1.25;
+          }
+        }
+
+        @media (max-width: 480px) {
+          .mission-statement {
+            font-size: clamp(1rem, 3vw, 1.6rem) !important; /* Even smaller */
+            max-width: 98%;
+            word-spacing: 0.05em;
+            line-height: 1.3;
+          }
+        }
+
+        @media (max-width: 360px) {
+          .mission-statement {
+            font-size: clamp(0.95rem, 2.8vw, 1.4rem) !important; /* Very small */
+            max-width: 100%;
+            word-spacing: normal;
+          }
         }
 
         .sections-column {
@@ -248,49 +276,90 @@ const OverviewSection = () => {
           text-align: left;
         }
 
-        @media (max-width: 768px) {
+        /* Tablet responsive */
+        @media (max-width: 1024px) {
           .mission-hero {
-            padding: 0 4rem;
-          }
-
-          .mission-statement {
-            font-size: clamp(1.5rem, 5vw, 2.5rem);
-            max-width: 80%;
+            padding: 0 6rem;
           }
 
           .sections-column {
-            padding: 0 1rem;
+            padding: 0 2rem;
+          }
+        }
+
+        /* Mobile responsive - IMPROVED SPACING */
+        @media (max-width: 768px) {
+          .mission-hero {
+            min-height: 40vh; /* Reduced from 50vh */
+            padding: 0 2rem; /* Much less side padding */
+          }
+
+          .sections-column {
+            padding: 0 1.5rem; /* Reduced side padding */
           }
 
           .section-block {
-            padding: 2rem 0 1.5rem 0;
+            padding: 1.5rem 0 1rem 0; /* Reduced top/bottom padding */
           }
 
           .section-title {
             font-size: clamp(1.75rem, 4vw, 2.5rem);
+            margin-bottom: 0.8rem; /* Less space below titles */
           }
 
           .section-description {
             font-size: 1.1rem;
+            line-height: 1.4; /* Tighter line height */
           }
         }
 
+        /* Small mobile phones - MAXIMUM SPACE EFFICIENCY */
         @media (max-width: 480px) {
           .mission-hero {
-            padding: 0 2.5rem;
+            min-height: 35vh; /* Even less height */
+            padding: 0 1rem; /* Minimal side padding */
           }
 
-          .mission-statement {
-            font-size: clamp(1.25rem, 4.5vw, 2rem);
-            max-width: 85%;
+          .sections-column {
+            padding: 0 1rem; /* Minimal side padding */
+          }
+
+          .section-block {
+            padding: 1rem 0 0.75rem 0; /* Tight vertical spacing */
           }
 
           .section-title {
             font-size: clamp(1.5rem, 4.5vw, 2rem);
+            margin-bottom: 0.6rem; /* Minimal gap */
           }
 
           .section-description {
             font-size: 1rem;
+            line-height: 1.3; /* Compact line height */
+          }
+        }
+
+        /* Extra small screens */
+        @media (max-width: 360px) {
+          .mission-hero {
+            min-height: 30vh; /* Compact height */
+            padding: 0 0.75rem; /* Tight padding */
+          }
+
+          .sections-column {
+            padding: 0 0.75rem; /* Tight padding */
+          }
+
+          .section-block {
+            padding: 0.75rem 0 0.5rem 0; /* Very tight spacing */
+          }
+
+          .section-title {
+            margin-bottom: 0.5rem;
+          }
+
+          .section-description {
+            font-size: 0.95rem;
           }
         }
       `}</style>

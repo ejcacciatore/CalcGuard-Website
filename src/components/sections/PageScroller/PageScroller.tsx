@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState, useRef } from 'react'
+import { useEffect, useState, useRef, Suspense } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import styles from './PageScroller.module.css'
 
@@ -29,7 +29,33 @@ const sections: Section[] = [
   { id: 'edge', title: 'COMPETITIVE EDGE', component: CompetitiveEdgeSection }
 ]
 
-const PageScroller: React.FC = () => {
+// Loading component for Suspense fallback
+const PageScrollerLoading = () => (
+  <div className={styles.pageScrollerContainer}>
+    <div className={styles.progressBarSystem}>
+      <div className={styles.progressBarsWrapper}>
+        {sections.map((section) => (
+          <div key={section.id} className={styles.progressBarItem}>
+            <div className={styles.progressBarLabel}>{section.title}</div>
+            <div className={styles.progressBarTrack}>
+              <div className={styles.progressBarFill} style={{ width: '0%' }} />
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+    <div className={styles.contentArea}>
+      <div className={styles.contentSlider}>
+        <div className={styles.sectionWrapper}>
+          <div>Loading...</div>
+        </div>
+      </div>
+    </div>
+  </div>
+)
+
+// Main PageScroller component
+const PageScrollerContent: React.FC = () => {
   const [currentIndex, setCurrentIndex] = useState(0)
   const [progress, setProgress] = useState(0)
   const [isAutoScrollPaused, setIsAutoScrollPaused] = useState(false)
@@ -168,8 +194,6 @@ const PageScroller: React.FC = () => {
 
   return (
     <div className={styles.pageScrollerContainer}>
-
-
       {/* Desktop Progress Bar System */}
       <div className={styles.progressBarSystem}>
         <div className={styles.progressBarsWrapper}>
@@ -227,6 +251,15 @@ const PageScroller: React.FC = () => {
         </div>
       </div>
     </div>
+  )
+}
+
+// Main export wrapped in Suspense
+const PageScroller: React.FC = () => {
+  return (
+    <Suspense fallback={<PageScrollerLoading />}>
+      <PageScrollerContent />
+    </Suspense>
   )
 }
 

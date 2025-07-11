@@ -76,13 +76,19 @@ const Header = () => {
           transform: translateY(-100%);
         }
 
+        .dark-header {
+          background: rgba(255, 255, 255, 0.15) !important;
+          backdrop-filter: saturate(110%) blur(3px);
+          -webkit-backdrop-filter: saturate(110%) blur(3px);
+        }
+
         .dark-header .company-name,
         .dark-header .icon-button {
           color: #111 !important;
         }
 
         .dark-header .logo-img {
-          filter: brightness(0);
+          filter: brightness(0.1) contrast(1.2);
         }
 
         .logo-container {
@@ -91,20 +97,43 @@ const Header = () => {
           gap: 16px;
           cursor: pointer;
           transition: transform 0.3s ease;
+          background: rgba(255, 255, 255, 0.12);
+          backdrop-filter: blur(4px);
+          -webkit-backdrop-filter: blur(4px);
+          border-radius: 8px;
+          padding: 8px 12px;
+          border: 1px solid rgba(255, 255, 255, 0.15);
         }
 
         .logo-container:hover {
           transform: scale(1.02);
+          background: rgba(255, 255, 255, 0.18);
+          box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        .dark-header .logo-container {
+          background: rgba(0, 0, 0, 0.08);
+          border: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        .dark-header .logo-container:hover {
+          background: rgba(0, 0, 0, 0.12);
+          box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
         }
 
         .logo-img {
           height: 35px;
-          transition: filter 0.3s ease;
+          transition: filter 0.3s ease, transform 0.3s ease;
+          filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+        }
+
+        .logo-img:hover {
+          transform: scale(1.05);
         }
 
         .company-name {
           font-family: 'Montserrat', sans-serif;
-          font-weight: 400;
+          font-weight: 500;
           font-size: 14px;
           color: #ffffff;
           text-transform: uppercase;
@@ -112,6 +141,11 @@ const Header = () => {
           line-height: 1.2;
           transition: color 0.3s ease;
           white-space: nowrap;
+          text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+        }
+
+        .dark-header .company-name {
+          text-shadow: 0 1px 2px rgba(255, 255, 255, 0.8);
         }
 
         .actions {
@@ -120,24 +154,37 @@ const Header = () => {
         }
 
         .icon-button {
-          background: rgba(255, 255, 255, 0.08);
-          border: none;
-          border-radius: 4px;
+          background: rgba(255, 255, 255, 0.2);
+          border: 1px solid rgba(255, 255, 255, 0.3);
+          border-radius: 6px;
           color: #ffffff;
           cursor: pointer;
           padding: 8px;
           display: flex;
           align-items: center;
           justify-content: center;
-          transition: background 0.2s ease, transform 0.2s ease;
+          transition: all 0.2s ease;
           width: 40px;
           height: 40px;
-          backdrop-filter: blur(1px);
+          backdrop-filter: blur(4px);
+          -webkit-backdrop-filter: blur(4px);
+          box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
         }
 
         .icon-button:hover {
-          background: rgba(255, 255, 255, 0.12);
+          background: rgba(255, 255, 255, 0.3);
           transform: scale(1.05);
+          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+        }
+
+        .dark-header .icon-button {
+          background: rgba(0, 0, 0, 0.15);
+          border: 1px solid rgba(0, 0, 0, 0.25);
+          color: #111;
+        }
+
+        .dark-header .icon-button:hover {
+          background: rgba(0, 0, 0, 0.25);
         }
 
         @media (max-width: 768px) {
@@ -155,6 +202,7 @@ const Header = () => {
 
           .logo-container {
             gap: 12px;
+            padding: 6px 10px;
           }
 
           .icon-button {
@@ -176,6 +224,7 @@ const Header = () => {
 
           .logo-container {
             gap: 8px;
+            padding: 4px 8px;
           }
         }
       `}</style>

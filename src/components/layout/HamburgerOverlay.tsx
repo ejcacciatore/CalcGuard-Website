@@ -281,6 +281,7 @@ const HamburgerOverlay = ({ onClose }: { onClose: () => void }) => {
             <span className="link" onClick={() => scrollTo('leadership')}>Leadership</span>
             <span className="link" onClick={() => goTo('/disclaimer')}>Disclaimer</span>
            
+            {/* 
             <div className="column-title" style={{ marginTop: '24px' }}>More Pages</div>
 
             <div className="sublink-block">
@@ -312,6 +313,7 @@ const HamburgerOverlay = ({ onClose }: { onClose: () => void }) => {
               <div className="sublink-title" onClick={() => goTo('/edge')}>Edge</div>
               <div className="sublink-desc">Tools for competitive advantage</div>
             </div>
+            */}
           </div>
 
           {/* CENTER COLUMN */}

@@ -301,9 +301,9 @@ const ContactDisclaimerSection = () => {
           </div>
 
           <div className="contact-section">
-            <div className="contact-item">
+            {/*<div className="contact-item">
               <strong>Phone:</strong> <a href="tel:+1234567890">(123) 456-7890</a>
-            </div>
+            </div>*/}
             <div className="contact-item">
               <strong>Email:</strong> <a href="mailto:info@calcguard.com">info@calcguard.com</a>
             </div>
@@ -336,9 +336,9 @@ const ContactDisclaimerSection = () => {
             <span className="page-link" onClick={() => goToSection('platform')}>Platform</span>
             <span className="page-link" onClick={() => goToSection('leadership')}>Leadership</span>
             <span className="page-link" onClick={() => goToSection('discovery')}>Discovery</span>
-            <span className="page-link" onClick={() => goToSection('inefficiencies')}>Inefficiencies</span>
-            <span className="page-link" onClick={() => goToSection('trinity')}>Trinity</span>
-            <span className="page-link" onClick={() => goToSection('edge')}>Edge</span>
+            {/* <span className="page-link" onClick={() => goToSection('inefficiencies')}>Inefficiencies</span> */}
+            {/* <span className="page-link" onClick={() => goToSection('trinity')}>Trinity</span> */}
+            {/* <span className="page-link" onClick={() => goToSection('edge')}>Edge</span> */}
             <span className="page-link" onClick={() => goToSection('news')}>Current News</span>
             <span className="page-link" onClick={() => goToSection('blog')}>Blog</span>
           </div>

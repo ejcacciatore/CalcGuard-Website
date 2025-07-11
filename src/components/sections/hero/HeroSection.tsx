@@ -5,9 +5,21 @@ import { useEffect, useRef, useState } from 'react'
 const HeroSection = () => {
   const [progress, setProgress] = useState(0)
   const [isPaused, setIsPaused] = useState(false)
+  const [isHomePage, setIsHomePage] = useState(false) // Start with false
+  const [isClient, setIsClient] = useState(false) // Track if client-side
   const progressRef = useRef<HTMLDivElement | null>(null)
 
   useEffect(() => {
+    // Mark as client-side and check if we're on home page
+    setIsClient(true)
+    const currentPath = window.location.pathname
+    setIsHomePage(currentPath === '/')
+  }, [])
+
+  useEffect(() => {
+    // Only run progress bar and auto-scroll on home page
+    if (!isClient || !isHomePage) return
+
     let animationFrame: number
     let start: number | null = null
     const duration = 6000
@@ -25,16 +37,22 @@ const HeroSection = () => {
     }
     animationFrame = requestAnimationFrame(step)
     return () => cancelAnimationFrame(animationFrame)
-  }, [isPaused])
+  }, [isPaused, isHomePage, isClient])
 
   const scrollToNext = () => {
-    const next = document.getElementById('what-we-do')
-    if (next) {
-      next.scrollIntoView({ behavior: 'smooth' })
+    // Only scroll to next if we're on the home page
+    if (isClient && isHomePage) {
+      const next = document.getElementById('what-we-do')
+      if (next) {
+        next.scrollIntoView({ behavior: 'smooth' })
+      }
     }
   }
 
   useEffect(() => {
+    // Only run auto-scroll on home page
+    if (!isClient || !isHomePage) return
+    
     const pause = () => setIsPaused(true)
     window.addEventListener('wheel', pause)
     window.addEventListener('touchstart', pause)
@@ -44,7 +62,7 @@ const HeroSection = () => {
       window.removeEventListener('touchstart', pause)
       window.removeEventListener('keydown', pause)
     }
-  }, [])
+  }, [isHomePage, isClient])
 
   return (
     <>
@@ -82,37 +100,60 @@ const HeroSection = () => {
 
         .title {
           z-index: 2;
-          font-size: clamp(1.5rem, 4vw, 4.2rem);
-          font-weight: 300;
+          font-size: clamp(2.8rem, 4.5vw, 5.2rem);
+          font-weight: 400;
           color: #ffffff;
           font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
           display: inline-block;
           text-align: center;
           transform: translateY(-8vh);
-          letter-spacing: -0.02em;
-          backdrop-filter: blur(4px);
-          padding: 0.15em 0.4em;
-          border-radius: 8px;
-          background: rgba(0, 0, 0, 0.15);
+          letter-spacing: -0.05em;
+          backdrop-filter: blur(1px);
+          padding: 0.1em 0.1em;
+          border-radius: 12px;
+          background: rgba(0, 0, 0, 0.25);
           text-shadow: 
-            0 2px 4px rgba(0, 0, 0, 0.8),
-            0 4px 12px rgba(0, 0, 0, 0.4),
-            0 0 20px rgba(255, 255, 255, 0.1);
-          border: 1px solid rgba(255, 255, 255, 0.08);
+            0 3px 6px rgba(0, 0, 0, 0.9),
+            0 6px 20px rgba(0, 0, 0, 0.5),
+            0 0 30px rgba(255, 255, 255, 0.15);
+          border: 1px solid rgba(255, 255, 255, 0.12);
           max-width: 90vw;
-          line-height: 1.1;
+          line-height: 1.05;
           word-break: keep-all;
           overflow-wrap: break-word;
           hyphens: none;
+          animation: titleEntrance 1.2s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+          opacity: 0;
+          transform: translateY(-8vh) scale(0.8);
         }
+
+        @keyframes titleEntrance {
+          0% {
+            opacity: 0;
+            transform: translateY(-8vh) scale(0.8) rotateX(15deg);
+            filter: blur(8px);
+          }
+          60% {
+            opacity: 0.8;
+            transform: translateY(-8vh) scale(1.05) rotateX(0deg);
+            filter: blur(2px);
+          }
+          100% {
+            opacity: 1;
+            transform: translateY(-8vh) scale(1) rotateX(0deg);
+            filter: blur(0px);
+          }
+        }
+
+
 
         .title span {
           display: inline-block;
           opacity: 0;
           transform: translateY(20px);
           animation: brightenLetter 0.6s ease-out forwards;
-          font-weight: 300; /* Consistent weight for all characters */
-          letter-spacing: inherit; /* Inherit consistent spacing */
+          font-weight: inherit;
+          letter-spacing: inherit;
         }
 
         .title span:nth-child(n) {
@@ -155,7 +196,7 @@ const HeroSection = () => {
           align-items: center;
           cursor: pointer;
           opacity: 0;
-          animation: fadeInUp 1s ease-out 2s forwards;
+          animation: fadeInUp 1s ease-out 2.5s forwards;
         }
 
         .scroll-text {
@@ -264,9 +305,10 @@ const HeroSection = () => {
         /* Tablet responsive */
         @media (max-width: 1024px) {
           .title {
-            font-size: clamp(1.4rem, 3.5vw, 3.5rem);
+            font-size: clamp(1.8rem, 4vw, 4rem);
             transform: translateY(-6vh);
             max-width: 85vw;
+            letter-spacing: -0.03em;
           }
 
           .scroll-indicator {
@@ -277,11 +319,11 @@ const HeroSection = () => {
         /* Mobile responsive */
         @media (max-width: 768px) {
           .title {
-            font-size: clamp(1.2rem, 3vw, 2.5rem);
+            font-size: clamp(1.4rem, 3.5vw, 3rem);
             transform: translateY(-5vh);
-            padding: 0.1em 0.3em;
+            padding: 0.15em 0.35em;
             max-width: 90vw;
-            letter-spacing: -0.01em;
+            letter-spacing: -0.02em;
           }
 
           .progress-bar {
@@ -312,10 +354,10 @@ const HeroSection = () => {
         /* Small mobile */
         @media (max-width: 480px) {
           .title {
-            font-size: clamp(1rem, 2.8vw, 2rem);
+            font-size: clamp(1.2rem, 3.2vw, 2.5rem);
             transform: translateY(-4vh);
             max-width: 95vw;
-            padding: 0.1em 0.2em;
+            padding: 0.1em 0.25em;
           }
 
           .scroll-indicator {
@@ -336,7 +378,7 @@ const HeroSection = () => {
         /* Extra small mobile */
         @media (max-width: 360px) {
           .title {
-            font-size: clamp(0.9rem, 2.5vw, 1.8rem);
+            font-size: clamp(1rem, 3vw, 2.2rem);
             transform: translateY(-3vh);
             max-width: 98vw;
           }
@@ -366,26 +408,27 @@ const HeroSection = () => {
         </video>
 
         <h1 className="title">
-          {'Seamless B2B Infrastructure'.split('').map((char, idx) => (
-            <span key={idx} style={{ ['--i' as any]: idx }}>
-              {char === ' ' ? '\u00A0' : char}
-            </span>
-          ))}
+          Seamless B2B Architecture
         </h1>
 
-        <div className="scroll-indicator" onClick={scrollToNext}>
-          <div className="scroll-text">Scroll down to find out more</div>
-          <div className="scroll-icon">
-            <div className="scroll-dot"></div>
-          </div>
-          <div className="scroll-arrow"></div>
-        </div>
+        {/* Only render scroll elements on client-side and home page */}
+        {isClient && isHomePage && (
+          <>
+            <div className="scroll-indicator" onClick={scrollToNext}>
+              <div className="scroll-text">Scroll</div>
+              <div className="scroll-icon">
+                <div className="scroll-dot"></div>
+              </div>
+              <div className="scroll-arrow"></div>
+            </div>
 
-        <div
-          className="progress-bar"
-          ref={progressRef}
-          style={{ width: `${progress * 100}%` }}
-        />
+            <div
+              className="progress-bar"
+              ref={progressRef}
+              style={{ width: `${progress * 100}%` }}
+            />
+          </>
+        )}
       </section>
     </>
   )
